@@ -20,7 +20,7 @@ import java.util.Set;
 public class Pacient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int PacientID;
+    private int pacientID;
    private String Nume;
    private String Prenume;
    private String Oras;

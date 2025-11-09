@@ -25,5 +25,5 @@ public class TratamentMedicatie {
     // Cheia Străină 2: Referința la Medicamentul Specific
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MedicamentID", nullable = false)
-    private Medicament Medicament;
+    private Medicament medicament;
 }

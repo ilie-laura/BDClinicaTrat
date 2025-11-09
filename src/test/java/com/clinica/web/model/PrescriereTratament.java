@@ -21,7 +21,7 @@ public class PrescriereTratament {
     // 🌟 Cheia Străină 1: Referința la Programare
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProgramareID", nullable = false)
-    private Programare Programare;
+    private Programare programare;
 
     // 🌟 Cheia Străină 2: Referința la Tratamentul Prescris
     @ManyToOne(fetch = FetchType.LAZY)

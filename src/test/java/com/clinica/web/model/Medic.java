@@ -19,7 +19,7 @@ import java.util.Set;
 public class Medic {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int MedicID;
+    private int medicID;
     private String Nume;
     private String Prenume;
     private String Specializare;

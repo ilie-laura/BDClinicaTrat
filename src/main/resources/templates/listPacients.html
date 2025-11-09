@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Pacienți</title>
+</head>
+<body>
+<h1>Lista Pacienților</h1>
+<ul>
+    <li th:each="p : ${pacients}" th:text="${p}"></li>
+</ul>
+</body>
+</html>

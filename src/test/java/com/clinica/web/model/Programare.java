@@ -19,7 +19,7 @@ import java.util.Set;
 public class Programare {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ProgramareID;
+    private int programareID;
     // Relația M-la-1: O consultatie are UN singur Medic
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MedicID", nullable = false)
@@ -30,7 +30,7 @@ public class Programare {
     @JoinColumn(name = "PacientID", nullable = false)
     private Pacient pacient;
 
-    @OneToMany(mappedBy = "consultatie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "programare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PrescriereTratament> prescrise = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime Data_programare;

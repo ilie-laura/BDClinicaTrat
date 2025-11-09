@@ -19,7 +19,7 @@ import java.util.Set;
 public class Tratament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int TratamentID;
+    private int tratamentID;
     private String Nume;
     // Relația 1-la-M: Un plan de Tratament include Multe Medicamente Specifice
     @OneToMany(mappedBy = "Tratament", cascade = CascadeType.ALL, orphanRemoval = true)

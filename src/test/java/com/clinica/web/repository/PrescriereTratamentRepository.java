@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface PrescriereTratamentRepository extends JpaRepository<PrescriereTratament,Long> {
     //@Override
-    Optional<PrescriereTratament> findByProgramareID(int url);
+    Optional<PrescriereTratament> findById(int url);
 }
