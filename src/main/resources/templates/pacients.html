@@ -1,9 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>pacient</title>
+    <meta charset="UTF-8">
+    <title>Lista pacienților</title>
 </head>
 <body>
-<h1>pacient</h1>
+<h1>Lista pacienților</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nume</th>
+        <th>Prenume</th>
+        <th>Oras</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${pacienti}">
+        <td th:text="${p.pacientID}">1</td>
+        <td th:text="${p.nume}">Popescu</td>
+        <td th:text="${p.prenume}">Ion</td>
+        <td th:text="${p.oras}">București</td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(pacienti)}">
+        <td colspan="4" style="text-align: center;">Nu există pacienți.</td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
