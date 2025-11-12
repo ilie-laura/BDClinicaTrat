@@ -25,7 +25,7 @@ public class Tratament {
     @OneToMany(mappedBy = "Tratament", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TratamentMedicatie> componente = new HashSet<>();
     // Relația 1-la-M: Un tratament este inclus în Multe Prescrieri
-    @OneToMany(mappedBy = "Tratament")
+    @OneToMany(mappedBy = "tratament")
     private Set<PrescriereTratament> prescrise = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime Data_inceput;

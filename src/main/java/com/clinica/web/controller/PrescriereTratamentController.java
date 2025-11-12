@@ -19,6 +19,10 @@ public class PrescriereTratamentController {
     @GetMapping("/prescrieri")
     public String prescrieri(Model model){
         List<PrescriereTratamentDto> prescrieri=prescriereTratamentService.findAllPrescriereTrataments();
+
+        System.out.println("Prescrieri size: " + prescrieri.size());
+        prescrieri.forEach(p -> System.out.println(p));
+
         model.addAttribute("prescrieri",prescrieri);
         return "prescrieri";
     }
