@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Tratament Medicatie</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px 10px;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista Tratament Medicatie</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID Tratament</th>
+        <th>ID Medicament</th>
+        <th>Doza</th>
+        <th>Frecventa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tm : ${tratamentMedicatie}">
+        <td th:text="${tm.tratamentID}"></td>
+        <td th:text="${tm.medicamentID}"></td>
+        <td th:text="${tm.doza}"></td>
+        <td th:text="${tm.frecventa}"></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(tratamentMedicatie)}">
+        <td colspan="4" style="text-align: center;">Nu există tratamente pentru medicamente.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

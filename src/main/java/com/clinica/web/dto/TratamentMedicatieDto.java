@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class TratamentMedicatieDto {
-    int id;
+    private long tratamentID;
+    private long medicamentID;
     private int Doza;
     private String Frecventa;
 }

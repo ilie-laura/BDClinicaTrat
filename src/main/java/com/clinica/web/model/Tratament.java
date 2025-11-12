@@ -22,7 +22,7 @@ public class Tratament {
     private int tratamentID;
     private String Nume;
     // Relația 1-la-M: Un plan de Tratament include Multe Medicamente Specifice
-    @OneToMany(mappedBy = "Tratament", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tratament", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TratamentMedicatie> componente = new HashSet<>();
     // Relația 1-la-M: Un tratament este inclus în Multe Prescrieri
     @OneToMany(mappedBy = "tratament")

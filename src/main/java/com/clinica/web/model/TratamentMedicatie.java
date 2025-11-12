@@ -12,18 +12,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 public class TratamentMedicatie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    private int Doza;
-    private String Frecventa;
-    // Cheia Străină 1: Referința la Planul de Tratament
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TratamentID", nullable = false)
-    private Tratament Tratament;
+    @EmbeddedId
+    private TratamentMedicatieId id;
 
-    // Cheia Străină 2: Referința la Medicamentul Specific
+    private int doza;
+    private String frecventa;
+
+    @MapsId("tratamentID")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MedicamentID", nullable = false)
-    private Medicament medicament;
-}
+    @JoinColumn(name = "TratamentID", insertable = false, updatable = false)
+    private Tratament tratament;
+
+    @MapsId("medicamentID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MedicamentID", insertable = false, updatable = false)
+    private Medicament medicament;}
