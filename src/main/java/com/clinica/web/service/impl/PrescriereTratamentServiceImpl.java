@@ -23,7 +23,7 @@ public class PrescriereTratamentServiceImpl implements PrescriereTratamentServic
     }
     public PrescriereTratamentDto maptoPrescriereTratamentDto(PrescriereTratament prescrieri) {
         PrescriereTratamentDto prescriereTratamentDto= PrescriereTratamentDto.builder()
-                .id(prescrieri.getId())
+               // .id(prescrieri.getId())
                 .tratamentID(prescrieri.getTratament().getTratamentID())
                 .programareID(prescrieri.getProgramare().getProgramareID())
                 .Durata(prescrieri.getDurata())
