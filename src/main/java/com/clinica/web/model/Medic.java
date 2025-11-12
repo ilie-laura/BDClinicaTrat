@@ -29,5 +29,6 @@ public class Medic {
     @OneToMany(mappedBy = "medic", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Programare> consultatii = new HashSet<>();
     @CreationTimestamp
-    private LocalDateTime Data_angajarii;
+  //  @Column(name = "Data_Angajarii")
+    private LocalDateTime data_nasterii;
 }

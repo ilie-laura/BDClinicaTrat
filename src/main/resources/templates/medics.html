@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista medicilor</title>
+</head>
+<body>
+<h1>Lista medicilor</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nume</th>
+        <th>Prenume</th>
+        <th>Specializare</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${medici}">
+        <td th:text="${p.medicID}">1</td>
+        <td th:text="${p.nume}">Popescu</td>
+        <td th:text="${p.prenume}">Ion</td>
+        <td th:text="${p.specializare}">București</td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(medici)}">
+        <td colspan="4" style="text-align: center;">Nu există medici.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@Table(name = "PrescriereTratament",schema="dbo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+
 public class PrescriereTratament {
 
     // 🌟 Soluția! Definește un ID simplu, auto-generat 🌟

@@ -22,6 +22,7 @@ public class Medicament {
     private String Nume;
     private int Stoc;
     private int Pret;
+    @Column(name="Data_expirare")
     private LocalDateTime Data_expirarii;
     // Relația 1-la-M: Un Medicament este parte din Multe structuri de Tratament
     @OneToMany(mappedBy = "medicament")

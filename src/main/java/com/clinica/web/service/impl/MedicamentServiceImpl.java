@@ -4,10 +4,11 @@ import com.clinica.web.dto.MedicamentDto;
 import com.clinica.web.model.Medicament;
 import com.clinica.web.repository.MedicamentRepository;
 import com.clinica.web.service.MedicamentService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class MedicamentServiceImpl implements MedicamentService {
     private MedicamentRepository medicamentRepository;
     //@Autowired
@@ -24,6 +25,7 @@ public class MedicamentServiceImpl implements MedicamentService {
     private MedicamentDto maptoMedicamentDto(Medicament medicament) {
         MedicamentDto medicamentDto= MedicamentDto.builder()
                 .MedicamentID(medicament.getMedicamentID())
+                .Nume(medicament.getNume())
                 .Data_expirarii(medicament.getData_expirarii())
                 .Pret(medicament.getPret())
                 .Stoc(medicament.getStoc())

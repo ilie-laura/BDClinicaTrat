@@ -15,5 +15,5 @@ public class MedicDto {
     private long Salariu;
     private char Sex;
     private String CNP;
-    private LocalDateTime Data_angajarii;
+    private LocalDateTime data_nasterii;
 }

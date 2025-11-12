@@ -4,10 +4,11 @@ import com.clinica.web.dto.MedicDto;
 import com.clinica.web.model.Medic;
 import com.clinica.web.repository.MedicRepository;
 import com.clinica.web.service.MedicService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class MedicServiceImpl implements MedicService {
     private MedicRepository medicRepository;
 

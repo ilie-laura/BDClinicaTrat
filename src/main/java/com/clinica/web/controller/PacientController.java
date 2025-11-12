@@ -24,8 +24,8 @@ public class PacientController {
         model.addAttribute("pacienti", pacienti);
         return "listPacients";
     }
-    @GetMapping("/pacients")
-    public String pacientsPage() {
-        return "pacients"; // Thymeleaf template name (pacients.html)
-    }
+//    @GetMapping("/pacients")
+//    public String pacientsPage() {
+//        return "pacients"; // Thymeleaf template name (pacients.html)
+//    }
 }

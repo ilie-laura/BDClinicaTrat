@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista programarilor</title>
+</head>
+<body>
+<h1>Lista programarilor</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ProgramareID</th>
+        <th>PacientID</th>
+        <th>MedicID</th>
+        <th>Data_prog</th>
+        <th>Durata</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${programari}">
+        <td th:text="${p.programareID}"></td>
+        <td th:text="${p.pacientID}"></td>
+        <td th:text="${p.medicID}"></td>
+        <td th:text="${p.data_programare}"></td>
+        <th th:text="${p.durata_programare}"></th>
+    </tr>
+    <tr th:if="${#lists.isEmpty(programari)}">
+        <td colspan="4" style="text-align: center;">Nu există programari.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

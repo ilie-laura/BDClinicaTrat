@@ -7,5 +7,7 @@ import lombok.Data;
 @Builder
 public class PrescriereTratamentDto {
     private Long id;
+    private int programareID;
+    private int tratamentID;
     private String Durata;
 }

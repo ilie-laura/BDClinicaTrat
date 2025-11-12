@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista medicamentelor</title>
+</head>
+<body>
+<h1>Lista medicamentelor</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nume</th>
+        <th>Data_exp</th>
+        <th>Stoc</th>\
+        <th>Pret</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${medicaments}">
+        <td th:text="${p.medicamentID}"></td>
+        <td th:text="${p.nume}"></td>
+        <td th:text="${p.data_expirarii}"></td>
+        <td th:text="${p.stoc}"></td>
+        <th th:text="${p.pret}"></th>
+    </tr>
+    <tr th:if="${#lists.isEmpty(medicaments)}">
+        <td colspan="4" style="text-align: center;">Nu există medicamente.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
