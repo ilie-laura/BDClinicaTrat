@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informații - ClinicaTrat</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body {
+            font-family: "Avenir Next", sans-serif;
+            background-color: #EDE7E3;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #82C0CC;
+            color: #213A57;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        header img {
+            height: 60px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        p.subtitle {
+            margin-top: 0.5rem;
+            color: #355070;
+            font-weight: 500;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            padding: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: #16697A;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 1rem;
+            text-decoration: none;
+            background-color: #82C0CC;
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .card a:hover {
+            background-color: #16697A;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img th:src="@{/images/logo.png}" alt="ClinicaTrat Logo">
+    <h1>ClinicaTrat</h1>
+    <p class="subtitle">Informații și secțiuni administrative</p>
+</header>
+
+<main class="container">
+    <div class="card">
+        <h2>Pacienți</h2>
+        <p>Gestionează datele pacienților, istoricul și fișele medicale.</p>
+        <a th:href="@{/listPacients}">Deschide</a>
+    </div>
+
+    <div class="card">
+        <h2>Medici</h2>
+        <p>Vizualizează și administrează lista medicilor din clinică.</p>
+        <a th:href="@{/medics}">Deschide</a>
+    </div>
+
+    <div class="card">
+        <h2>Medicamente</h2>
+        <p>Accesează catalogul medicamentelor și gestionarea stocurilor.</p>
+        <a th:href="@{/medicaments}">Deschide</a>
+    </div>
+
+    <div class="card">
+        <h2>Programări</h2>
+        <p>Verifică și gestionează programările zilnice și viitoare.</p>
+        <a th:href="@{/programari}">Deschide</a>
+    </div>
+    <div class="card">
+        <h2>Tratamente</h2>
+        <p>Verifică și gestionează tratamentele zilnice și viitoare.</p>
+        <a th:href="@{/tratamente}">Deschide</a>
+    </div>
+    <div class="card">
+        <h2>Prescrieri</h2>
+        <p>Verifică și gestionează prescrierile zilnice și viitoare.</p>
+        <a th:href="@{/prescrieri}">Deschide</a>
+    </div>
+<!--    <div class="card">-->
+<!--        <h2>TratMed</h2>-->
+<!--        <p>Verifică și gestionează programările zilnice și viitoare.</p>-->
+<!--        <a th:href="@{/tratament_medicatie.html}">Deschide</a>-->
+<!--    </div>-->
+</main>
+
+</body>
+</html>

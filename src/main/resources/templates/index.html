@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet"  type="text/css" href="/css/styles.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
 <head>
     <meta charset="UTF-8">
     <title>ClinicaTrat</title>
+
 </head>
 <body>
+<nav class="desktop-menu">
+    <a href="#">
+        <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo">
+    </a>
+    <div class="menu-links">
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a th:href="@{/info}">Info</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+<nav role="navigation">
+    <div id="menuToggle">
+        <input type="checkbox" id="menuCheckbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul id="menu">
+            <li><a href="#"><label for="menuCheckbox">Home</label></a></li>
+            <li><a href="#about"><label for="menuCheckbox">About</label></a></li>
+            <li><a  th:href="@{/info}"><label for="menuCheckbox">Info</label></a></li>
+            <li><a href="#contact"><label for="menuCheckbox">Contact</label></a></li>
+        </ul>
+    </div>
+</nav>
 
-<div class="navbar">
-    <a href="#home">Home</a>
-    <div class="subnav">
-        <button class="subnavbtn">About <i class="fa fa-caret-down"></i></button>
-        <div class="subnav-content">
-            <a href="#company">Clinica</a>
-            <a href="#team">Team</a>
-            <a href="#careers">Evenimente</a>
-        </div>
-    </div>
-    <div class="subnav">
-        <button class="subnavbtn">Services <i class="fa fa-caret-down"></i></button>
-        <div class="subnav-content">
-            <a href="#prog">Programare</a>
-            <a href="#instr">Instruire</a>
-            <a href="#afis">Afisare Date</a>
-
-        </div>
-    </div>
-    <div class="subnav">
-        <button class="subnavbtn">Partners <i class="fa fa-caret-down"></i></button>
-        <div class="subnav-content">
-            <a href="#link1">ING</a>
-            <a href="#link2">HELPNET</a>
-            <a href="#link3">UNSTPB</a>
-            <a href="#link4">KAUFLAND</a>
-        </div>
-    </div>
-    <a href="#contact">Contact</a>
-</div>
-<h1>Pagina home BD ClinicaTrat</h1>
 </body>
 </html>
