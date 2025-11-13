@@ -47,7 +47,7 @@ a {  color:black;
 }
 
 #menuToggle {
-    display: none; /* ascuns implicit */
+    display: none;
     position: fixed;
     top: 25px;
     left: 20px;
@@ -64,7 +64,7 @@ a {  color:black;
     top: -7px;
     left: -5px;
     cursor: pointer;
-    opacity: 0; /* ascunde checkboxul */
+    opacity: 0;
     z-index: 2;
     -webkit-touch-callout: none;
 }
@@ -141,7 +141,6 @@ a {  color:black;
     }
 }
 
-/* Pe tablete și desktop (>768px) -> doar navbar-ul normal */
 @media (min-width: 769px) {
     .desktop-menu {
         display: flex;
@@ -150,4 +149,7 @@ a {  color:black;
     #menuToggle {
         display: none;
     }
+}
+::-webkit-scrollbar{
+    display: none;
 }

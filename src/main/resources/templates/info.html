@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informații - ClinicaTrat</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
+       ::-webkit-scrollbar{
+           display: none;
+       }
         body {
             font-family: "Avenir Next", sans-serif;
             background-color: #EDE7E3;
@@ -17,7 +20,7 @@
             background-color: #82C0CC;
             color: #213A57;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 2rem 1rem 1rem;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
@@ -38,13 +41,90 @@
             font-weight: 500;
         }
 
+        .tabs {
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tabs input {
+            display: none;
+        }
+
+        .tabs ul {
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
+            background: #CDE7EA;
+            list-style: none;
+        }
+
+        .tabs ul li label {
+            display: block;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #355070;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tabs ul li label:hover {
+            background: #B1D4D9;
+            color: #16697A;
+        }
+
+        /* Indicator */
+        .tabs .slider {
+            height: 4px;
+            background: #16697A;
+            width: 16.6%;
+            transition: all 0.3s ease;
+        }
+
+        /* Tab positions */
+        #tab1:checked ~ .slider { margin-left: 0%; }
+        #tab2:checked ~ .slider { margin-left: 16.6%; }
+        #tab3:checked ~ .slider { margin-left: 33.2%; }
+        #tab4:checked ~ .slider { margin-left: 49.8%; }
+        #tab5:checked ~ .slider { margin-left: 66.4%; }
+        #tab6:checked ~ .slider { margin-left: 83%; }
+
+        /* Active tab label color */
+        #tab1:checked ~ ul li:nth-child(1) label,
+        #tab2:checked ~ ul li:nth-child(2) label,
+        #tab3:checked ~ ul li:nth-child(3) label,
+        #tab4:checked ~ ul li:nth-child(4) label,
+        #tab5:checked ~ ul li:nth-child(5) label,
+        #tab6:checked ~ ul li:nth-child(6) label {
+            color: #16697A;
+            font-weight: 700;
+        }
+
+        .content section {
+            display: none;
+            padding: 2rem;
+        }
+
+        #tab1:checked ~ .content section:nth-child(1),
+        #tab2:checked ~ .content section:nth-child(2),
+        #tab3:checked ~ .content section:nth-child(3),
+        #tab4:checked ~ .content section:nth-child(4),
+        #tab5:checked ~ .content section:nth-child(5),
+        #tab6:checked ~ .content section:nth-child(6) {
+            display: block;
+        }
+
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
-            padding: 3rem;
-            max-width: 1000px;
-            margin: 0 auto;
+            margin-top: 1rem;
         }
 
         .card {
@@ -52,13 +132,7 @@
             border-radius: 15px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .card h2 {
@@ -85,56 +159,129 @@
         .card a:hover {
             background-color: #16697A;
         }
+
+        @media (max-width: 768px) {
+            .tabs ul {
+                flex-wrap: wrap;
+            }
+            .tabs .slider {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <img th:src="@{/images/logo.png}" alt="ClinicaTrat Logo">
-    <h1>ClinicaTrat</h1>
-    <p class="subtitle">Informații și secțiuni administrative</p>
+
+    <nav class="desktop-menu">
+        <a th:href="@{/}">
+            <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo">
+        </a>
+        <div class="menu-links">
+            <a th:href="@{/}">Home</a>
+            <a href="#about">About</a>
+            <a th:href="@{/info}">Date_BD</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+    <nav role="navigation">
+        <div id="menuToggle">
+            <input type="checkbox" id="menuCheckbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <li><a href="/"><label for="menuCheckbox">Home</label></a></li>
+                <li><a href="#about"><label for="menuCheckbox">About</label></a></li>
+                <li><a  th:href="@{/info}"><label for="menuCheckbox">Info</label></a></li>
+                <li><a href="#contact"><label for="menuCheckbox">Contact</label></a></li>
+            </ul>
+        </div>
+    </nav>
+
 </header>
 
-<main class="container">
-    <div class="card">
-        <h2>Pacienți</h2>
-        <p>Gestionează datele pacienților, istoricul și fișele medicale.</p>
-        <a th:href="@{/listPacients}">Deschide</a>
-    </div>
+<div class="tabs">
+    <input type="radio" id="tab1" name="tab" checked>
+    <input type="radio" id="tab2" name="tab">
+    <input type="radio" id="tab3" name="tab">
+    <input type="radio" id="tab4" name="tab">
+    <input type="radio" id="tab5" name="tab">
+    <input type="radio" id="tab6" name="tab">
 
-    <div class="card">
-        <h2>Medici</h2>
-        <p>Vizualizează și administrează lista medicilor din clinică.</p>
-        <a th:href="@{/medics}">Deschide</a>
-    </div>
+    <ul>
+        <li><label for="tab1">Pacienți</label></li>
+        <li><label for="tab2">Medici</label></li>
+        <li><label for="tab3">Medicamente</label></li>
+        <li><label for="tab4">Programări</label></li>
+        <li><label for="tab5">Tratamente</label></li>
+        <li><label for="tab6">Prescrieri</label></li>
+    </ul>
+    <div class="slider"></div>
 
-    <div class="card">
-        <h2>Medicamente</h2>
-        <p>Accesează catalogul medicamentelor și gestionarea stocurilor.</p>
-        <a th:href="@{/medicaments}">Deschide</a>
-    </div>
+    <div class="content">
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>Pacienți</h2>
+                    <p>Gestionează datele pacienților, istoricul și fișele medicale.</p>
+                    <a th:href="@{/listPacients}">Deschide</a>
+                </div>
+            </div>
+        </section>
 
-    <div class="card">
-        <h2>Programări</h2>
-        <p>Verifică și gestionează programările zilnice și viitoare.</p>
-        <a th:href="@{/programari}">Deschide</a>
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>Medici</h2>
+                    <p>Vizualizează și administrează lista medicilor din clinică.</p>
+                    <a th:href="@{/medics}">Deschide</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>Medicamente</h2>
+                    <p>Accesează catalogul medicamentelor și gestionarea stocurilor.</p>
+                    <a th:href="@{/medicaments}">Deschide</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>Programări</h2>
+                    <p>Verifică și gestionează programările zilnice și viitoare.</p>
+                    <a th:href="@{/programari}">Deschide</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>Tratamente</h2>
+                    <p>Verifică și gestionează tratamentele zilnice și viitoare.</p>
+                    <a th:href="@{/tratamente}">Deschide</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>Prescrieri</h2>
+                    <p>Administrează prescrierile pacienților și istoricul acestora.</p>
+                    <a th:href="@{/prescrieri}">Deschide</a>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="card">
-        <h2>Tratamente</h2>
-        <p>Verifică și gestionează tratamentele zilnice și viitoare.</p>
-        <a th:href="@{/tratamente}">Deschide</a>
-    </div>
-    <div class="card">
-        <h2>Prescrieri</h2>
-        <p>Verifică și gestionează prescrierile zilnice și viitoare.</p>
-        <a th:href="@{/prescrieri}">Deschide</a>
-    </div>
-<!--    <div class="card">-->
-<!--        <h2>TratMed</h2>-->
-<!--        <p>Verifică și gestionează programările zilnice și viitoare.</p>-->
-<!--        <a th:href="@{/tratament_medicatie.html}">Deschide</a>-->
-<!--    </div>-->
-</main>
+</div>
 
 </body>
 </html>

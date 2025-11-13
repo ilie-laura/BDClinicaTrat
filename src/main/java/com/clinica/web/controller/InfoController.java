@@ -8,6 +8,6 @@ public class InfoController {
 
     @GetMapping("/info")
     public String showInfoPage() {
-        return "info"; // Se leagă de templates/info.html
+        return "info";
     }
 }
