@@ -1,0 +1,178 @@
+*,:before,:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    background-color: #e0f0ff;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; /* ascunde scroll bar */
+    align-items: flex-start; /* sus, nu lipit de top */
+    padding-top: 50px; /* spațiu sus */
+}
+
+.background {
+
+    width: 520px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+
+.background .shape {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.shape:first-child {
+    background: linear-gradient(#4a90e2, #6bb8ff);
+    left: -80px;
+    top: -80px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #6bb8ff, #4a90e2);
+    right: -30px;
+    bottom: -80px;
+}
+
+form {
+
+    height: auto;
+    width: 470px;
+    background-color: rgba(255,255,255,0.2);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 0 40px rgba(74,144,226,0.3);
+    padding: 50px 35px;
+    color: #003366;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form * {
+    font-family: 'Poppins',sans-serif;
+    outline: none;
+    border: none;
+}
+
+form h3 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+    color: #003366;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #003366;
+}
+
+::placeholder {
+    color: #39393a;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button.login-btn {
+    width: 48%;
+    background-color: #4a90e2;
+    color: white;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.login-btn:hover {
+    background-color: #357ab8;
+}
+
+.register-btn {
+    display: inline-block;
+    width: 48%;
+    text-align: center;
+    background-color: #3b66fb;
+    color: #ffffff;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.register-btn:hover {
+    background-color: #08596c;
+}
+
+.social {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.social div {
+    background-color: rgba(255,255,255,0.2);
+    color: #003366;
+    width: 48%;
+    border-radius: 5px;
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.social div:hover {
+    background-color: rgba(255,255,255,0.35);
+}
+
+.social i {
+    margin-right: 6px;
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .background, form {
+        width: 90%;
+        padding: 30px 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    button.login-btn, .register-btn, .social div {
+        width: 100%;
+    }
+}
