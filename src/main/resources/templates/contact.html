@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - Medical</title>
+    <link rel="stylesheet" href="/css/contact.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<form th:action="@{/submit-contact}" method="post">
+    <h3>Trimite un Mesaj</h3>
+    <div th:if="${success}"
+         style="background:#d4edda; color:#155724; padding:15px; border-radius:5px; margin-bottom:15px; text-align:center;">
+        <span th:text="${success}"></span>
+    </div>
+
+    <label for="name">Nume și Prenume</label>
+    <input type="text" placeholder="Ex: Popescu Ion" id="name" name="name" required>
+
+    <label for="email">Adresă Email</label>
+    <input type="email" placeholder="nume@exemplu.ro" id="email" name="email" required>
+
+    <label for="subject">Subiect</label>
+    <input type="text" placeholder="Ex: Programare" id="subject" name="subject">
+
+    <label for="message">Mesajul Tău</label>
+    <textarea placeholder="Scrie mesajul aici..." id="message" name="message" rows="5" required></textarea>
+
+    <div class="buttons">
+        <button type="submit" class="login-btn" style="width: 100%;">Trimite Mesajul</button>
+        <a   th:href="@{/}"  class="home-btn">Home</a>
+    </div>
+
+    <div class="social">
+        <div class="go"><i class="fas fa-phone"></i> +40 7XX XXX XXX</div>
+        <div class="fb"><i class="fas fa-envelope"></i> contact@clinica.ro</div>
+    </div>
+</form>
+
+</body>
+</html>

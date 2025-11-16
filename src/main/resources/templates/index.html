@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+
 <nav>
     <div class="navbar">
         <div class="container nav-container">
@@ -25,8 +26,8 @@
             <div class="menu-items">
                 <li><a href="#home" onclick="document.getElementById('nav-toggle').checked = false;">Home</a></li>
                 <li><a href="#about" onclick="document.getElementById('nav-toggle').checked = false;">About</a></li>
-                <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">Date_BD</a></li>
-                <li><a href="#contact" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
+                <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">Informatii</a></li>
+                <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
             </div>
         </div>
     </div>

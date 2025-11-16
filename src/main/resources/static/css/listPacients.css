@@ -1,0 +1,234 @@
+/* --------------------------------------------------
+   RESET & GENERAL (Conform solicitării)
+-------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+title{
+    text-align: center;
+}
+body {
+    font-family: "Avenir Next", "Avenir", sans-serif;
+    background: #EDE7E3; /* Culoarea de fundal a paginii */
+    color: #232323;
+    text-align: center;
+}
+
+a {
+    color: black;
+    text-decoration: none; /* Elimină sublinierea implicită a link-urilor */
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+h1 {
+    color: #213A57;
+    padding: 20px 0;
+}
+
+/* --- TABELĂ (Stiluri preluate și adaptate la tema curentă) --- */
+table {
+    background-color: #82C0CC;
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    font-size: 16px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: #232323; /* Asigură că textul tabelei se vede */
+}
+
+thead tr {
+    background-color: #213A57; /* Culoarea închisă principală */
+    color: white;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #D3EAF0;
+}
+
+tbody tr:hover {
+    background-color: #B2DAE2;
+}
+
+/* Colțuri rotunjite */
+thead th:first-child { border-top-left-radius: 0.4rem; }
+thead th:last-child { border-top-right-radius: 0.4rem; }
+tbody tr:last-child td:first-child { border-bottom-left-radius: 0.4rem; }
+tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
+
+
+/* --------------------------------------------------
+   NAVBAR — HAMBURGER + DESKTOP (Conform solicitării)
+-------------------------------------------------- */
+
+.navbar {
+    width: 100%;
+    background: #82C0CC;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+    width: 90%;
+    margin: auto;
+    position: relative;
+    /* Adăugare pentru a centra elementele pe lățimea containerului */
+    max-width: 1200px;
+}
+
+/* Logo */
+.logo-img {
+    height: 45px;
+    width: auto;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+/* Hamburger Button */
+.checkbox {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 20px;
+    left: 20px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.hamburger-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 26px;
+    position: absolute;
+    top: 17px; /* Ajustat de la 20px la 17px pentru centrare */
+    left: 20px;
+    z-index: 3;
+}
+
+.hamburger-lines .line {
+    height: 4px;
+    width: 100%;
+    background: #213A57;
+    border-radius: 10px;
+    transition: transform 0.4s ease-in-out;
+}
+
+.hamburger-lines .line1 { transform-origin: 0% 0%; }
+.hamburger-lines .line3 { transform-origin: 0% 100%; }
+
+/* Line animations */
+.checkbox:checked ~ .hamburger-lines .line1 {
+    transform: rotate(45deg);
+}
+.checkbox:checked ~ .hamburger-lines .line2 {
+    transform: scaleY(0);
+}
+.checkbox:checked ~ .hamburger-lines .line3 {
+    transform: rotate(-45deg);
+}
+
+/* Mobile Menu */
+.menu-items {
+    padding-top: 120px;
+    height: 100vh;
+    width: 70%;
+    background: #4694aa;
+    transform: translateX(-150%);
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    list-style: none; /* Adăugat pentru a elimina punctele de listă */
+}
+
+/* Clasa adăugată prin JavaScript pentru a permite tranziția doar după încărcare */
+.menu-transition {
+    transition: transform 0.5s ease-in-out;
+}
+
+
+.menu-items a {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #213A57;
+    padding: 10px 0;
+    text-decoration: none; /* Asigură că nu sunt subliniate */
+}
+
+.menu-items a:hover {
+    color: black;
+}
+
+.checkbox:checked ~ .menu-items {
+    transform: translateX(0);
+}
+
+.checkbox:checked ~ .logo {
+    opacity: 0;
+}
+
+/* Desktop Navigation */
+@media (min-width: 900px) {
+
+    .checkbox,
+    .hamburger-lines {
+        display: none;
+    }
+
+    .menu-transition {
+        /* Dezactivează tranziția la redimensionare pe desktop */
+        transition: none !important;
+    }
+
+    .menu-items {
+        transform: none !important; /* Meniul este vizibil, elimină posibila animație la redimensionare */
+        background: none;
+        height: auto;
+        flex-direction: row;
+        gap: 40px;
+        padding: 1rem;
+        justify-content: flex-end;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .menu-items a {
+        font-size: 1.2rem;
+        color: #213A57;
+    }
+
+    .logo-img {
+        left: 20px;
+        right: auto;
+    }
+}

@@ -173,30 +173,28 @@
 <body>
 
 <header>
+    <nav>
+        <div class="navbar">
+            <div class="container nav-container">
+                <input class="checkbox" type="checkbox" id="nav-toggle" />
 
-    <nav class="desktop-menu">
-        <a th:href="@{/}">
-            <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo">
-        </a>
-        <div class="menu-links">
-            <a th:href="@{/}">Home</a>
-            <a href="#about">About</a>
-            <a th:href="@{/info}">Date_BD</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
-    <nav role="navigation">
-        <div id="menuToggle">
-            <input type="checkbox" id="menuCheckbox" />
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-                <li><a href="/"><label for="menuCheckbox">Home</label></a></li>
-                <li><a href="#about"><label for="menuCheckbox">About</label></a></li>
-                <li><a  th:href="@{/info}"><label for="menuCheckbox">Info</label></a></li>
-                <li><a href="#contact"><label for="menuCheckbox">Contact</label></a></li>
-            </ul>
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+
+                <div class="logo">
+                    <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo-img">
+                </div>
+
+                <div class="menu-items">
+                    <li><a th:href="@{/}" onclick="document.getElementById('nav-toggle').checked = false;">Home</a></li>
+                    <li><a th:href="@{/}" onclick="document.getElementById('nav-toggle').checked = false;">About</a></li>
+                    <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">Informatii</a></li>
+                    <li><a href="#contact" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
+                </div>
+            </div>
         </div>
     </nav>
 

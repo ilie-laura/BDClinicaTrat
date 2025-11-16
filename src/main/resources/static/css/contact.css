@@ -8,13 +8,30 @@ body {
 
     background-color: #e0f0ff;
     font-family: 'Poppins', sans-serif;
-    overflow: hidden; /* ascunde scroll bar */
-    align-items: flex-start; /* sus, nu lipit de top */
-    padding-top: 50px; /* spațiu sus */
+    overflow: auto;
+    align-items: flex-start;
+
+}
+.home-btn {
+    width: 100%;
+    background-color: #4a90e2;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.home-btn:hover {
+    background-color: #357ab8;
 }
 
 .background {
-
+    z-index:-1;
     width: 520px;
     height: 520px;
     position: absolute;
@@ -43,23 +60,23 @@ body {
 }
 
 form {
-
+    width: 400px;
+    margin: 50px auto;
     height: auto;
-    width: 470px;
     background-color: rgba(255,255,255,0.2);
-    position: absolute;
-    transform: translate(-50%,-50%);
-    top: 50%;
-    left: 50%;
+    position: relative;
+    transform: none;
+    top: auto;
+    left: auto;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.3);
     box-shadow: 0 0 40px rgba(74,144,226,0.3);
-    padding: 50px 35px;
+    padding: 20px 20px;
     color: #003366;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px; /* Redus puțin gap-ul pentru a face loc câmpurilor suplimentare */
 }
 
 form * {
@@ -74,24 +91,31 @@ form h3 {
     line-height: 42px;
     text-align: center;
     color: #003366;
+    margin-bottom: 10px;
 }
 
 label {
     display: block;
     font-size: 16px;
     font-weight: 500;
+    margin-top: 5px;
 }
 
-input {
+input, textarea { /* Stilul se aplică acum și la textarea */
     display: block;
-    height: 50px;
-    width: 100%;
+    width: 80%;
     background-color: rgba(255,255,255,0.1);
     border-radius: 5px;
-    padding: 0 10px;
+    padding: 10px; /* Padding ajustat pentru textarea */
     font-size: 14px;
     font-weight: 300;
     color: #003366;
+    resize: none; /* Previne redimensionarea verticală a textarea */
+    min-height: 50px;
+}
+
+input {
+    height: 30px;
 }
 
 ::placeholder {
@@ -100,13 +124,14 @@ input {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center; /* Am centrat butonul */
     margin-top: 20px;
+    gap: 10px; /* Păstrează gap-ul dacă adaugi mai multe butoane */
 }
 
+/* Butonul Trimite Mesajul (folosește stilul login-btn) */
 button.login-btn {
-    width: 48%;
+    width: 100%; /* Folosește toată lățimea containerului, eliminând register-btn */
     background-color: #4a90e2;
     color: white;
     padding: 15px 0;
@@ -120,25 +145,11 @@ button.login-btn:hover {
     background-color: #357ab8;
 }
 
-.register-btn {
-    display: inline-block;
-    width: 48%;
-    text-align: center;
-    background-color: #3b66fb;
-    color: #ffffff;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    text-decoration: none;
-}
+/* Am eliminat stilurile .register-btn pentru că nu mai este necesar */
 
-.register-btn:hover {
-    background-color: #08596c;
-}
-
+/* Stiluri pentru număr de telefon și email în social bar */
 .social {
-    margin-top: 20px;
+    margin-top: 30px; /* Mai mult spațiu sus */
     display: flex;
     justify-content: space-between;
 }
@@ -150,7 +161,8 @@ button.login-btn:hover {
     border-radius: 5px;
     padding: 10px 0;
     text-align: center;
-    cursor: pointer;
+    cursor: default; /* Schimbat din pointer în default */
+    font-size: 14px;
 }
 
 .social div:hover {
@@ -164,7 +176,7 @@ button.login-btn:hover {
 /* Responsive */
 @media screen and (max-width: 480px) {
     .background, form {
-        width: 90%;
+        width: 95%; /* Lățime mai mare pe mobil */
         padding: 30px 20px;
     }
 
@@ -172,46 +184,18 @@ button.login-btn:hover {
         flex-direction: column;
     }
 
-    button.login-btn, .register-btn, .social div {
+    button.login-btn, .social div {
         width: 100%;
     }
 }
-/* Stiluri de bază pentru alert-danger (roșu) */
-.alert-danger {
+@media screen and (max-width: 600px) {
+    .background {
+        width: 300px;
+        height: 300px;
+    }
 
-    background-color: #f8d7da; /* Fundal roșu deschis */
-    color: #721c24;          /* Text roșu închis */
-    border: 1px solid #f5c6cb; /* Margine roșie */
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-/* Stiluri pentru a face div-ul să arate ca un pop-up */
-.error-popup {
-
-    position: fixed; /* Poziționează fix pe ecran */
-    top: 50%;        /* Centrează vertical */
-    left: 50%;       /* Centrează orizontal */
-    transform: translate(-50%, -50%); /* Ajustează pentru centrare perfectă */
-    z-index: 1000;   /* Asigură că este deasupra altor elemente */
-    min-width: 300px; /* Lățime minimă */
-    max-width: 80%;  /* Lățime maximă */
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Umbră pentru efect de ridicare */
-    padding: 20px;
-    border-radius: 8px;
-    /* Opțional: Adaugă o tranziție pentru efecte mai fluide */
-    transition: opacity 0.3s ease-in-out;
-}
-
-/* Opțional: Adaugă un overlay semi-transparent în fundal */
-.error-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent negru */
-    z-index: 999;
+    .background .shape {
+        width: 120px;
+        height: 120px;
+    }
 }

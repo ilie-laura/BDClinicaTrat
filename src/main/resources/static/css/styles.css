@@ -30,7 +30,7 @@ a {
 .navbar {
     width: 100%;
     background: #82C0CC;
-    box-shadow: 0 1px 4px rgba(146, 161, 176, 0.20);
+    /*box-shadow: 0 1px 4px rgba(146, 161, 176, 0.20);*/
     position: sticky;
     top: 0;
     z-index: 999;
@@ -133,7 +133,7 @@ a {
 
 .menu-items a:hover {
     color: black;
-    font-weight: 800;
+
 }
 
 .checkbox:checked ~ .menu-items {
@@ -256,11 +256,11 @@ a {
 }
 
 .section {
-    min-height: 100vh;
+    min-height: 120vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    scroll-margin-top: 70px;
+    /*scroll-margin-top: 70px;*/
 }
 
 /* --------------------------------------------------
