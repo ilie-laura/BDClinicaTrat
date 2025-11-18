@@ -36,16 +36,25 @@ public class SecurityConfig {
         http
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/css/**").permitAll()
+                        .requestMatchers("/login", "/register",  "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/assets/**",
+                                "/webjars/**",
+                                "/login",
+                                "/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/index", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 )
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout.permitAll()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                );
 
         return http.build();
     }

@@ -460,3 +460,210 @@ a {
     }
 }
 
+/* --------------------------------------------------
+   Container Principal (Aranjare Laterală)
+-------------------------------------------------- */
+.appointment-form-container {
+    display: flex; /* Aranjează blocul lateral și formularul unul lângă altul */
+    max-width: 900px;
+    margin: 50px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Colțuri rotunjite, dacă se dorește */
+    overflow: hidden; /* Asigură că marginile laterale sunt tăiate corect */
+}
+
+/* --------------------------------------------------
+   Blocul Lateral Albastru
+-------------------------------------------------- */
+.side-block {
+    background-color: #2e86de; /* Albastru similar imaginii */
+    color: white;
+    width: 30%; /* Lățimea blocului lateral */
+    min-width: 200px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrează pe verticală */
+    align-items: center;
+    text-align: center;
+}
+
+.calendar-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.side-block h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+/* --------------------------------------------------
+   Formularul Principal (Câmpuri și Buton)
+-------------------------------------------------- */
+.main-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Ocupă spațiul rămas */
+    padding: 20px;
+    background-color: #f5f5f5; /* Fundal ușor gri */
+}
+
+/* Containerul Câmpurilor (Aranjare pe Grid) */
+.fields-container {
+    display: grid;
+    /* Două coloane de lățime egală */
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 25px; /* Spațiere între rânduri și coloane */
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* --------------------------------------------------
+   Butonul Verde
+-------------------------------------------------- */
+.appointment-btn {
+    /* Ocupă tot spațiul din rândul său (ca o singură coloană) */
+    grid-column: 1 / 3;
+    background-color: #8cc63f; /* Verde similar imaginii */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+.appointment-btn:hover {
+    background-color: #79ac35;
+}
+
+/* --------------------------------------------------
+   Responsiveness (Pentru ecrane mici)
+-------------------------------------------------- */
+@media (max-width: 768px) {
+    .appointment-form-container {
+        flex-direction: column; /* Stivuiește blocurile pe verticală */
+    }
+
+    .side-block {
+        width: 100%;
+        min-height: 100px;
+    }
+
+    .fields-container {
+        grid-template-columns: 1fr; /* Treci la o singură coloană */
+    }
+
+    .appointment-btn {
+        grid-column: 1 / 1;
+    }
+}
+/* --------------------------------------------------
+   INDICATOR DE STARE (STATUS DOT)
+-------------------------------------------------- */
+
+/* Containerul de stare */
+.logged-user-status {
+    /* Poziționează-l în colțul din dreapta sus al navbar-ului pe desktop */
+    position: absolute;
+    right: 20px;
+    top: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 1000;
+}
+
+/* Numele de utilizator (opțional, dar util) */
+.logged-user-status .username {
+    font-size: 1rem;
+    color: #213A57;
+    font-weight: 600;
+}
+
+/* Stilul de bază al indicatorului (cercul) */
+.status-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+}
+
+/* Starea Logat (verde) */
+.status-indicator.logged-in {
+    background-color: #4CAF50;
+    border: 1px solid #388E3C;
+}
+
+/* Ascunde-l pe mobil pentru a nu interfera cu hamburger */
+@media (max-width: 900px) {
+    .logged-user-status {
+        display: none;
+    }
+}
+
+/* Reajustare poziție pentru desktop */
+@media (min-width: 900px) {
+    .logged-user-status {
+        /* Pe desktop, poate fi necesar să îl muți puțin mai spre centru/stânga
+           dacă logo-ul tău e în dreapta, sau pur și simplu păstrează-l în dreapta */
+        right: 40px;
+    }
+}
+
+/* Login button */
+.login-btn {
+    padding: 8px 18px;
+    background-color: #3793f1;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    border-color: #3793f1;
+
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Logout button */
+.logout-form {
+    display: inline;
+}
+
+.logout-btn {
+    padding: 8px 10px;
+    background-color: #cd0000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.logout-btn:hover {
+    background-color: #a60617;
+}

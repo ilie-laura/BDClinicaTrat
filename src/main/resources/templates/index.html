@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:https="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,9 +27,28 @@
             <div class="menu-items">
                 <li><a href="#home" onclick="document.getElementById('nav-toggle').checked = false;">Home</a></li>
                 <li><a href="#about" onclick="document.getElementById('nav-toggle').checked = false;">About</a></li>
-                <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">Informatii</a></li>
+                <li >
+                    <a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">
+                        Informatii
+                    </a>
+
+                </li>
                 <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
             </div>
+            <div th:if="${currentUsername != null}">
+                Bine ai venit, <strong th:text="${currentUsername}"></strong>!
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+
+            <div th:if="${currentUsername == null}">
+               <form th:action="@{/login}" method="post" style="display: inline">
+                   <button type="submit" class="login-btn">Login</button>
+               </form>
+            </div>
+
+
         </div>
     </div>
 </nav>
@@ -74,7 +94,45 @@
     </div>
 </section>
 
+<section style="padding-top:2rem;background-image: url(https://i.pinimg.com/736x/17/43/21/174321b860839f260a096c0dd2e3ffaf.jpg);min-height: 80vh">
+        <div class="appointment-form-container">
+            <div class="side-block">
+                <i class="calendar-icon">📅</i> <h2>Programare</h2>
+            </div>
 
+            <form class="main-form">
+
+                <div class="fields-container">
+
+                    <div class="input-group">
+                        <label for="full-name">Nume Prenume</label>
+                        <input type="text" id="full-name" name="full_name">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">E-mail </label>
+                        <input type="email" id="email" name="email">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone">Nr telefon</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="date">Data Programarii</label>
+                        <input type="date" id="date" name="appointment_date">
+                    </div>
+                </div>
+
+                <button type="submit" class="appointment-btn">
+                    Trimite Programarea~
+                </button>
+
+            </form>
+        </div>
+
+</section>
 
 
 
