@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface PacientRepository extends JpaRepository<Pacient, Long> {
     //@Override
-   // Optional<Pacient> findByPacientID(int url);
+   //
+     Optional<Pacient> findByPacientID(int url);
 }

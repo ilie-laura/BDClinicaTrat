@@ -20,7 +20,7 @@ public class PacientController {
     @GetMapping("/listPacients")
 
     public String listPacients(Model model) {
-        List<PacientDto> pacienti = pacientService.findAllPacients(); // sau orice metodă ai
+        List<PacientDto> pacienti = pacientService.findAllPacients();
         model.addAttribute("pacienti", pacienti);
         return "listPacients";
     }

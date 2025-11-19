@@ -2,14 +2,99 @@ package com.clinica.web.repository;
 
 import com.clinica.web.model.PrescriereTratament;
 import com.clinica.web.model.PrescriereTratamentId;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface PrescriereTratamentRepository extends JpaRepository<PrescriereTratament, PrescriereTratamentId> {
-    //@Override
-   // Optional<PrescriereTratament> findById(int url);
-    List<PrescriereTratament> findByIdProgramareID(Long programareID);
-    List<PrescriereTratament> findByIdTratamentID(Long tratamentID);
+@Repository
+public class PrescriereTratamentRepository {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    public PrescriereTratamentRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    //-----------------------------------------------------
+    // FIND ALL
+    //-----------------------------------------------------
+    public List<PrescriereTratament> findAll() {
+        String sql = "SELECT * FROM PrescriereTratament";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            PrescriereTratament p = new PrescriereTratament();
+
+            PrescriereTratamentId id = new PrescriereTratamentId();
+            id.setProgramareID(rs.getLong("ProgramareID"));
+            id.setTratamentID(rs.getLong("TratamentID"));
+
+            p.setId(id);
+            p.setDurata(rs.getString("Durata"));
+            return p;
+        });
+    }
+
+    //-----------------------------------------------------
+    // FIND BY COMPOSITE ID
+    //-----------------------------------------------------
+    public Optional<PrescriereTratament> findById(Long programareID, Long tratamentID) {
+        String sql = "SELECT * FROM PrescriereTratament WHERE ProgramareID = ? AND TratamentID = ?";
+
+        List<PrescriereTratament> results = jdbcTemplate.query(sql,
+                new Object[]{programareID, tratamentID},
+                (rs, rowNum) -> {
+                    PrescriereTratament p = new PrescriereTratament();
+
+                    PrescriereTratamentId id = new PrescriereTratamentId();
+                    id.setProgramareID(rs.getLong("ProgramareID"));
+                    id.setTratamentID(rs.getLong("TratamentID"));
+
+                    p.setId(id);
+                    p.setDurata(rs.getString("Durata"));
+
+                    return p;
+                });
+
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+    }
+
+    //-----------------------------------------------------
+    // FIND BY ProgramareID
+    //-----------------------------------------------------
+    public List<PrescriereTratament> findByProgramareID(Long programareID) {
+        String sql = "SELECT * FROM PrescriereTratament WHERE ProgramareID = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{programareID}, (rs, rowNum) -> {
+            PrescriereTratament p = new PrescriereTratament();
+
+            PrescriereTratamentId id = new PrescriereTratamentId();
+            id.setProgramareID(rs.getLong("ProgramareID"));
+            id.setTratamentID(rs.getLong("TratamentID"));
+
+            p.setId(id);
+            p.setDurata(rs.getString("Durata"));
+            return p;
+        });
+    }
+
+    //-----------------------------------------------------
+    // FIND BY TratamentID
+    //-----------------------------------------------------
+    public List<PrescriereTratament> findByTratamentID(Long tratamentID) {
+        String sql = "SELECT * FROM PrescriereTratament WHERE TratamentID = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{tratamentID}, (rs, rowNum) -> {
+            PrescriereTratament p = new PrescriereTratament();
+
+            PrescriereTratamentId id = new PrescriereTratamentId();
+            id.setProgramareID(rs.getLong("ProgramareID"));
+            id.setTratamentID(rs.getLong("TratamentID"));
+
+            p.setId(id);
+            p.setDurata(rs.getString("Durata"));
+            return p;
+        });
+    }
 }

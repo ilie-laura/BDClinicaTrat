@@ -36,4 +36,25 @@ public class Programare {
     private LocalDateTime Data_programare;
     private String Durata_programare;
 
+    public void setPacientID(int pacientID) {
+        if (this.pacient == null) {
+            this.pacient = new Pacient();
+        }
+        this.pacient.setPacientID(pacientID);
+    }
+
+    public void setMedicID(int medicID) {
+        if (this.medic == null) {
+            this.medic = new Medic();
+        }
+        this.medic.setMedicID(medicID);
+    }
+    public void setDataProgramarii(LocalDateTime data) {
+        this.Data_programare = data;
+    }
+
+
+    public void setDurataProgramare(String durataProgramare) {
+        this.Durata_programare = durataProgramare;
+    }
 }
