@@ -1,6 +1,7 @@
 package com.clinica.web.repository;
 
 import com.clinica.web.model.Pacient;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -65,16 +66,20 @@ public class PacientJdbcRepository {
     }
     public Pacient save(Pacient p) {
         String sql = "INSERT INTO Pacient (Nume, Prenume, Oras, Strada, Localitate, Sex, CNP, Data_nasterii) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql,
-                p.getNume(),
-                p.getPrenume(),
-                p.getOras(),
-                p.getStrada(),
-                p.getLocalitate(),
-                p.getSex() != null ? p.getSex().toString() : null,
-                p.getCnp(),
-                p.getDataNasterii() != null ? java.sql.Timestamp.valueOf(p.getDataNasterii()) : java.sql.Timestamp.valueOf(LocalDateTime.now())
-        );
+        try {
+            jdbcTemplate.update(sql,
+                    p.getNume(),
+                    p.getPrenume(),
+                    p.getOras(),
+                    p.getStrada(),
+                    p.getLocalitate(),
+                    p.getSex() != null ? p.getSex().toString() : null,
+                    p.getCnp(),
+                    p.getDataNasterii() != null ? java.sql.Timestamp.valueOf(p.getDataNasterii()) : java.sql.Timestamp.valueOf(LocalDateTime.now())
+            );
+        } catch (DuplicateKeyException e) {
+            throw new RuntimeException("CNP deja existent!");
+        }
 
         return p;
     }
