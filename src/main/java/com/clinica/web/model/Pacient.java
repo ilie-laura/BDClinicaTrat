@@ -33,6 +33,80 @@ public class Pacient {
     private Set<Programare> consultatii = new HashSet<>();
    @CreationTimestamp
    private LocalDateTime Data_nasterii;
-   //@updateTmeStamp
+
+    // GETTERE
+    public int getPacientID() {
+        return pacientID;
+    }
+
+    public String getNume() {
+        return Nume;
+    }
+
+    public String getPrenume() {
+        return Prenume;
+    }
+
+    public LocalDateTime getDataNasterii() {
+        return Data_nasterii;
+    }
+
+    public String getCnp() {
+        return CNP;
+    }
+
+    public Character getSex() {
+        return Sex;
+    }
+
+    public String getStrada() {
+        return Strada;
+    }
+
+    public String getOras() {
+        return Oras;
+    }
+
+    public String getLocalitate() {
+        return Localitate;
+    }
+
+    // SETTERE
+    public void setPacientID(int pacientID) {
+        this.pacientID = pacientID;
+    }
+
+    public void setNume(String nume) {
+        this.Nume = nume;
+    }
+
+    public void setPrenume(String prenume) {
+        this.Prenume = prenume;
+    }
+
+    public void setDataNasterii(LocalDateTime dataNasterii) {
+        this.Data_nasterii = dataNasterii;
+    }
+
+    public void setCnp(String cnp) {
+        this.CNP = cnp;
+    }
+
+    public void setSex(Character sex) {
+        this.Sex = sex;
+    }
+
+    public void setStrada(String strada) {
+        this.Strada = strada;
+    }
+
+    public void setOras(String oras) {
+        this.Oras = oras;
+    }
+
+    public void setLocalitate(String localitate) {
+        this.Localitate = localitate;
+    }
+    //@updateTmeStamp
 
 }

@@ -35,6 +35,19 @@
 </nav>
 
 <h1 >Lista pacienților</h1>
+<form method="get" th:action="@{/listPacients}">
+    <label for="field">Caută după:</label>
+    <select name="field" id="field">
+        <option value="Nume">Nume</option>
+        <option value="Prenume">Prenume</option>
+        <option value="Oras">Oraș</option>
+        <option value="Sex">Sex</option>
+    </select>
+
+    <input type="text" name="value" placeholder="Introduceți valoarea">
+
+    <button type="submit">Search</button>
+</form>
 
 <table>
     <thead>
@@ -47,15 +60,15 @@
     </thead>
     <tbody>
     <tr th:each="p : ${pacienti}">
-        <td th:text="${p.pacientID}">1</td>
-        <td th:text="${p.nume}">Popescu</td>
-        <td th:text="${p.prenume}">Ion</td>
-        <td th:text="${p.oras}">București</td>
+        <td th:text="${p.pacientID}"></td>
+        <td th:text="${p.nume}"></td>
+        <td th:text="${p.prenume}"></td>
+        <td th:text="${p.oras}"></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(pacienti)}">
+        <td colspan="6">No results found</td>
     </tr>
 
-    <tr th:if="${#lists.isEmpty(pacienti)}">
-        <td colspan="4" style="text-align: center;">Nu există pacienți.</td>
-    </tr>
     </tbody>
 </table>
 

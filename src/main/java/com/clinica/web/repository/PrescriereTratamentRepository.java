@@ -16,10 +16,6 @@ public class PrescriereTratamentRepository {
     public PrescriereTratamentRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
-    //-----------------------------------------------------
-    // FIND ALL
-    //-----------------------------------------------------
     public List<PrescriereTratament> findAll() {
         String sql = "SELECT * FROM PrescriereTratament";
 
@@ -35,10 +31,6 @@ public class PrescriereTratamentRepository {
             return p;
         });
     }
-
-    //-----------------------------------------------------
-    // FIND BY COMPOSITE ID
-    //-----------------------------------------------------
     public Optional<PrescriereTratament> findById(Long programareID, Long tratamentID) {
         String sql = "SELECT * FROM PrescriereTratament WHERE ProgramareID = ? AND TratamentID = ?";
 
@@ -60,9 +52,6 @@ public class PrescriereTratamentRepository {
         return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
 
-    //-----------------------------------------------------
-    // FIND BY ProgramareID
-    //-----------------------------------------------------
     public List<PrescriereTratament> findByProgramareID(Long programareID) {
         String sql = "SELECT * FROM PrescriereTratament WHERE ProgramareID = ?";
 

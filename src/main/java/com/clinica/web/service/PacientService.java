@@ -1,9 +1,12 @@
 package com.clinica.web.service;
-
-import com.clinica.web.dto.PacientDto;
-
+import com.clinica.web.model.Pacient;
+import com.clinica.web.repository.PacientJdbcRepository;
+import org.springframework.stereotype.Service;
 import java.util.List;
-
+@Service
 public interface PacientService {
-    List<PacientDto> findAllPacients();
+
+    public List<Pacient> findAll();
+
+    public List<Pacient> search(String field, String value) ;
 }

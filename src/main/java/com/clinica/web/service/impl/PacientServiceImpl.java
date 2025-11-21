@@ -3,7 +3,7 @@ package com.clinica.web.service.impl;
 import com.clinica.web.dto.PacientDto;
 import com.clinica.web.model.Pacient;
 import com.clinica.web.repository.PacientJdbcRepository;
-import com.clinica.web.repository.PacientRepository;
+
 import com.clinica.web.service.PacientService;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,11 +18,21 @@ public class PacientServiceImpl implements PacientService {
         this.pacientRepository = pacientRepository;
     }
 
-    @Override
+
     public List<PacientDto> findAllPacients() {
-        return pacientRepository.findAllPacients().stream()
+        return pacientRepository.findAll().stream()
                 .map(this::maptoPacientDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pacient> findAll() {
+        return pacientRepository.findAll();
+    }
+
+    @Override
+    public List<Pacient> search(String field, String value) {
+        return pacientRepository.search(field, value);
     }
 
     private PacientDto maptoPacientDto(Pacient pacient) {
