@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -36,12 +37,12 @@ public class PacientJdbcRepository {
             return findAll();
         }
 
-        // Folosim RTRIM pentru coloanele CHAR/NCHAR + LIKE parametrizat
         String sql = "SELECT * FROM Pacient WHERE RTRIM(" + field + ") LIKE ?";
+
         System.out.println("Executing search: field=" + field + ", value=" + value);
 
         return jdbcTemplate.query(sql,
-                new Object[]{"%" + value.trim() + "%"},
+                new Object[]{ value.trim() + "%" }, // pentru "începe cu"
                 this::mapRow);
     }
 
@@ -62,4 +63,20 @@ public class PacientJdbcRepository {
 
         return p;
     }
+    public Pacient save(Pacient p) {
+        String sql = "INSERT INTO Pacient (Nume, Prenume, Oras, Strada, Localitate, Sex, CNP, Data_nasterii) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                p.getNume(),
+                p.getPrenume(),
+                p.getOras(),
+                p.getStrada(),
+                p.getLocalitate(),
+                p.getSex() != null ? p.getSex().toString() : null,
+                p.getCnp(),
+                p.getDataNasterii() != null ? java.sql.Timestamp.valueOf(p.getDataNasterii()) : java.sql.Timestamp.valueOf(LocalDateTime.now())
+        );
+
+        return p;
+    }
+
 }

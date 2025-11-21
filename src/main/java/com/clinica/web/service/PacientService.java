@@ -7,6 +7,7 @@ import java.util.List;
 public interface PacientService {
 
     public List<Pacient> findAll();
+    Pacient save(Pacient pacient);
 
     public List<Pacient> search(String field, String value) ;
 }

@@ -47,4 +47,8 @@ public class PacientServiceImpl implements PacientService {
                 .Data_nasterii(pacient.getData_nasterii())
                 .build();
     }
+    @Override
+    public Pacient save(Pacient pacient) {
+        return pacientRepository.save(pacient);
+    }
 }

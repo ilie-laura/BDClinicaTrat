@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -40,4 +42,15 @@ public class PacientController {
 
         return "listPacients"; // numele paginii HTML
     }
+    @GetMapping("/addPacient")
+    public String showAddForm(Model model) {
+        model.addAttribute("pacient", new Pacient()); // obiect gol pentru form
+        return "addPacient"; // pagina Thymeleaf pentru form
+    }
+    @PostMapping("/addPacient")
+    public String addPacient(@ModelAttribute Pacient pacient) {
+        pacientService.save(pacient); // Trebuie să creezi metoda save() în service/repository
+        return "redirect:/listPacients"; // după inserare, duce înapoi la listă
+    }
+
 }

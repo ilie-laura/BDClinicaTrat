@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adaugă Pacient</title>
+    <link rel="stylesheet" href="/css/adder.css"> <!-- folosește același fișier CSS -->
+</head>
+<body>
+<form th:action="@{/addPacient}" th:object="${pacient}" method="post">
+    <h3>Adaugă Pacient</h3>
+
+    <label for="nume">Nume:</label>
+    <input type="text" th:field="*{nume}" id="nume" placeholder="Introduceți numele" required />
+
+    <label for="prenume">Prenume:</label>
+    <input type="text" th:field="*{prenume}" id="prenume" placeholder="Introduceți prenumele" required />
+
+    <label for="oras">Oraș:</label>
+    <input type="text" th:field="*{oras}" id="oras" placeholder="Introduceți orașul" />
+
+    <label for="strada">Strada:</label>
+    <input type="text" th:field="*{strada}" id="strada" placeholder="Introduceți strada" />
+
+    <label for="localitate">Localitate:</label>
+    <input type="text" th:field="*{localitate}" id="localitate" placeholder="Introduceți localitatea" />
+
+    <label for="sex">Sex:</label>
+    <select th:field="*{sex}" id="sex">
+        <option value="">Selectează</option>
+        <option value="M">Masculin</option>
+        <option value="F">Feminin</option>
+    </select>
+
+    <label for="cnp">CNP:</label>
+    <input type="text" th:field="*{cnp}" id="cnp" placeholder="Introduceți CNP-ul" />
+
+    <div class="buttons">
+        <button type="submit" class="register-btn">Salvează pacient</button>
+        <a href="/listPacients" class="login-btn">Înapoi la listă</a>
+    </div>
+</form>
+</body>
+</html>

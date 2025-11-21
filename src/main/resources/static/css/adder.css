@@ -1,0 +1,148 @@
+*,:before,:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e0f4ff;
+    font-family: 'Poppins', sans-serif;
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+}
+
+form {
+    width: 500px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    padding: 60px 50px 40px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #003366;
+}
+
+form * {
+    font-family: 'Poppins',sans-serif;
+    outline: none;
+    border: none;
+}
+
+form h3 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 42px;
+    text-align: center;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #003366;
+    transition: 0.3s;
+}
+
+input:focus {
+    background-color: #e0f0ff;
+    box-shadow: 0 0 5px #4a90e2;
+}
+
+::placeholder {
+    color: #8bbcf7;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button.register-btn {
+    width: 48%;
+    background-color: #4a90e2;
+    color: white;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button.register-btn:hover {
+    background-color: #357ab8;
+}
+
+.login-btn {
+    display: inline-block;
+    width: 48%;
+    text-align: center;
+    background-color: #ffffff;
+    color: #003366;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 2px solid #4a90e2;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #4a90e2;
+    color: #fff;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    form {
+        width: 90%;
+        padding: 50px 20px 30px 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    button.register-btn, .login-btn {
+        width: 100%;
+    }
+}
+select {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4a90e2;;
+    transition: 0.3s;
+}
+
+select:focus {
+    background-color: #e0f0ff;
+    box-shadow: 0 0 5px #4a90e2;
+}
+
