@@ -35,6 +35,21 @@
 </nav>
 <h1>Lista medicilor</h1>
 
+<form method="get" th:action="@{/medics}">
+    <label for="field">Caută după:</label>
+    <select name="field" id="field">
+        <option value="Nume">Nume</option>
+        <option value="Prenume">Prenume</option>
+        <option value="Specializare">Specializare</option>
+        <option value="Salariu">Salar</option>
+        <option value="Sex">Sex</option>
+    </select>
+
+    <input type="text" name="value" placeholder="Introduceți valoarea">
+
+    <button type="submit">Search</button>
+    <a th:href="@{/addMedic}" class="btn add-btn" >Adauga medic</a>
+</form>
 <table>
     <thead>
     <tr>
@@ -42,6 +57,8 @@
         <th>Nume</th>
         <th>Prenume</th>
         <th>Specializare</th>
+        <th>Salariu</th>
+        <th>Sex</th>
     </tr>
     </thead>
     <tbody>
@@ -50,6 +67,8 @@
         <td th:text="${p.nume}">Popescu</td>
         <td th:text="${p.prenume}">Ion</td>
         <td th:text="${p.specializare}">București</td>
+        <td th:text="${p.salariu}"></td>
+        <td th:text="${p.sex}"></td>
     </tr>
     <tr th:if="${#lists.isEmpty(medici)}">
         <td colspan="4" style="text-align: center;">Nu există medici.</td>

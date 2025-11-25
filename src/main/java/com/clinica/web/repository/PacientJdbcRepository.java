@@ -1,6 +1,7 @@
 package com.clinica.web.repository;
 
 import com.clinica.web.model.Pacient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,11 +18,10 @@ public class PacientJdbcRepository {
     private static final List<String> ALLOWED_FIELDS = List.of("Nume", "Prenume", "Oras","Localitate","Sex");
 
     private final JdbcTemplate jdbcTemplate;
-
-    public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
+public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+@Bean
     public List<Pacient> findAll() {
         String sql = "SELECT * FROM Pacient";
         return jdbcTemplate.query(sql, this::mapRow);

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adaugă Medic</title>
+    <link rel="stylesheet" href="/css/adder.css">
+</head>
+<body>
+
+<form th:action="@{/addMedic}" th:object="${medic}" method="post">
+    <h3>Adaugă Medic</h3>
+
+    <label for="nume">Nume:</label>
+    <input type="text" th:field="*{nume}" id="nume" placeholder="Introduceți numele" required />
+
+    <label for="prenume">Prenume:</label>
+    <input type="text" th:field="*{prenume}" id="prenume" placeholder="Introduceți prenumele" required />
+
+    <label for="specializare">Specializare:</label>
+    <input type="text" th:field="*{specializare}" id="specializare" placeholder="Introduceți specializarea" required />
+
+    <label for="sex">Sex:</label>
+    <select th:field="*{sex}" id="sex" required>
+        <option value="">Selectează</option>
+        <option value="M">Masculin</option>
+        <option value="F">Feminin</option>
+    </select>
+
+    <!-- 🔹 Câmp nou: CNP -->
+    <label for="cnp">CNP:</label>
+    <input type="text" th:field="*{CNP}" id="cnp" placeholder="Introduceți CNP-ul" required maxlength="13" />
+
+    <!-- 🔹 Câmp nou: Data nașterii -->
+    <label for="dataNasterii">Data nașterii:</label>
+    <input type="date" th:field="*{dataNasterii}" id="dataNasterii" required />
+
+    <label for="salariu">Salariu:</label>
+    <input type="number" th:field="*{salariu}" id="salariu" placeholder="Introduceți salariul" min="0" />
+
+    <div class="buttons">
+        <button type="submit" class="register-btn">Salvează medic</button>
+        <a href="/medics" class="login-btn">Înapoi la listă</a>
+    </div>
+</form>
+
+</body>
+</html>

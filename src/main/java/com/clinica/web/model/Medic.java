@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,11 +25,15 @@ public class Medic {
     private String Prenume;
     private String Specializare;
     private long Salariu;
-    private char Sex;
+    private Character Sex;
     private String CNP;
     @OneToMany(mappedBy = "medic", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Programare> consultatii = new HashSet<>();
     @CreationTimestamp
   //  @Column(name = "Data_Angajarii")
-    private LocalDateTime data_nasterii;
+    private LocalDate data_nasterii;
+
+    public LocalDate getDataNasterii() {
+        return data_nasterii;
+    }
 }
