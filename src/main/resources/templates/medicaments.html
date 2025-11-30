@@ -36,26 +36,44 @@
 
 <h1>Lista medicamentelor</h1>
 
+<!-- Formular de cautare -->
+<form method="get" th:action="@{/medicaments}">
+    <label for="field">Caută după:</label>
+    <select name="field" id="field">
+        <option value="Nume">Nume</option>
+        <option value="Data_exp">Data expirării</option>
+        <option value="Stoc">Stoc</option>
+        <option value="Pret">Preț</option>
+    </select>
+
+    <input type="text" name="value" placeholder="Introduceți valoarea">
+
+    <button type="submit">Search</button>
+    <a th:href="@{/addMedicament}" class="btn add-btn">Adaugă medicament</a>
+</form>
+
 <table>
     <thead>
     <tr>
         <th>ID</th>
         <th>Nume</th>
-        <th>Data_exp</th>
-        <th>Stoc</th>\
-        <th>Pret</th>
+        <th>Data exp.</th>
+        <th>Stoc</th>
+        <th>Preț</th>
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="p : ${medicaments}">
         <td th:text="${p.medicamentID}"></td>
         <td th:text="${p.nume}"></td>
         <td th:text="${p.data_expirarii}"></td>
         <td th:text="${p.stoc}"></td>
-        <th th:text="${p.pret}"></th>
+        <td th:text="${p.pret}"></td>
     </tr>
+
     <tr th:if="${#lists.isEmpty(medicaments)}">
-        <td colspan="4" style="text-align: center;">Nu există medicamente.</td>
+        <td colspan="5" style="text-align: center;">Nu există medicamente.</td>
     </tr>
     </tbody>
 </table>
@@ -63,11 +81,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const menuItems = document.querySelector('.menu-items');
-        // Adaugă clasa de tranziție care conține 'transition: transform 0.5s...'
         if (menuItems) {
             menuItems.classList.add('menu-transition');
         }
     });
 </script>
+
 </body>
 </html>

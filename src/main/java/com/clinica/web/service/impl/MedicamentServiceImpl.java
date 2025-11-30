@@ -6,30 +6,48 @@ import com.clinica.web.repository.MedicamentRepository;
 import com.clinica.web.service.MedicamentService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class MedicamentServiceImpl implements MedicamentService {
-    private MedicamentRepository medicamentRepository;
-    //@Autowired
+
+    private final MedicamentRepository medicamentRepository;
+
     public MedicamentServiceImpl(MedicamentRepository medicamentRepository) {
         this.medicamentRepository = medicamentRepository;
     }
 
     @Override
     public List<MedicamentDto> findAllMedicaments() {
-        List<Medicament> medicaments=medicamentRepository.findAll();
-        return medicaments.stream().map((medicament)->maptoMedicamentDto(medicament)).collect(Collectors.toList());
-
+        return medicamentRepository.findAll()
+                .stream()
+                .map(this::mapToMedicamentDto)
+                .collect(Collectors.toList());
     }
-    private MedicamentDto maptoMedicamentDto(Medicament medicament) {
-        MedicamentDto medicamentDto= MedicamentDto.builder()
-                .MedicamentID(medicament.getMedicamentID())
-                .Nume(medicament.getNume())
-                .Data_expirarii(medicament.getData_expirarii())
-                .Pret(medicament.getPret())
-                .Stoc(medicament.getStoc())
+
+    @Override
+    public List<MedicamentDto> search(String field, String value) {
+        return medicamentRepository.search(field, value)
+                .stream()
+                .map(this::mapToMedicamentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Medicament save(Medicament medicament) {
+        return medicamentRepository.save(medicament);
+    }
+
+    private MedicamentDto mapToMedicamentDto(Medicament medicament) {
+        return MedicamentDto.builder()
+                .medicamentID(medicament.getMedicamentID())
+                .nume(medicament.getNume())
+                .data_expirarii(LocalDate.from(medicament.getData_expirarii()))
+                .pret(medicament.getPret())
+                .stoc(medicament.getStoc())
                 .build();
-        return medicamentDto;
     }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adaugă Medicament</title>
+    <link rel="stylesheet" href="/css/adder.css">
+</head>
+<body>
+
+<form th:action="@{/addMedicament}" th:object="${medicament}" method="post">
+    <h3>Adaugă Medicament</h3>
+
+    <label for="nume">Nume medicament:</label>
+    <input type="text" id="nume" th:field="*{nume}" placeholder="Introduceți numele" required />
+
+    <label for="dataExp">Data expirării:</label>
+    <input type="date" id="dataExp" th:field="*{data_expirarii}" required />
+
+    <label for="stoc">Stoc:</label>
+    <input type="number" id="stoc" th:field="*{stoc}" placeholder="Introduceți stocul" min="0" required />
+
+    <label for="pret">Preț:</label>
+    <input type="number" id="pret" th:field="*{pret}" placeholder="Introduceți prețul" min="0" required />
+
+    <div class="buttons">
+        <button type="submit" class="register-btn">Salvează medicament</button>
+        <a href="/medicaments" class="login-btn">Înapoi la listă</a>
+    </div>
+</form>
+
+</body>
+</html>

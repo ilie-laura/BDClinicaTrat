@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +23,7 @@ public class Medicament {
     private int Stoc;
     private int Pret;
     @Column(name="Data_expirare")
-    private LocalDateTime Data_expirarii;
+    private LocalDate Data_expirarii;
     // Relația 1-la-M: Un Medicament este parte din Multe structuri de Tratament
     @OneToMany(mappedBy = "medicament")
     private Set<TratamentMedicatie> inclusInTratamente = new HashSet<>();
