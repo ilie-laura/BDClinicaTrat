@@ -6,11 +6,14 @@ import com.clinica.web.repository.TratamentRepository;
 import com.clinica.web.service.TratamentService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class TratamentServiceImpl implements TratamentService {
-    private TratamentRepository tratamentRepository;
+
+    private final TratamentRepository tratamentRepository;
 
     public TratamentServiceImpl(TratamentRepository tratamentRepository) {
         this.tratamentRepository = tratamentRepository;
@@ -18,19 +21,41 @@ public class TratamentServiceImpl implements TratamentService {
 
     @Override
     public List<TratamentDto> findAllTrataments() {
-        List<Tratament> trataments=tratamentRepository.findAll();
-        return trataments.stream().map((tratament) -> maptoTratamentDto(tratament)).collect(Collectors.toList());
-
+        return tratamentRepository.findAll()
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
-    private TratamentDto  maptoTratamentDto(Tratament tratament) {
-        TratamentDto tratamentDto=TratamentDto.builder()
-                .TratamentID(tratament.getTratamentID())
-                .Nume(tratament.getNume())
-                .Data_inceput(tratament.getData_inceput())
-                .Durata_tratament(tratament.getDurata_tratament())
-                .build();
-        return tratamentDto;
 
+    @Override
+    public List<TratamentDto> search(String field, String value) {
+        return tratamentRepository.search(field,value)
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveTratament(TratamentDto dto) {
+        Tratament t = new Tratament();
+        t.setNume(dto.getNume());
+        t.setDurata_tratament(dto.getDurata_tratament());
+        t.setData_inceput(LocalDateTime.now());
+
+        tratamentRepository.saveTratament(t);
+    }
+
+    @Override
+    public void deleteTratament(int id) {
+        tratamentRepository.delete(id);
+    }
+
+    private TratamentDto mapToDto(Tratament t) {
+        return TratamentDto.builder()
+                .TratamentID(t.getTratamentID())
+                .Nume(t.getNume())
+                .Data_inceput(t.getData_inceput())
+                .Durata_tratament(t.getDurata_tratament())
+                .build();
     }
 }
-

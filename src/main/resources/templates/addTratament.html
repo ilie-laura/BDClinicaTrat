@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adaugă Tratament</title>
+    <link rel="stylesheet" href="/css/adder.css">
+</head>
+<body>
+
+<form th:action="@{/addTratament}" th:object="${tratament}" method="post">
+    <h3>Adaugă Tratament</h3>
+
+    <label for="nume">Nume:</label>
+    <input type="text" th:field="*{nume}" id="nume" placeholder="Introduceți numele tratamentului" required />
+
+    <label for="durata_tratament">Durata tratament:</label>
+    <input type="text" th:field="*{durata_tratament}" id="durata_tratament" placeholder="Introduceți durata tratamentului" required />
+
+    <!-- Data_inceput se setează automat în service -->
+
+    <div class="buttons">
+        <button type="submit" class="register-btn">Salvează tratament</button>
+        <a href="/tratamente" class="login-btn">Înapoi la listă</a>
+    </div>
+</form>
+
+</body>
+</html>

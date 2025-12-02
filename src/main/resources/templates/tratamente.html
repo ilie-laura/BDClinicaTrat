@@ -35,7 +35,19 @@
 
 
 <h1>Lista tratamentelor</h1>
+<form th:action="@{/tratamente/search}" method="get" style="margin-bottom: 20px;">
+    <label>Caută după:</label>
+    <select name="field">
+        <option value="Nume">Nume</option>
+        <option value="Data_inceput">Data început</option>
+        <option value="Durata_tratament">Durata</option>
+    </select>
 
+    <input type="text" name="value" placeholder="Introduceți valoarea căutată" >
+    <button type="submit">Caută</button>
+
+    <a th:href="@{/addTratament}" class="btn add-btn">Adaugă tratament</a>
+</form>
 <table>
     <thead>
     <tr>
