@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
 <nav>
     <div class="navbar">
         <div class="container nav-container">
@@ -34,8 +33,23 @@
     </div>
 </nav>
 
-
 <h1>Lista programarilor</h1>
+
+
+<form th:action="@{/programari/search}" method="get" style="margin-bottom: 20px;">
+    <label>Caută după:</label>
+    <select name="field">
+        <option value="pacientID">Pacient ID</option>
+        <option value="medicID">Medic ID</option>
+        <option value="Data_programare">Data programare</option>
+    </select>
+
+    <input type="text" name="value" placeholder="Introduceți valoarea căutată" >
+    <button type="submit">Cauta</button>
+    <a th:href="@{/addProgramare}" class="btn add-btn" >Adaugă programare</a>
+</form>
+
+
 
 <table>
     <thead>
@@ -53,10 +67,11 @@
         <td th:text="${p.pacientID}"></td>
         <td th:text="${p.medicID}"></td>
         <td th:text="${p.data_programare}"></td>
-        <th th:text="${p.durata_programare}"></th>
+        <td th:text="${p.durata_programare}"></td>
     </tr>
+
     <tr th:if="${#lists.isEmpty(programari)}">
-        <td colspan="4" style="text-align: center;">Nu există programari.</td>
+        <td colspan="5" style="text-align: center;">Nu există programari.</td>
     </tr>
     </tbody>
 </table>
@@ -64,11 +79,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const menuItems = document.querySelector('.menu-items');
-        // Adaugă clasa de tranziție care conține 'transition: transform 0.5s...'
         if (menuItems) {
             menuItems.classList.add('menu-transition');
         }
     });
 </script>
+
 </body>
 </html>

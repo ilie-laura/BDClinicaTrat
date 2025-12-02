@@ -57,4 +57,16 @@ public class Programare {
     public void setDurataProgramare(String durataProgramare) {
         this.Durata_programare = durataProgramare;
     }
+
+    public LocalDateTime getDataProgramarii() {
+        return this.Data_programare;
+    }
+
+    public int getPacientID() {
+        return  pacient.getPacientID();
+    }
+
+    public int getMedicID() {
+        return medic.getMedicID();
+    }
 }

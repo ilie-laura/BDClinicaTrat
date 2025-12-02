@@ -7,28 +7,74 @@ import com.clinica.web.service.ProgramareService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 @Service
 public class ProgramareServiceImpl implements ProgramareService {
-    private ProgramareRepository programareRepository;
+
+    private final ProgramareRepository programareRepository;
 
     public ProgramareServiceImpl(ProgramareRepository programareRepository) {
         this.programareRepository = programareRepository;
     }
+
+    // -------------------------------------------------------
+    // FIND ALL
+    // -------------------------------------------------------
+    @Override
     public List<ProgramareDto> findAllProgramari() {
-        List <Programare> programares=programareRepository.findAll();
-        return programares.stream().map((programare)->mapToProgramareDto(programare)).collect(Collectors.toList());
-
-
+        return programareRepository.findAll()
+                .stream()
+                .map(this::mapToProgramareDto)
+                .collect(Collectors.toList());
     }
-    public ProgramareDto mapToProgramareDto(Programare programare){
-        ProgramareDto programareDto=ProgramareDto.builder()
+
+    // -------------------------------------------------------
+    // FIND BY ID
+    // -------------------------------------------------------
+    @Override
+    public ProgramareDto findProgramareById(int id) {
+        Optional<Programare> optional = programareRepository.findByProgramareID((long) id);
+
+        return optional.map(this::mapToProgramareDto).orElse(null);
+    }
+
+
+    @Override
+    public List<ProgramareDto> search(String field, String value) {
+
+        List<Programare> lista = programareRepository.search(field, value);
+
+        return lista.stream()
+                .map(this::mapToProgramareDto)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void save(ProgramareDto dto) {
+
+        Programare p = new Programare();
+        p.setPacientID(dto.getPacientID());
+        p.setMedicID(dto.getMedicID());
+        p.setDataProgramarii(dto.getData_programare());
+        p.setDurataProgramare(dto.getDurata_programare());
+
+        programareRepository.save(p);
+    }
+
+    // -------------------------------------------------------
+    // DTO MAPPER
+    // -------------------------------------------------------
+    private ProgramareDto mapToProgramareDto(Programare programare) {
+
+        return ProgramareDto.builder()
                 .ProgramareID(programare.getProgramareID())
-                .pacientID(programare.getPacient().getPacientID())
-                 .medicID(programare.getMedic().getMedicID())
-                .Data_programare(programare.getData_programare())
+                .pacientID(programare.getPacientID())
+                .medicID(programare.getMedicID())
+                .Data_programare(programare.getDataProgramarii())
                 .Durata_programare(programare.getDurata_programare())
-        .build();
-  return  programareDto;
+                .build();
     }
 }
