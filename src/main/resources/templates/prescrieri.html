@@ -35,7 +35,19 @@
 </nav>
 
 <h1>Lista prescrieri</h1>
+<form th:action="@{/prescrieri/search}" method="get" style="margin-bottom: 20px;">
+    <label>Caută după:</label>
+    <select name="field">
+        <option value="ProgramareID">ProgramareID</option>
+        <option value="TratamentID">TratamentID</option>
+        <option value="Durata">Durata</option>
+    </select>
 
+    <input type="text" name="value" placeholder="Introduceți valoarea căutată" >
+    <button type="submit">Caută</button>
+
+    <a th:href="@{/addPrescriere}" class="btn add-btn">Adaugă Prescriere</a>
+</form>
 <table>
     <thead>
     <tr>

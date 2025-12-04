@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Adaugă Prescriere Tratament</title>
+    <link rel="stylesheet" href="/css/adder.css">
 </head>
 <body>
+<div th:if="${errorMessage}">
+    <div class="error-overlay"></div>
+    <div class="alert-danger error-popup">
+        <p th:text="${errorMessage}"></p>
+    </div>
+</div>
+<script th:if="${errorMessage}">
+    setTimeout(() => {
+        document.querySelector('.error-popup').style.display = 'none';
+        document.querySelector('.error-overlay').style.display = 'none';
+    }, 3000);
+</script>
+<form th:action="@{/addPrescriere}" th:object="${prescrieri}" method="post">
+    <h3>Adaugă Prescriere Tratament</h3>
+
+    <label for="programareID">ID Programare:</label>
+    <input type="number" th:field="*{programareID}" id="programareID" placeholder="Introduceți ID-ul programării" required />
+
+    <label for="tratamentID">ID Tratament:</label>
+    <input type="number" th:field="*{tratamentID}" id="tratamentID" placeholder="Introduceți ID-ul tratamentului" required />
+
+    <label for="durata">Durată:</label>
+    <input type="text" th:field="*{durata}" id="durata" placeholder="Ex: 7 zile, 2 săptămâni" required />
+
+    <div class="buttons">
+        <button type="submit" class="register-btn">Salvează Prescrierea</button>
+        <a href="/prescrieri" class="login-btn">Înapoi la listă</a>
+    </div>
+</form>
 
 </body>
 </html>

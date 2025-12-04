@@ -2,9 +2,13 @@ package com.clinica.web.repository;
 
 import com.clinica.web.model.PrescriereTratament;
 import com.clinica.web.model.PrescriereTratamentId;
+import com.clinica.web.model.Tratament;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +16,7 @@ import java.util.Optional;
 public class PrescriereTratamentRepository {
 
     private final JdbcTemplate jdbcTemplate;
-
+    private static final List<String> ALLOWED_FIELDS = List.of("ProgramareID","TratamentID","Durata");
     public PrescriereTratamentRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -68,9 +72,6 @@ public class PrescriereTratamentRepository {
         });
     }
 
-    //-----------------------------------------------------
-    // FIND BY TratamentID
-    //-----------------------------------------------------
     public List<PrescriereTratament> findByTratamentID(Long tratamentID) {
         String sql = "SELECT * FROM PrescriereTratament WHERE TratamentID = ?";
 
@@ -86,4 +87,39 @@ public class PrescriereTratamentRepository {
             return p;
         });
     }
+    private PrescriereTratament mapRow(ResultSet rs, int rowNum) throws SQLException {
+        PrescriereTratament t = new PrescriereTratament();
+
+        PrescriereTratamentId id = new PrescriereTratamentId();
+        id.setProgramareID(rs.getLong("ProgramareID"));
+        id.setTratamentID(rs.getLong("TratamentID"));
+
+        t.setId(id);
+        t.setDurata(rs.getString("Durata"));
+
+        return t;
+    }
+
+    public List<PrescriereTratament> search(String field,String value) {
+        if (!ALLOWED_FIELDS.contains(field)) {
+            throw new IllegalArgumentException("Invalid column for filtering: " + field);
+        }
+
+        if (value == null || value.trim().isEmpty()) {
+            return findAll();
+        }
+
+        String sql = "SELECT * FROM PrescriereTratament WHERE RTRIM(" + field + ") LIKE ?";
+        return jdbcTemplate.query(sql, new Object[]{value.trim() + "%"}, this::mapRow);
+    }
+
+    public  int savePrescriere(PrescriereTratament t) {
+        String sql = "INSERT INTO PrescriereTratament (ProgramareID,TratamentID,Durata) VALUES (?, ?, ?)";
+        return jdbcTemplate.update(sql,
+                t.getId().getProgramareID(),
+                t.getId().getTratamentID(),
+                t.getDurata());
+    }
+
+
 }

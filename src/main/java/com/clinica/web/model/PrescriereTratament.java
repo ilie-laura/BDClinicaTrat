@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "PrescriereTratament")
 public class PrescriereTratament {
 
-    // 🌟 Soluția! Definește un ID simplu, auto-generat 🌟
     @EmbeddedId
     private PrescriereTratamentId id;
 
@@ -29,14 +28,8 @@ public class PrescriereTratament {
     @JoinColumn(name = "ProgramareID", insertable = false, updatable = false)
     private Programare programare;
 
-//    // 🌟 Cheia Străină 1: Referința la Programare
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ProgramareID", nullable = false)
-//    private Programare programare;
-////Id
-//    // 🌟 Cheia Străină 2: Referința la Tratamentul Prescris
-//    @ManyToOne(fetch = FetchType.LAZY)
-//   // @JoinColumn(name = "TratamentID", nullable = false)
-//    private Tratament Tratament;
+    public void setProgramare(int programareID) {
+        this.programare.setProgramareID(programareID);
+    }
 
 }

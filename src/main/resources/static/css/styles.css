@@ -40,7 +40,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 65px;
+    height: 60px;
     width: 90%;
     margin: auto;
     position: relative;
@@ -275,7 +275,7 @@ a {
     border-radius: 8px;
     font-weight: 600;
     transition: 0.3s;
-    margin: 20px auto; /* <-- AICI ESTE CHEIA: Setează marginile laterale pe 'auto' */
+    margin: 20px auto;
     width: fit-content;
 }
 
@@ -316,7 +316,7 @@ a {
     .hero-content {
         flex-direction: column;
         text-align: center;
-        align-items: center; /* <-- ADĂUGAT/CONFIRMAT PENTRU MODUL COLONAR */
+        align-items: center;
     }
 }
 /* --------------------------------------------------
@@ -324,7 +324,7 @@ a {
 -------------------------------------------------- */
 
 .main-footer {
-    /*background: #82C0CC; !* Culoarea primară din navbar, mai închisă *!*/
+
     background-image: url("https://i.pinimg.com/1200x/8f/3f/2f/8f3f2fd3984b88d5228979013ae91844.jpg");
     color: #2a2930;
     padding: 40px 0 0 0;
@@ -333,17 +333,17 @@ a {
 
 .footer-container {
     display: flex;
-    flex-wrap: wrap; /* Permite coloanelor să se mute pe rând nou pe mobil */
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: 30px;
     padding-bottom: 40px;
-    width: 90%; /* Păstrează lățimea containerului tău standard */
+    width: 90%;
     margin: auto;
 }
 
 .footer-col {
-    flex-basis: 25%; /* Face ca fiecare coloană să ocupe aproximativ 25% */
-    min-width: 250px; /* Asigură că pe ecrane mici nu se micșorează prea mult */
+    flex-basis: 25%;
+    min-width: 250px;
 }
 
 /* Coloana de Logo/Contact (Prima coloană, puțin mai lată) */
@@ -355,14 +355,13 @@ a {
     height: 45px;
     width: auto;
     margin-bottom: 15px;
-    /* Poate fi nevoie să fie alb/inversat pentru a se vedea pe fundal întunecat */
-    /* filter: invert(1); */
+
 }
 
 .footer-col h3 {
     font-size: 1.3rem;
     margin-bottom: 20px;
-    color: #82C0CC; /* Culoarea secundară pentru titluri */
+    color: #82C0CC;
     border-bottom: 2px solid #82C0CC;
     padding-bottom: 5px;
 }
@@ -391,7 +390,7 @@ a {
 }
 
 .footer-bottom {
-    background: #4694aa; /* Culoare foarte închisă pentru secțiunea de copyright */
+    background: #4694aa;
     padding: 15px 0;
     text-align: center;
     border-top: 1px solid #4694aa;
@@ -411,7 +410,7 @@ a {
     }
 
     .footer-col {
-        flex-basis: 100%; /* Fiecare coloană ocupă toată lățimea */
+        flex-basis: 100%;
         min-width: 100%;
         text-align: center;
     }
@@ -431,59 +430,53 @@ a {
     }
 
     .footer-col:not(:last-child) {
-        margin-bottom: 20px; /* Spațiu între coloane pe mobil */
+        margin-bottom: 20px;
     }
 }
 /* Stil pentru a centra GIF-urile */
 .gif-container {
-    display: flex; /* Activează Flexbox */
-    justify-content: space-between; /* Centrează elementele pe orizontală */
-    gap: 5rem; /* Adaugă spațiu între GIF-uri (ajustează la nevoie) */
+    display: flex;
+    justify-content: space-between;
+    gap: 5rem;
 
-    /* Asigură că containerul ocupă lățimea necesară și este centrat în secțiune */
-    max-width: 900px; /* Limitează lățimea, la fel ca .glass */
-    margin: 30px auto; /* Centrează containerul pe pagină */
-    padding: 0 20px; /* Padding lateral pentru ecrane mici */
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
 }
 
-/* Recomandare: Scoate stilurile inline de pe imagini și pune-le aici */
+
 .gif-container img {
-    width: 60px; /* Am mărit puțin dimensiunea pentru a fi mai vizibile */
+    width: 60px;
     height: 60px;
-    object-fit: contain; /* Asigură că GIF-ul se încadrează fără a fi distorsionat */
+    object-fit: contain;
 }
 
-/* Centrare pe ecrane foarte mici (dacă e necesar) */
+
 @media (max-width: 500px) {
     .gif-container {
-        gap: 15px; /* Redu spațiul pe mobil */
+        gap: 15px;
     }
 }
 
-/* --------------------------------------------------
-   Container Principal (Aranjare Laterală)
--------------------------------------------------- */
+
 .appointment-form-container {
-    display: flex; /* Aranjează blocul lateral și formularul unul lângă altul */
+    display: flex;
     max-width: 900px;
     margin: 50px auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; /* Colțuri rotunjite, dacă se dorește */
-    overflow: hidden; /* Asigură că marginile laterale sunt tăiate corect */
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* --------------------------------------------------
-   Blocul Lateral Albastru
--------------------------------------------------- */
 .side-block {
-    background-color: #2e86de; /* Albastru similar imaginii */
+    background-color: #2e86de;
     color: white;
-    width: 30%; /* Lățimea blocului lateral */
+    width: 30%;
     min-width: 200px;
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrează pe verticală */
+    justify-content: center;
     align-items: center;
     text-align: center;
 }
@@ -498,23 +491,21 @@ a {
     font-weight: 500;
 }
 
-/* --------------------------------------------------
-   Formularul Principal (Câmpuri și Buton)
--------------------------------------------------- */
+
 .main-form {
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Ocupă spațiul rămas */
+    flex-grow: 1;
     padding: 20px;
-    background-color: #f5f5f5; /* Fundal ușor gri */
+    background-color: #f5f5f5;
 }
 
-/* Containerul Câmpurilor (Aranjare pe Grid) */
+
 .fields-container {
     display: grid;
-    /* Două coloane de lățime egală */
+
     grid-template-columns: 1fr 1fr;
-    gap: 15px 25px; /* Spațiere între rânduri și coloane */
+    gap: 15px 25px;
     margin-bottom: 20px;
 }
 
@@ -556,9 +547,7 @@ a {
     background-color: #79ac35;
 }
 
-/* --------------------------------------------------
-   Responsiveness (Pentru ecrane mici)
--------------------------------------------------- */
+
 @media (max-width: 768px) {
     .appointment-form-container {
         flex-direction: column; /* Stivuiește blocurile pe verticală */
@@ -577,13 +566,10 @@ a {
         grid-column: 1 / 1;
     }
 }
-/* --------------------------------------------------
-   INDICATOR DE STARE (STATUS DOT)
--------------------------------------------------- */
 
-/* Containerul de stare */
+
 .logged-user-status {
-    /* Poziționează-l în colțul din dreapta sus al navbar-ului pe desktop */
+
     position: absolute;
     right: 20px;
     top: 25px;
@@ -594,14 +580,13 @@ a {
     z-index: 1000;
 }
 
-/* Numele de utilizator (opțional, dar util) */
 .logged-user-status .username {
     font-size: 1rem;
     color: #213A57;
     font-weight: 600;
 }
 
-/* Stilul de bază al indicatorului (cercul) */
+
 .status-indicator {
     display: inline-block;
     width: 20px;
@@ -616,18 +601,15 @@ a {
     border: 1px solid #388E3C;
 }
 
-/* Ascunde-l pe mobil pentru a nu interfera cu hamburger */
+
 @media (max-width: 900px) {
     .logged-user-status {
         display: none;
     }
 }
 
-/* Reajustare poziție pentru desktop */
 @media (min-width: 900px) {
     .logged-user-status {
-        /* Pe desktop, poate fi necesar să îl muți puțin mai spre centru/stânga
-           dacă logo-ul tău e în dreapta, sau pur și simplu păstrează-l în dreapta */
         right: 40px;
     }
 }
