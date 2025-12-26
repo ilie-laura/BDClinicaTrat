@@ -54,10 +54,10 @@ public class MedicController {
     }
 
     @GetMapping("/medics/update/{id}")
-    public String update(@PathVariable Long id, Model model) {
+    public String updateMedic(@PathVariable Long id, Model model) {
         Medic medic = medicService.findById(id);
         model.addAttribute("medic", medic);
-        return "update";
+        return "updateMedic";
     }
 
 

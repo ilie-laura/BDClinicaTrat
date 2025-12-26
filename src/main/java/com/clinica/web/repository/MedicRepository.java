@@ -122,7 +122,7 @@ public class MedicRepository {
 
     public Medic update(Medic pacient) {
         jdbcTemplate.update(
-                "UPDATE pacient SET nume=?, prenume=?, salariu=?, specializare=? WHERE MedicID=?",
+                "UPDATE Medic SET nume=?, prenume=?, salariu=?, specializare=? WHERE MedicID=?",
                 pacient.getNume(),
                 pacient.getPrenume(),
                 pacient.getSalariu(),

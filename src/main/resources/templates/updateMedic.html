@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editează medic</title>
+    <link rel="stylesheet" href="/css/update.css">
+</head>
+<body>
+
+<h1>Editează medic</h1>
+
+<form class="update-form"
+      th:action="@{/medics/update/{id}(id=${medic.medicID})}"
+      th:object="${medic}"
+      method="post">
+
+    <input type="hidden" th:field="*{medicID}"/>
+
+    <label for="nume">Nume</label>
+    <input id="nume" type="text" th:field="*{nume}" required>
+
+    <label for="prenume">Prenume</label>
+    <input id="prenume" type="text" th:field="*{prenume}" required>
+
+    <label for="salariu">Salariu</label>
+    <input id="salariu" type="number" th:field="*{salariu}" required>
+
+    <label for="specializare">Specializare</label>
+    <input id="specializare" type="text" th:field="*{specializare}" required>
+
+
+
+    <div class="buttons">
+        <button type="submit">Salvează</button>
+        <a th:href="@{/medics}">Renunță</a>
+    </div>
+
+</form>
+
+</body>
+</html>
