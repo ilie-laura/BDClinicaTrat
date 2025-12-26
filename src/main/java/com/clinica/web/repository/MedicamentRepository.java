@@ -1,6 +1,7 @@
 package com.clinica.web.repository;
 
 import com.clinica.web.model.Medicament;
+import com.clinica.web.model.Pacient;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -86,6 +87,28 @@ public class MedicamentRepository {
         );
 
         return medicament;
+    }
+    public void deleteById(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM Medicament WHERE medicamentID= ?",
+                id
+        );
+    }
+
+    public Medicament findById(Long id) {
+        String sql = "SELECT * FROM Medicament WHERE medicamentID = ?";
+        return jdbcTemplate.queryForObject(sql, this::mapRow, id);
+    }
+
+    public Medicament update(Medicament pacient) {
+        jdbcTemplate.update(
+                "UPDATE Medicament SET nume=?, stoc=?, pret=? WHERE medicamentID=?",
+                pacient.getNume(),
+               pacient.getStoc(),
+                pacient.getPret(),
+                pacient.getMedicamentID()
+        );
+        return pacient;
     }
 
 }

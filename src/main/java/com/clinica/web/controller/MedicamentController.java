@@ -2,13 +2,11 @@ package com.clinica.web.controller;
 
 import com.clinica.web.dto.MedicamentDto;
 import com.clinica.web.model.Medicament;
+import com.clinica.web.model.Pacient;
 import com.clinica.web.service.MedicamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Controller
@@ -46,18 +44,36 @@ public class MedicamentController {
         return "medicaments";
     }
 
-    // Afișează formularul de adăugare medicament
     @GetMapping("/addMedicament")
     public String showAddForm(Model model) {
         model.addAttribute("medicament", new Medicament()); // obiect gol pentru form
         return "addMedicament";
     }
-
-    // Salvează medicamentul nou
     @PostMapping("/addMedicament")
     public String addMedicament(@ModelAttribute Medicament medicament) {
         medicamentService.save(medicament);
-        return "redirect:/medicaments"; // după inserare, duce înapoi la listă
+        return "redirect:/medicaments";
+    }
+
+
+    @GetMapping("/medicaments/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        medicamentService.deleteById(id);
+        return "redirect:/medicaments";
+    }
+
+    @GetMapping("/medicaments/update/{id}")
+    public String updateMedicament(@PathVariable Long id, Model model) {
+        Medicament medicament = medicamentService.findById(id);
+        model.addAttribute("medicament", medicament);
+        return "updateMedicament";
+    }
+
+
+    @PostMapping("/medicaments/update/{id}")
+    public String update(@ModelAttribute Medicament pacient) {
+        medicamentService.update(pacient);
+        return "redirect:/medicaments";
     }
 
 }

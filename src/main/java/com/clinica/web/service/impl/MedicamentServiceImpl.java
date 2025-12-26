@@ -2,6 +2,7 @@ package com.clinica.web.service.impl;
 
 import com.clinica.web.dto.MedicamentDto;
 import com.clinica.web.model.Medicament;
+import com.clinica.web.model.Pacient;
 import com.clinica.web.repository.MedicamentRepository;
 import com.clinica.web.service.MedicamentService;
 import org.springframework.stereotype.Service;
@@ -50,4 +51,20 @@ public class MedicamentServiceImpl implements MedicamentService {
                 .stoc(medicament.getStoc())
                 .build();
     }
+
+
+    @Override
+    public void deleteById(Long medicamentId) {
+        medicamentRepository.deleteById(medicamentId);
+    }
+    @Override
+    public Medicament findById(Long id) {
+        return medicamentRepository.findById(id);
+    }
+
+    @Override
+    public Medicament update(Medicament pacient) {
+        return medicamentRepository.update(pacient);
+    }
+
 }
