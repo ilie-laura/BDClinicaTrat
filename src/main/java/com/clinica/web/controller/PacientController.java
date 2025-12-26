@@ -5,14 +5,12 @@ import com.clinica.web.service.PacientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+
 public class PacientController {
 
     private final PacientService pacientService;
@@ -45,12 +43,32 @@ public class PacientController {
     @GetMapping("/addPacient")
     public String showAddForm(Model model) {
         model.addAttribute("pacient", new Pacient()); // obiect gol pentru form
-        return "addPacient"; // pagina Thymeleaf pentru form
+        return "addPacient";
     }
     @PostMapping("/addPacient")
     public String addPacient(@ModelAttribute Pacient pacient) {
-        pacientService.save(pacient); // Trebuie să creezi metoda save() în service/repository
-        return "redirect:/listPacients"; // după inserare, duce înapoi la listă
+        pacientService.save(pacient);
+        return "redirect:/listPacients";
     }
 
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        pacientService.deleteById(id);
+        return "redirect:/listPacients";
+    }
+
+    @GetMapping("/listPacients/update/{id}")
+    public String updatePacient(@PathVariable Long id, Model model) {
+        Pacient pacient = pacientService.findById(id);
+        model.addAttribute("pacient", pacient);
+        return "updatePacient";
+    }
+
+
+    @PostMapping("/listPacients/update/{id}")
+    public String update(@ModelAttribute Pacient pacient) {
+        pacientService.update(pacient);
+        return "redirect:/listPacients";
+    }
 }

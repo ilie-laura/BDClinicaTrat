@@ -38,7 +38,7 @@ public class MedicamentController {
                     ).toList();
 
         } else {
-            // afișăm toate
+
             medicamente = medicamentService.findAllMedicaments();
         }
 
@@ -50,7 +50,7 @@ public class MedicamentController {
     @GetMapping("/addMedicament")
     public String showAddForm(Model model) {
         model.addAttribute("medicament", new Medicament()); // obiect gol pentru form
-        return "addMedicament"; // pagina Thymeleaf pentru formular
+        return "addMedicament";
     }
 
     // Salvează medicamentul nou

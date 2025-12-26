@@ -10,14 +10,14 @@ title{
 }
 body {
     font-family: "Avenir Next", "Avenir", sans-serif;
-    background: #EDE7E3; /* Culoarea de fundal a paginii */
+    background: #EDE7E3;
     color: #232323;
     text-align: center;
 }
 
 a {
     color: black;
-    text-decoration: none; /* Elimină sublinierea implicită a link-urilor */
+    text-decoration: none;
 }
 
 ::-webkit-scrollbar {
@@ -29,7 +29,7 @@ h1 {
     padding: 20px 0;
 }
 
-/* --- TABELĂ (Stiluri preluate și adaptate la tema curentă) --- */
+
 table {
     background-color: #82C0CC;
     width: 80%;
@@ -45,7 +45,7 @@ table {
 }
 
 thead tr {
-    background-color: #213A57; /* Culoarea închisă principală */
+    background-color: #213A57;
     color: white;
 }
 
@@ -69,9 +69,6 @@ tbody tr:last-child td:first-child { border-bottom-left-radius: 0.4rem; }
 tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
 
 
-/* --------------------------------------------------
-   NAVBAR — HAMBURGER + DESKTOP (Conform solicitării)
--------------------------------------------------- */
 
 .navbar {
     width: 100%;
@@ -89,7 +86,7 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     width: 90%;
     margin: auto;
     position: relative;
-    /* Adăugare pentru a centra elementele pe lățimea containerului */
+
     max-width: 1200px;
 }
 
@@ -121,7 +118,7 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     width: 32px;
     height: 26px;
     position: absolute;
-    top: 17px; /* Ajustat de la 20px la 17px pentru centrare */
+    top: 17px;
     left: 20px;
     z-index: 3;
 }
@@ -164,10 +161,10 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     flex-direction: column;
     text-align: center;
     gap: 10px;
-    list-style: none; /* Adăugat pentru a elimina punctele de listă */
+    list-style: none;
 }
 
-/* Clasa adăugată prin JavaScript pentru a permite tranziția doar după încărcare */
+
 .menu-transition {
     transition: transform 0.5s ease-in-out;
 }
@@ -178,7 +175,7 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     font-weight: 600;
     color: #213A57;
     padding: 10px 0;
-    text-decoration: none; /* Asigură că nu sunt subliniate */
+    text-decoration: none;
 }
 
 .menu-items a:hover {
@@ -206,12 +203,12 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     }
 
     .menu-transition {
-        /* Dezactivează tranziția la redimensionare pe desktop */
+
         transition: none !important;
     }
 
     .menu-items {
-        transform: none !important; /* Meniul este vizibil, elimină posibila animație la redimensionare */
+        transform: none !important;
         background: none;
         height: auto;
         flex-direction: row;
@@ -238,8 +235,8 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     display: inline-block;
     background-color: #4a90e2;
     color: white;
-    padding: 12px 25px; /* Același padding ca la search button */
-    font-size: 16px;    /* Aceeași dimensiune font */
+    padding: 12px 25px;
+    font-size: 16px;
     font-weight: 600;
     border-radius: 8px;
     text-decoration: none;
@@ -258,10 +255,10 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
         width: 100%;
         margin: 10px 0 0 0;
         text-align: center;
-        padding: 12px 0; /* păstrează aceleași proporții ca search button */
+        padding: 12px 0;
     }
 }
-/* ASCUNDE TOTAL LOGO-UL PE MOBIL */
+
 @media screen and (max-width: 700px) {
     .logo,
     .logo-img {
@@ -287,8 +284,8 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
 
 }
 
-/* --- Formular Search & Dropdown --- */
-form {
+/* --- Formular Search & Dropdown */
+.search-form {
     width: 80%;
     max-width: 900px;
     margin: 20px auto;
@@ -303,12 +300,12 @@ form {
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
-form label {
+.search-form label {
     font-weight: 600;
     color: #213A57;
 }
 
-form select, form input[type="text"] {
+.search-form select, .search-form input[type="text"] {
     padding: 12px 15px;
     font-size: 14px;
     border-radius: 8px;
@@ -319,12 +316,12 @@ form select, form input[type="text"] {
     min-width: 120px;
 }
 
-form select:focus, form input[type="text"]:focus {
+.search-form select:focus, .search-form input[type="text"]:focus {
     border-color: #4a90e2;
     box-shadow: 0 0 5px #4a90e2;
 }
 
-form button[type="submit"] {
+.search-form button[type="submit"] {
     background-color: #4a90e2;
     color: white;
     border: none;
@@ -336,18 +333,18 @@ form button[type="submit"] {
     transition: 0.3s;
 }
 
-form button[type="submit"]:hover {
+.search-form button[type="submit"]:hover {
     background-color: #357ab8;
 }
 
 /* Responsive */
 @media screen and (max-width: 600px) {
-    form {
+    .search-form {
         flex-direction: column;
         gap: 10px;
     }
 
-    form select, form input[type="text"], form button[type="submit"], .add-btn {
+    .search-form select, .search-form input[type="text"],  .search-formbutton[type="submit"], .add-btn {
         width: 100%;
         margin: 0;
     }
@@ -374,3 +371,61 @@ form button[type="submit"]:hover {
     }
 }
 
+.modif-cell {
+    position: relative;
+    text-align: center;
+    background: inherit;
+}
+
+.delete-form {
+    display: inline-block;
+    position: relative;
+}
+
+.modif-button {
+    border: none;
+    background: inherit;
+    cursor: pointer;
+    padding: 0;
+
+}
+
+.table-popup {
+    display: none;
+    position: absolute;
+    top: 28px;      /* sub icon */
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    padding: 10px 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10;
+    width: 140px;
+}
+
+.table-popup p {
+    margin: 0 0 8px;
+    font-size: 13px;
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirm-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #ccc;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}

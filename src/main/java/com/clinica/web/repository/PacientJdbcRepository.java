@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,13 +16,14 @@ import java.util.List;
 public class PacientJdbcRepository {
 
     // Coloanele permise pentru cautare
-    private static final List<String> ALLOWED_FIELDS = List.of("Nume", "Prenume", "Oras","Localitate","Sex");
+    private static final List<String> ALLOWED_FIELDS = List.of("Nume", "Prenume", "Oras", "Localitate", "Sex");
 
     private final JdbcTemplate jdbcTemplate;
-public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
+
+    public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-@Bean
+
     public List<Pacient> findAll() {
         String sql = "SELECT * FROM Pacient";
         return jdbcTemplate.query(sql, this::mapRow);
@@ -33,7 +35,6 @@ public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
         }
 
-        // Protecție la valoare null sau goală
         if (value == null || value.trim().isEmpty()) {
             return findAll();
         }
@@ -43,7 +44,7 @@ public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
         System.out.println("Executing search: field=" + field + ", value=" + value);
 
         return jdbcTemplate.query(sql,
-                new Object[]{ value.trim() + "%" }, // pentru "începe cu"
+                new Object[]{value.trim() + "%"},
                 this::mapRow);
     }
 
@@ -59,11 +60,12 @@ public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
         p.setCnp(rs.getString("CNP"));
 
         if (rs.getDate("Data_nasterii") != null) {
-            p.setDataNasterii(rs.getDate("Data_nasterii").toLocalDate().atStartOfDay());
+            p.setDataNasterii(LocalDate.from(rs.getDate("Data_nasterii").toLocalDate().atStartOfDay()));
         }
 
         return p;
     }
+
     public Pacient save(Pacient p) {
         String sql = "INSERT INTO Pacient (Nume, Prenume, Oras, Strada, Localitate, Sex, CNP, Data_nasterii) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -75,7 +77,7 @@ public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
                     p.getLocalitate(),
                     p.getSex() != null ? p.getSex().toString() : null,
                     p.getCnp(),
-                    p.getDataNasterii() != null ? java.sql.Timestamp.valueOf(p.getDataNasterii()) : java.sql.Timestamp.valueOf(LocalDateTime.now())
+                    p.getDataNasterii() != null ? java.sql.Timestamp.valueOf(p.getDataNasterii().atStartOfDay()) : java.sql.Timestamp.valueOf(LocalDateTime.now())
             );
         } catch (DuplicateKeyException e) {
             throw new RuntimeException("CNP deja existent!");
@@ -83,5 +85,32 @@ public PacientJdbcRepository(JdbcTemplate jdbcTemplate) {
 
         return p;
     }
+
+    public void deleteById(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM Pacient WHERE PacientID= ?",
+                id
+        );
+    }
+
+    public Pacient findById(Long id) {
+        String sql = "SELECT * FROM Pacient WHERE PacientID = ?";
+        return jdbcTemplate.queryForObject(sql, this::mapRow, id);
+    }
+
+    public Pacient update(Pacient pacient) {
+        jdbcTemplate.update(
+                "UPDATE pacient SET nume=?, prenume=?, oras=?, localitate=?, strada=?WHERE PacientID=?",
+                pacient.getNume(),
+                pacient.getPrenume(),
+                pacient.getOras(),
+                pacient.getLocalitate(),
+                pacient.getStrada(),
+                pacient.getPacientID()
+        );
+        return pacient;
+    }
+
+
 
 }

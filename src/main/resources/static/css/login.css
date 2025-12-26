@@ -215,3 +215,7 @@ button.login-btn:hover {
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent negru */
     z-index: 999;
 }
+.update-form {
+    display: inline-block;
+    position: relative;
+}

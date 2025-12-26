@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editează pacient</title>
+    <link rel="stylesheet" href="/css/update.css">
+</head>
+<body>
+
+<h1>Editează pacient</h1>
+
+<form th:action="@{/listPacients/update/{id}(id=${pacient.pacientID})}"
+      th:object="${pacient}"
+      method="post">
+  <input type="hidden" th:field="*{pacientID}"/>
+
+    <label>Nume</label>
+    <input type="text" th:field="*{nume}" required/>
+
+    <label>Prenume</label>
+    <input type="text" th:field="*{prenume}" required/>
+
+    <label>Oraș</label>
+    <input type="text" th:field="*{oras}"/>
+
+    <label>Localitate</label>
+    <input type="text" th:field="*{localitate}"/>
+
+    <label>Stradă</label>
+    <input type="text" th:field="*{strada}"/>
+
+<!--    <label>Sex</label>-->
+<!--    <select th:field="*{sex}">-->
+<!--        <option value="M">Masculin</option>-->
+<!--        <option value="F">Feminin</option>-->
+<!--    </select>-->
+
+
+<!--    <input type="hidden" th:field="*{dataNasterii}"/>-->
+
+    <div class="buttons">
+        <button type="submit">Salveaza</button>
+        <a th:href="@{/listPacients}">Renunta</a>
+    </div>
+
+</form>
+
+</body>
+</html>

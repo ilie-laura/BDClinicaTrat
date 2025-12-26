@@ -44,11 +44,25 @@ public class PacientServiceImpl implements PacientService {
                 .Localitate(pacient.getLocalitate())
                 .Strada(pacient.getStrada())
                 .Sex(pacient.getSex())
-                .Data_nasterii(pacient.getData_nasterii())
+                .Data_nasterii(pacient.getData_nasterii().atStartOfDay())
                 .build();
     }
     @Override
     public Pacient save(Pacient pacient) {
         return pacientRepository.save(pacient);
     }
+    @Override
+    public void deleteById(Long pacientId) {
+        pacientRepository.deleteById(pacientId);
+    }
+    @Override
+    public Pacient findById(Long id) {
+        return pacientRepository.findById(id);
+    }
+
+    @Override
+    public Pacient update(Pacient pacient) {
+        return pacientRepository.update(pacient);
+    }
+
 }

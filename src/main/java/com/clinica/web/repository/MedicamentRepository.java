@@ -23,9 +23,7 @@ public class MedicamentRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // ---------------------------------------------------------
-    // Find by ID
-    // ---------------------------------------------------------
+
     public Optional<Medicament> findByMedicamentID(int medicamentID) {
         String sql = "SELECT * FROM Medicament WHERE MedicamentID = ?";
 
@@ -38,9 +36,6 @@ public class MedicamentRepository {
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
 
-    // ---------------------------------------------------------
-    // Search with allowed fields
-    // ---------------------------------------------------------
     public List<Medicament> search(String field, String value) {
 
         if (!ALLOWED_FIELDS.contains(field)) {
@@ -60,9 +55,7 @@ public class MedicamentRepository {
         );
     }
 
-    // ---------------------------------------------------------
-    // Map ResultSet → Medicament
-    // ---------------------------------------------------------
+
     private Medicament mapRow(ResultSet rs, int rowNum) throws SQLException {
         Medicament m = new Medicament();
         m.setMedicamentID(rs.getInt("MedicamentID"));
