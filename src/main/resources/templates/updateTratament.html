@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editează tratament</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/update.css">
+</head>
+<body>
+
+
+<h1>Editează tratament</h1>
+<form class="update-form"
+      th:action="@{/tratamente/update/{id}(id=${tratament.tratamentID})}"
+      th:object="${tratament}"
+      method="post">
+
+    <input type="hidden" th:field="*{tratamentID}"/>
+
+    <label>Nume</label>
+    <input type="text" th:field="*{nume}" required/>
+
+    <label>Data_inceput</label>
+    <input type="datetime-local" th:field="*{data_inceput}" required/>
+
+    <label>Durata</label>
+    <input type="text" th:field="*{durata_tratament}" required/>
+
+    <div class="buttons">
+        <button type="submit" class="confirm-btn">Salvează</button>
+        <a th:href="@{/tratamente}" class="cancel-btn">Renunță</a>
+    </div>
+
+</form>
+
+</body>
+</html>

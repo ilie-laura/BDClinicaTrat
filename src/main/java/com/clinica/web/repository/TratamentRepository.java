@@ -79,11 +79,28 @@ public class TratamentRepository {
                 Timestamp.valueOf(t.getData_inceput()));
     }
 
-    // -------------------------------
-    // Delete
-    // -------------------------------
-    public int delete(int id) {
-        String sql = "DELETE FROM Tratament WHERE TratamentID = ?";
-        return jdbcTemplate.update(sql, id);
+
+    public void deleteById(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM Tratament WHERE TratamentID= ?",
+                id
+        );
     }
+
+    public Tratament findById(Long id) {
+        String sql = "SELECT * FROM Tratament WHERE TratamentID = ?";
+        return jdbcTemplate.queryForObject(sql, this::mapRow, id);
+    }
+
+    public Tratament update(Tratament pacient) {
+        jdbcTemplate.update(
+                "UPDATE Tratament SET nume=?, data_inceput=?,durata_tratament=? WHERE TratamentID=?",
+                pacient.getNume(),
+                pacient.getData_inceput(),
+                pacient.getDurata_tratament(),
+                pacient.getTratamentID()
+        );
+        return pacient;
+    }
+
 }

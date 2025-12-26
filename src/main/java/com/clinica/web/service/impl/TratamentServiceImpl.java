@@ -1,6 +1,7 @@
 package com.clinica.web.service.impl;
 
 import com.clinica.web.dto.TratamentDto;
+import com.clinica.web.model.Pacient;
 import com.clinica.web.model.Tratament;
 import com.clinica.web.repository.TratamentRepository;
 import com.clinica.web.service.TratamentService;
@@ -45,11 +46,6 @@ public class TratamentServiceImpl implements TratamentService {
         tratamentRepository.saveTratament(t);
     }
 
-    @Override
-    public void deleteTratament(int id) {
-        tratamentRepository.delete(id);
-    }
-
     private TratamentDto mapToDto(Tratament t) {
         return TratamentDto.builder()
                 .TratamentID(t.getTratamentID())
@@ -58,4 +54,19 @@ public class TratamentServiceImpl implements TratamentService {
                 .Durata_tratament(t.getDurata_tratament())
                 .build();
     }
+
+    @Override
+    public void deleteById(Long tratamentId) {
+        tratamentRepository.deleteById(tratamentId);
+    }
+    @Override
+    public Tratament findById(Long id) {
+        return tratamentRepository.findById(id);
+    }
+
+    @Override
+    public Tratament update(Tratament pacient) {
+        return tratamentRepository.update(pacient);
+    }
+
 }

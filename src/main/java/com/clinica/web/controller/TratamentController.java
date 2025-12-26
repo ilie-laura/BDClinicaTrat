@@ -1,6 +1,8 @@
 package com.clinica.web.controller;
 
 import com.clinica.web.dto.TratamentDto;
+import com.clinica.web.model.Medicament;
+import com.clinica.web.model.Tratament;
 import com.clinica.web.service.TratamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,27 +48,39 @@ public class TratamentController {
     public String searchTratamente(@RequestParam String field,
                                    @RequestParam String value,
                                    Model model) {
-
         System.out.println("Căutare tratament: field=" + field + "  value=" + value);
-
         List<TratamentDto> tratamente;
-
         if (value != null && !value.trim().isEmpty() && field != null) {
-            // Folosește metoda search din service
+
             tratamente = tratamentService.search(field, value);
         } else {
-            // Dacă nu există valoare, afișează toate tratamentele
+
             tratamente = tratamentService.findAllTrataments();
         }
 
         model.addAttribute("tratamente", tratamente);
-        return "tratamente"; // Numele template-ului Thymeleaf
+        return "tratamente";
     }
 
-    // Ștergere
-    @GetMapping("/deleteTratament/{id}")
-    public String deleteTratament(@PathVariable int id) {
-        tratamentService.deleteTratament(id);
+
+    @GetMapping("/tratamente/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        tratamentService.deleteById(id);
         return "redirect:/tratamente";
     }
+
+    @GetMapping("/tratamente/update/{id}")
+    public String updateTratament(@PathVariable Long id, Model model) {
+        Tratament tratament = tratamentService.findById(id);
+        model.addAttribute("tratament", tratament);
+        return "updateTratament";
+    }
+
+
+    @PostMapping("/tratamente/update/{id}")
+    public String update(@ModelAttribute Tratament tratament) {
+        tratamentService.update(tratament);
+        return "redirect:/tratamente";
+    }
+
 }

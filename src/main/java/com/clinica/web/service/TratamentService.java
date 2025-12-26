@@ -1,6 +1,8 @@
 package com.clinica.web.service;
 
 import com.clinica.web.dto.TratamentDto;
+import com.clinica.web.model.Pacient;
+import com.clinica.web.model.Tratament;
 
 import java.util.List;
 
@@ -12,5 +14,8 @@ public interface TratamentService {
 
     void saveTratament(TratamentDto tratamentDto);
 
-    void deleteTratament(int id);
+
+    void deleteById(Long tratamentId);
+    Tratament update(Tratament tratament);
+    Tratament findById(Long id);
 }

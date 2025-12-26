@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 //@Service
 public interface PacientService {
-
+    public List<Pacient> search(String field, String value) ;
     public List<Pacient> findAll();
     Pacient save(Pacient pacient);
     void deleteById(Long pacientId);
     Pacient update(Pacient pacient);
-    public List<Pacient> search(String field, String value) ;
+
 
     Pacient findById(Long id);
 }
