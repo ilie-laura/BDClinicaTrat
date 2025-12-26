@@ -2,7 +2,6 @@ package com.clinica.web.service.impl;
 
 import com.clinica.web.dto.MedicDto;
 import com.clinica.web.model.Medic;
-import com.clinica.web.model.Pacient;
 import com.clinica.web.repository.MedicRepository;
 import com.clinica.web.service.MedicService;
 import org.springframework.stereotype.Service;
@@ -44,5 +43,23 @@ return medicDto;
     @Override
     public Medic save(Medic medic) {
         return medicRepository.save(medic);
+    }
+
+
+    @Override
+    public void deleteById(Long medicId) {
+        medicRepository.deleteById(medicId);
+    }
+
+
+
+    @Override
+    public Medic update(Medic medic) {
+        return medicRepository.update(medic);
+    }
+
+    @Override
+    public Medic findById(Long medicId) {
+        return medicRepository.findById(medicId);
     }
 }

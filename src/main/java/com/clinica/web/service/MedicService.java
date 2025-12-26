@@ -13,4 +13,11 @@ public interface MedicService {
   public List<Medic> findAll();
   public List<Medic> search(String field, String value) ;
   Medic save(Medic medic);
+
+    void deleteById(Long medicId);
+    Medic update(Medic pacient);
+    Medic findById(Long medicId);
+
+
+
 }

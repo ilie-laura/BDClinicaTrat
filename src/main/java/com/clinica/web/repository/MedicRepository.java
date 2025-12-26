@@ -107,4 +107,29 @@ public class MedicRepository {
 
         return p;
     }
+
+    public void deleteById(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM Medic WHERE MedicID= ?",
+                id
+        );
+    }
+
+    public Medic findById(Long id) {
+        String sql = "SELECT * FROM Medic WHERE MedicID = ?";
+        return jdbcTemplate.queryForObject(sql, this::mapRow, id);
+    }
+
+    public Medic update(Medic pacient) {
+        jdbcTemplate.update(
+                "UPDATE pacient SET nume=?, prenume=?, salariu=?, specializare=? WHERE MedicID=?",
+                pacient.getNume(),
+                pacient.getPrenume(),
+                pacient.getSalariu(),
+                pacient.getSpecializare(),
+                pacient.getMedicID()
+        );
+        return pacient;
+    }
+
 }

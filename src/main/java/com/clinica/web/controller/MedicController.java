@@ -7,10 +7,7 @@ import com.clinica.web.model.Pacient;
 import com.clinica.web.service.MedicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Controller
@@ -23,7 +20,7 @@ public class MedicController {
 
     public String medics(Model model,@RequestParam(required = false) String field,
                          @RequestParam(required = false) String value) {
-        List<Medic> medici ;// sau orice metodă ai
+        List<Medic> medici ;
 
         System.out.println("Search parameters: field=" + field + ", value=" + value);
 
@@ -39,12 +36,34 @@ public class MedicController {
 
     @GetMapping("/addMedic")
     public String showAddForm(Model model) {
-        model.addAttribute("medic", new Medic()); // obiect gol pentru form
-        return "addMedic"; // pagina Thymeleaf pentru form
+        model.addAttribute("medic", new Medic());
+        return "addMedic";
     }
     @PostMapping("/addMedic")
     public String addPacient(@ModelAttribute Medic medic) {
         medicService.save(medic);
-        return "redirect:/medics"; // după inserare, duce înapoi la listă
+        return "redirect:/medics";
+    }
+
+
+
+    @GetMapping("/medics/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        medicService.deleteById(id);
+        return "redirect:/medics";
+    }
+
+    @GetMapping("/medics/update/{id}")
+    public String update(@PathVariable Long id, Model model) {
+        Medic medic = medicService.findById(id);
+        model.addAttribute("medic", medic);
+        return "update";
+    }
+
+
+    @PostMapping("/medics/update/{id}")
+    public String update(@ModelAttribute Medic pacient) {
+        medicService.update(pacient);
+        return "redirect:/medics";
     }
 }
