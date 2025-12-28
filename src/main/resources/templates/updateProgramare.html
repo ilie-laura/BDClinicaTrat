@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+   <title>Programare update
+   </title>
+    <link rel="stylesheet" href="/css/update.css">
+</head>
+<body>
+
+<h1 >Editeaza programare
+</h1>
+
+<form th:action="@{/programari/update/{id}(id=${programare.programareId})}"
+      th:object="${programare}"
+      method="post">
+
+<!--    <input type="hidden" th:field="*{programareId}"/>-->
+
+    <label>Pacient ID</label>
+    <input type="number" id="pacientId" th:field="*{pacientId}" required/>
+
+    <label>Medic ID</label>
+    <input type="number" th:field="*{medicId}" required/>
+
+    <label>Data programării</label>
+    <input type="datetime-local" th:field="*{dataProgramare}" required/>
+
+    <label>Durata (minute)</label>
+    <input type="number" th:field="*{durataProgramare}" min="1" required/>
+
+    <div class="buttons">
+        <button type="submit">Salvează</button>
+        <a th:href="@{/programari}">Renunță</a>
+    </div>
+
+</form>
+
+</body>
+</html>

@@ -73,24 +73,6 @@ public class TratamentController {
         return "redirect:/tratamente";
     }
 
-    // Căutare
-//    @GetMapping("/tratamente/search")
-//    public String searchTratamente(@RequestParam String field,
-//                                   @RequestParam String value,
-//                                   Model model) {
-//        System.out.println("Căutare tratament: field=" + field + "  value=" + value);
-//        List<TratamentDto> tratamente;
-//        if (value != null && !value.trim().isEmpty() && field != null) {
-//
-//            tratamente = tratamentService.search(field, value,current);
-//        } else {
-//
-//            tratamente = tratamentService.findAllTrataments();
-//        }
-//
-//        model.addAttribute("tratamente", tratamente);
-//        return "tratamente";
-//    }
 
 
     @GetMapping("/tratamente/delete/{id}")

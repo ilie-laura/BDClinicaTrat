@@ -11,16 +11,16 @@
     <h3>Adaugă Programare</h3>
 
     <label for="pacientID">Pacient ID:</label>
-    <input type="number" th:field="*{pacientID}" id="pacientID" placeholder="Introduceți ID pacient" required />
+    <input type="number" th:field="*{pacientId}" id="pacientID" placeholder="Introduceți ID pacient" required />
 
     <label for="medicID">Medic ID:</label>
-    <input type="number" th:field="*{medicID}" id="medicID" placeholder="Introduceți ID medic" required />
+    <input type="number" th:field="*{medicId}" id="medicID" placeholder="Introduceți ID medic" required />
 
     <label for="data_programare">Data programării:</label>
-    <input type="datetime-local" th:field="*{data_programare}" id="data_programare" required />
+    <input type="datetime-local" th:field="*{dataProgramare}" id="data_programare" required />
 
     <label for="durata">Durata (ex: 30 min):</label>
-    <input type="text" th:field="*{durata_programare}" id="durata" placeholder="Introduceți durata" required />
+    <input type="text" th:field="*{durataProgramare}" id="durata" placeholder="Introduceți durata" required />
 
     <div class="buttons">
         <button type="submit" class="register-btn">Salvează programarea</button>

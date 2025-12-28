@@ -1,5 +1,6 @@
 package com.clinica.web.repository;
 
+import com.clinica.web.dto.ProgramareDto;
 import com.clinica.web.model.Programare;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ProgramareRepository {
@@ -24,18 +24,21 @@ public class ProgramareRepository {
     public ProgramareRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public List<Programare> search(String field, String value) {
+    public List<Programare> search(String field, String value, Boolean dir) {
 
         if (!ALLOWED_FIELDS.contains(field)) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
         }
 
         if (value == null || value.trim().isEmpty()) {
-            return findAll();
+            return findAll(dir,field);
         }
 
-        String sql = "SELECT * FROM Programare WHERE CONVERT(VARCHAR(19), " + field + ", 120) LIKE ?";
-
+        String sql;
+        if (dir==null || dir==true)
+            sql = "SELECT * FROM Programare WHERE CONVERT(VARCHAR(19), \" + field + \", 120) LIKE ? ORDER BY "+field+" ASC";
+        else
+            sql="SELECT * FROM Programare WHERE CONVERT(VARCHAR(19), \" + field + \", 120) LIKE ? ORDER BY "+field+" DESC";
 
         return jdbcTemplate.query(
                 sql,
@@ -43,10 +46,8 @@ public class ProgramareRepository {
                 this::mapRow
         );
     }
-    //-----------------------------------------------------
-    // FIND BY ID
-    //-----------------------------------------------------
-    public Optional<Programare> findByProgramareID(Long programareID) {
+
+    public Programare findByID(Long programareID) {
         String sql = "SELECT * FROM Programare WHERE ProgramareID = ?";
 
         List<Programare> programari = jdbcTemplate.query(sql, new Object[]{programareID}, (rs, rowNum) -> {
@@ -54,11 +55,11 @@ public class ProgramareRepository {
             p.setProgramareID(rs.getInt("ProgramareID"));
             p.setPacientID(rs.getInt("PacientID"));
             p.setMedicID(rs.getInt("MedicID"));
-            p.setDataProgramarii(rs.getTimestamp("DataProgramarii").toLocalDateTime());
+            p.setDurata_programare("Durata_programare");
+            p.setDataProgramarii(rs.getTimestamp("Data_programare").toLocalDateTime());
             return p;
         });
-
-        return programari.isEmpty() ? Optional.empty() : Optional.of(programari.get(0));
+        return jdbcTemplate.queryForObject(sql, this::mapRow, programareID);
     }
     private Programare mapRow(ResultSet rs, int rowNum) throws SQLException {
         Programare p = new Programare();
@@ -76,18 +77,27 @@ public class ProgramareRepository {
 
         return p;
     }
-    //-----------------------------------------------------
-    // FIND ALL
-    //-----------------------------------------------------
-    public List<Programare> findAll() {
-        String sql = "SELECT * FROM Programare";
 
+    public List<Programare> findAll(Boolean dir,String field) {
+        String sql;
+        if(field!=null) {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Programare ORDER BY " + field + " ASC";
+            else
+                sql = "SELECT * FROM Programare ORDER BY " + field + " DESC";
+        }
+        else {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Programare ORDER BY Data_programare ASC";
+            else
+                sql = "SELECT * FROM Programare ORDER BY Data_programare DESC";
+        }
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Programare p = new Programare();
             p.setProgramareID(rs.getInt("ProgramareID"));
             p.setPacientID(rs.getInt("PacientID"));
             p.setMedicID(rs.getInt("MedicID"));
-            p.setDataProgramarii(rs.getTimestamp("Data_programare").toLocalDateTime());
+            p.setData_programare(rs.getTimestamp("Data_programare").toLocalDateTime());
             p.setDurataProgramare(rs.getString("Durata_programare"));
 
             return p;
@@ -106,5 +116,25 @@ public class ProgramareRepository {
         );
 
         return p;
+    }
+
+
+    public void deleteById(Long id) {
+        jdbcTemplate.update(
+                "DELETE FROM Programare WHERE ProgramareID= ?",
+                id
+        );
+    }
+
+    public Programare update(Programare pacient) {
+        jdbcTemplate.update(
+                "UPDATE programare SET Data_programare=?, Durata_programare=?, MedicID=?, PacientID=? WHERE ProgramareID=?",
+                pacient.getData_programare(),
+                pacient.getDurata_programare(),
+                pacient.getMedic().getMedicID(),
+                pacient.getPacientID(),
+                pacient.getProgramareID()
+        );
+        return pacient;
     }
 }
