@@ -35,42 +35,51 @@ public class TratamentRepository {
         return t;
     }
 
-    // -------------------------------
-    // Find by ID
-    // -------------------------------
+
     public Optional<Tratament> findByTratamentID(int tratamentID) {
         String sql = "SELECT * FROM Tratament WHERE TratamentID = ?";
         List<Tratament> list = jdbcTemplate.query(sql, new Object[]{tratamentID}, this::mapRow);
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
 
-    // -------------------------------
-    // Find all
-    // -------------------------------
-    public List<Tratament> findAll() {
-        String sql = "SELECT * FROM Tratament";
+
+    public List<Tratament> findAll(Boolean dir,String field) {
+        String sql;
+        if(field!=null) {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Tratament ORDER BY " + field + " ASC";
+            else
+                sql = "SELECT * FROM Tratament ORDER BY " + field + " DESC";
+        }
+        else {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Tratament ORDER BY Nume ASC";
+            else
+                sql = "SELECT * FROM Tratament ORDER BY Nume DESC";
+        }
         return jdbcTemplate.query(sql, this::mapRow);
     }
 
-    // -------------------------------
-    // Search după câmp permis
-    // -------------------------------
-    public List<Tratament> search(String field,String value) {
+    public List<Tratament> search(String field,String value,Boolean dir) {
         if (!ALLOWED_FIELDS.contains(field)) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
         }
 
         if (value == null || value.trim().isEmpty()) {
-            return findAll();
+            return findAll(dir,field);
         }
 
-        String sql = "SELECT * FROM Tratament WHERE RTRIM(" + field + ") LIKE ?";
-        return jdbcTemplate.query(sql, new Object[]{value.trim() + "%"}, this::mapRow);
+        String sql;
+        if (dir==null || dir==true)
+            sql = "SELECT * FROM Tratament WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
+        else
+            sql="SELECT * FROM Tratament WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" DESC";
+        return jdbcTemplate.query(sql, new Object[]
+                {value.trim() + "%"
+                }, this::mapRow);
     }
 
-    // -------------------------------
-    // Save (insert)
-    // -------------------------------
+
     public int saveTratament(Tratament t) {
         String sql = "INSERT INTO Tratament (Nume, Durata_tratament, Data_inceput) VALUES (?, ?, ?)";
         return jdbcTemplate.update(sql,

@@ -1,5 +1,6 @@
 package com.clinica.web.controller;
 
+import com.clinica.web.dto.MedicamentDto;
 import com.clinica.web.dto.TratamentDto;
 import com.clinica.web.model.Medicament;
 import com.clinica.web.model.Tratament;
@@ -23,8 +24,37 @@ public class TratamentController {
 
     // Lista tratamentelor
     @GetMapping("/tratamente")
-    public String tratamente(Model model){
-        List<TratamentDto> tratamente = tratamentService.findAllTrataments();
+    public String tratamente(@RequestParam(required = false) String field,
+                             @RequestParam(required = false) String value,
+                             @RequestParam(required = false) Boolean dir,
+                             @RequestParam(required = false) String order,
+                             Model model){
+        boolean currentDir = (dir == null) ? true : dir;
+        if (order != null) {
+            currentDir = !currentDir;
+        }
+
+        boolean nextDir = !currentDir;
+        model.addAttribute("dir", currentDir);
+        model.addAttribute("nextDir", nextDir);
+        model.addAttribute("field", field);
+
+        List<TratamentDto> tratamente ;
+        if (field != null && value != null && !value.isEmpty()) {
+            // căutare
+            List<TratamentDto> lista = tratamentService.search(field, value,currentDir);
+            tratamente = lista.stream()
+                    .map(m -> TratamentDto.builder()
+                            .Nume(m.getNume())
+                             .Data_inceput(m.getData_inceput())
+                            .Durata_tratament(m.getDurata_tratament())
+                            .build()
+                    ).toList();
+
+        } else {
+
+            tratamente = tratamentService.findAll(currentDir,field);
+        }
         model.addAttribute("tratamente", tratamente);
         return "tratamente";
     }
@@ -33,7 +63,7 @@ public class TratamentController {
     @GetMapping("/addTratament")
     public String addTratament(Model model) {
         model.addAttribute("tratament", new TratamentDto());
-        return "addTratament"; // fișier HTML pentru adaugare
+        return "addTratament";
     }
 
     // Salvare tratament
@@ -44,23 +74,23 @@ public class TratamentController {
     }
 
     // Căutare
-    @GetMapping("/tratamente/search")
-    public String searchTratamente(@RequestParam String field,
-                                   @RequestParam String value,
-                                   Model model) {
-        System.out.println("Căutare tratament: field=" + field + "  value=" + value);
-        List<TratamentDto> tratamente;
-        if (value != null && !value.trim().isEmpty() && field != null) {
-
-            tratamente = tratamentService.search(field, value);
-        } else {
-
-            tratamente = tratamentService.findAllTrataments();
-        }
-
-        model.addAttribute("tratamente", tratamente);
-        return "tratamente";
-    }
+//    @GetMapping("/tratamente/search")
+//    public String searchTratamente(@RequestParam String field,
+//                                   @RequestParam String value,
+//                                   Model model) {
+//        System.out.println("Căutare tratament: field=" + field + "  value=" + value);
+//        List<TratamentDto> tratamente;
+//        if (value != null && !value.trim().isEmpty() && field != null) {
+//
+//            tratamente = tratamentService.search(field, value,current);
+//        } else {
+//
+//            tratamente = tratamentService.findAllTrataments();
+//        }
+//
+//        model.addAttribute("tratamente", tratamente);
+//        return "tratamente";
+//    }
 
 
     @GetMapping("/tratamente/delete/{id}")

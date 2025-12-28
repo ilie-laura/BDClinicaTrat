@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface TratamentService {
 
-    List<TratamentDto> findAllTrataments();
+    List<TratamentDto> findAll(Boolean dir,String field);
 
-    List<TratamentDto> search(String keyword, String value);
+    List<TratamentDto> search(String keyword, String value,Boolean dir);
 
     void saveTratament(TratamentDto tratamentDto);
 

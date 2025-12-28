@@ -2,7 +2,6 @@ package com.clinica.web.controller;
 
 import com.clinica.web.dto.MedicamentDto;
 import com.clinica.web.model.Medicament;
-import com.clinica.web.model.Pacient;
 import com.clinica.web.service.MedicamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

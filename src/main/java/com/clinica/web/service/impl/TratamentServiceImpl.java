@@ -21,16 +21,16 @@ public class TratamentServiceImpl implements TratamentService {
     }
 
     @Override
-    public List<TratamentDto> findAllTrataments() {
-        return tratamentRepository.findAll()
+    public List<TratamentDto> findAll(Boolean dir,String field) {
+        return tratamentRepository.findAll(dir,field)
                 .stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<TratamentDto> search(String field, String value) {
-        return tratamentRepository.search(field,value)
+    public List<TratamentDto> search(String field, String value,Boolean dir) {
+        return tratamentRepository.search(field,value,dir)
                 .stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
