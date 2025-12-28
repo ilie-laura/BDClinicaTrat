@@ -9,9 +9,9 @@ import java.util.List;
 //@Service
 public interface MedicService {
     //@Override
-  public  List<MedicDto> findAllMedics();
-  public List<Medic> findAll();
-  public List<Medic> search(String field, String value) ;
+//  public  List<MedicDto> findAllMedics();
+  public List<Medic> findAll(Boolean dir,String field);
+  public List<Medic> search(String field, String value,Boolean dir) ;
   Medic save(Medic medic);
 
     void deleteById(Long medicId);

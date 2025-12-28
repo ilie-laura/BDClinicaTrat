@@ -39,7 +39,7 @@ public class MedicRepository {
         return medici.isEmpty() ? Optional.empty() : Optional.of(medici.get(0));
     }
 
-    public List<Medic> search(String field, String value) {
+    public List<Medic> search(String field, String value,Boolean dir) {
         // Verifica daca coloana este permisa
         if (!ALLOWED_FIELDS.contains(field)) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
@@ -47,10 +47,14 @@ public class MedicRepository {
 
         // Protecție la valoare null sau goală
         if (value == null || value.trim().isEmpty()) {
-            return findAll();
+            return findAll(dir,field);
         }
 
-        String sql = "SELECT * FROM Medic WHERE RTRIM(" + field + ") LIKE ?";
+        String sql;
+        if (dir==null || dir==true)
+            sql = "SELECT * FROM Medic WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
+        else
+            sql="SELECT * FROM Medic WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" DESC";
 
         System.out.println("Executing search: field=" + field + ", value=" + value);
 
@@ -72,8 +76,20 @@ public class MedicRepository {
 
         return p;
     }
-    public List<Medic> findAll() {
-        String sql = "SELECT * FROM Medic";
+    public List<Medic> findAll(Boolean dir,String field) {
+        String sql ;
+        if(field!=null) {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Medic ORDER BY " + field + " ASC";
+            else
+                sql = "SELECT * FROM Medic ORDER BY " + field + " DESC";
+        }
+        else {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Medic ORDER BY Nume ASC";
+            else
+                sql = "SELECT * FROM Medic ORDER BY Nume DESC";
+        }
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Medic m = new Medic();
             m.setMedicID(rs.getInt("MedicID"));

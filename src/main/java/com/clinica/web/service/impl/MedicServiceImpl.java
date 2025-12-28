@@ -15,20 +15,20 @@ public class MedicServiceImpl implements MedicService {
     public MedicServiceImpl(MedicRepository medicRepository) {
         this.medicRepository = medicRepository;
     }
-    @Override
-    public List<MedicDto> findAllMedics(){
-        List<Medic> medics=medicRepository.findAll();
-        return medics.stream().map((medic)->maptoMedicDto(medic)).collect(Collectors.toList());
 
-    }
+//    public List<MedicDto> findAllMedics(){
+//        List<Medic> medics=medicRepository.findAll();
+//        return medics.stream().map((medic)->maptoMedicDto(medic)).collect(Collectors.toList());
+//
+//    }
 
     @Override
-    public List<Medic> findAll() {
-        return medicRepository.findAll();
+    public List<Medic> findAll(Boolean dir,String field) {
+        return medicRepository.findAll(dir,field);
     }
     @Override
-    public List<Medic> search(String field, String value) {
-        return medicRepository.search(field, value);
+    public List<Medic> search(String field, String value,Boolean dir) {
+        return medicRepository.search(field, value,dir);
     }
     private MedicDto maptoMedicDto(Medic medic){
         MedicDto medicDto=MedicDto.builder()

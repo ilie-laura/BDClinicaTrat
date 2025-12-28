@@ -18,16 +18,27 @@ public class MedicController {
     }
     @GetMapping("/medics")
 
-    public String medics(Model model,@RequestParam(required = false) String field,
-                         @RequestParam(required = false) String value) {
+    public String medics(Model model,
+                         @RequestParam(required = false) String field,
+                         @RequestParam(required = false) String value,
+                         @RequestParam(required = false) Boolean dir,
+                         @RequestParam(required = false) String order ) {
+
+        boolean currentDir = (dir == null) ? true : dir;
+        if (order != null) {
+            currentDir = !currentDir;
+        }
+
+        boolean nextDir = !currentDir;
+        model.addAttribute("dir", currentDir);
+        model.addAttribute("nextDir", nextDir);
         List<Medic> medici ;
-
         System.out.println("Search parameters: field=" + field + ", value=" + value);
-
+        model.addAttribute("field", field);
         if (value != null && !value.trim().isEmpty() && field != null) {
-            medici = medicService.search(field, value);
+            medici = medicService.search(field, value,currentDir);
         } else {
-            medici = medicService.findAll();
+            medici = medicService.findAll(currentDir, field);
         }
 
         model.addAttribute("medici", medici);
