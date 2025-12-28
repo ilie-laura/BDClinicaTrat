@@ -19,8 +19,8 @@ public class PacientServiceImpl implements PacientService {
 
 
     @Override
-    public List<Pacient> findAll(Boolean dir) {
-        return pacientRepository.findAll(dir);
+    public List<Pacient> findAll(Boolean dir,String field) {
+        return pacientRepository.findAll(dir,field);
     }
 
     @Override

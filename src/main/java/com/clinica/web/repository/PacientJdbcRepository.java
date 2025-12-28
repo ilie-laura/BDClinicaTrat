@@ -24,11 +24,20 @@ public class PacientJdbcRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Pacient> findAll(Boolean dir) {
+    public List<Pacient> findAll(Boolean dir,String field) {
         String sql ;
-        if(dir==null || dir==true)
-        sql="SELECT * FROM Pacient ORDER BY nume ASC";
-        else sql="SELECT * FROM Pacient ORDER BY nume DESC";
+        if(field!=null) {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Pacient ORDER BY " + field + " ASC";
+            else
+                sql = "SELECT * FROM Pacient ORDER BY " + field + " DESC";
+        }
+        else {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Pacient ORDER BY Nume ASC";
+            else
+                sql = "SELECT * FROM Pacient ORDER BY Nume DESC";
+        }
         return jdbcTemplate.query(sql, this::mapRow);
     }
 
@@ -39,7 +48,7 @@ public class PacientJdbcRepository {
         }
 
         if (value == null || value.trim().isEmpty()) {
-            return findAll(dir);
+            return findAll(dir,field);
         }
         String sql;
 

@@ -6,7 +6,7 @@ import java.util.List;
 //@Service
 public interface PacientService {
     public List<Pacient> search(String field, String value,Boolean dir) ;
-    public List<Pacient> findAll(Boolean dir);
+    public List<Pacient> findAll(Boolean dir,String field);
     Pacient save(Pacient pacient);
     void deleteById(Long pacientId);
     Pacient update(Pacient pacient);

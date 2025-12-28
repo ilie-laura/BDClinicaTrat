@@ -25,20 +25,27 @@ public class PacientController {
             @RequestParam(required = false) String field,
             @RequestParam(required = false) String value,
             @RequestParam(required = false) Boolean dir,
+            @RequestParam(required = false) String order,
+
             Model model
     ) {
         boolean currentDir = (dir == null) ? true : dir;
+        if (order != null) {
+            currentDir = !currentDir;
+        }
+
         boolean nextDir = !currentDir;
         model.addAttribute("dir", currentDir);
         model.addAttribute("nextDir", nextDir);
 
         List<Pacient> pacienti;
         System.out.println("field=" + field + ", value=" + value);
+        model.addAttribute("field", field);
 
         if (value != null && !value.isEmpty()) {
             pacienti = pacientService.search(field, value, currentDir);
         } else {
-            pacienti = pacientService.findAll(currentDir);
+            pacienti = pacientService.findAll(currentDir,field);
         }
 
         model.addAttribute("pacienti", pacienti);
