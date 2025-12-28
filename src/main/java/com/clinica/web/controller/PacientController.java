@@ -24,21 +24,26 @@ public class PacientController {
     public String listPacients(
             @RequestParam(required = false) String field,
             @RequestParam(required = false) String value,
+            @RequestParam(required = false) Boolean dir,
             Model model
     ) {
+        boolean currentDir = (dir == null) ? true : dir;
+        boolean nextDir = !currentDir;
+        model.addAttribute("dir", currentDir);
+        model.addAttribute("nextDir", nextDir);
 
         List<Pacient> pacienti;
         System.out.println("field=" + field + ", value=" + value);
 
         if (value != null && !value.isEmpty()) {
-            pacienti = pacientService.search(field, value);
+            pacienti = pacientService.search(field, value, currentDir);
         } else {
-            pacienti = pacientService.findAll();
+            pacienti = pacientService.findAll(currentDir);
         }
 
         model.addAttribute("pacienti", pacienti);
 
-        return "listPacients"; // numele paginii HTML
+        return "listPacients";
     }
     @GetMapping("/addPacient")
     public String showAddForm(Model model) {

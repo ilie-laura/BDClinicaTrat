@@ -28,13 +28,10 @@ public class WebController {
             model.addAttribute("currentUsername", username);
 
         } else {
-            // Debugging: Arată contextul Anonim
             System.out.println("--- UTILIZATOR ANONIM DETECTAT ---");
-            // FOARTE IMPORTANT: NU adăuga model.addAttribute("currentUsername", null) sau "NONE" aici.
+
         }
-            // SAU: Adaugă întregul UserDTO (dacă ai nevoie de mai multe câmpuri)
-            // UserDTO userDTO = loadUserDTOByUsername(username);
-            // model.addAttribute("currentUser", userDTO);
+
 
         return "index";
     }

@@ -28,7 +28,6 @@
     // Funcția de ascundere
     function hidePopup() {
         if (popup) {
-            // Setează proprietatea CSS 'display' pe 'none' pentru a-l ascunde
             popup.style.display = 'none';
         }
         if (overlay) {
@@ -36,22 +35,18 @@
         }
     }
 
-    // 2. Adaugă un ascultător de eveniment (event listener) pe întregul document
     document.addEventListener('click', function(event) {
-        // Verifică dacă click-ul NU a avut loc în interiorul pop-up-ului
+
         if (popup && !popup.contains(event.target)) {
             // Dacă click-ul a fost în afara, ascunde pop-up-ul
             hidePopup();
         }
     });
 
-    // Dacă folosești overlay, poți adăuga un ascultător direct pe el
     if (overlay) {
         overlay.addEventListener('click', hidePopup);
     }
 
-    // Oprește propagarea click-ului în interiorul pop-up-ului
-    // Dacă utilizatorul dă click pe textul din interior, pop-up-ul NU va dispărea
     if (popup) {
         popup.addEventListener('click', function(event) {
             event.stopPropagation();
@@ -59,9 +54,7 @@
     }
 
 </script>
-<!--<div th:if="${param.logout}" class="alert alert-success">-->
-<!--    Ai fost deconectat.-->
-<!--</div>-->
+
 <form th:action="@{/login}" method="post">
     <h3>Login Here</h3>
 

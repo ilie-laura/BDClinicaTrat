@@ -24,22 +24,29 @@ public class PacientJdbcRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Pacient> findAll() {
-        String sql = "SELECT * FROM Pacient";
+    public List<Pacient> findAll(Boolean dir) {
+        String sql ;
+        if(dir==null || dir==true)
+        sql="SELECT * FROM Pacient ORDER BY nume ASC";
+        else sql="SELECT * FROM Pacient ORDER BY nume DESC";
         return jdbcTemplate.query(sql, this::mapRow);
     }
 
-    public List<Pacient> search(String field, String value) {
+    public List<Pacient> search(String field, String value,Boolean dir) {
         // Verifica daca coloana este permisa
         if (!ALLOWED_FIELDS.contains(field)) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
         }
 
         if (value == null || value.trim().isEmpty()) {
-            return findAll();
+            return findAll(dir);
         }
+        String sql;
 
-        String sql = "SELECT * FROM Pacient WHERE RTRIM(" + field + ") LIKE ?";
+        if (dir==null || dir==true)
+         sql = "SELECT * FROM Pacient WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
+        else
+        sql="SELECT * FROM Pacient WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" DESC";
 
         System.out.println("Executing search: field=" + field + ", value=" + value);
 
@@ -110,7 +117,6 @@ public class PacientJdbcRepository {
         );
         return pacient;
     }
-
 
 
 }

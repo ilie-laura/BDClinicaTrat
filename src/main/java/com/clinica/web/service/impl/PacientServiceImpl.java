@@ -7,7 +7,6 @@ import com.clinica.web.repository.PacientJdbcRepository;
 import com.clinica.web.service.PacientService;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PacientServiceImpl implements PacientService {
@@ -19,20 +18,14 @@ public class PacientServiceImpl implements PacientService {
     }
 
 
-    public List<PacientDto> findAllPacients() {
-        return pacientRepository.findAll().stream()
-                .map(this::maptoPacientDto)
-                .collect(Collectors.toList());
+    @Override
+    public List<Pacient> findAll(Boolean dir) {
+        return pacientRepository.findAll(dir);
     }
 
     @Override
-    public List<Pacient> findAll() {
-        return pacientRepository.findAll();
-    }
-
-    @Override
-    public List<Pacient> search(String field, String value) {
-        return pacientRepository.search(field, value);
+    public List<Pacient> search(String field, String value,Boolean dir) {
+        return pacientRepository.search(field, value,dir);
     }
 
     private PacientDto maptoPacientDto(Pacient pacient) {

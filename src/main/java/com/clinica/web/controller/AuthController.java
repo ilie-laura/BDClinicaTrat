@@ -34,6 +34,6 @@ public class AuthController {
 
     @GetMapping("/")
     public String home() {
-        return "index"; // pagina protejată
+        return "index";
     }
 }
