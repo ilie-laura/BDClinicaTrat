@@ -22,16 +22,16 @@ public class MedicamentServiceImpl implements MedicamentService {
     }
 
     @Override
-    public List<MedicamentDto> findAllMedicaments() {
-        return medicamentRepository.findAll()
+    public List<MedicamentDto> findAll(Boolean dir,String field) {
+        return medicamentRepository.findAll( dir, field)
                 .stream()
                 .map(this::mapToMedicamentDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<MedicamentDto> search(String field, String value) {
-        return medicamentRepository.search(field, value)
+    public List<MedicamentDto> search(String field, String value,Boolean dir) {
+        return medicamentRepository.search(field, value,dir)
                 .stream()
                 .map(this::mapToMedicamentDto)
                 .collect(Collectors.toList());

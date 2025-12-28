@@ -18,13 +18,22 @@ public class MedicamentController {
     @GetMapping("/medicaments")
     public String medicaments(@RequestParam(required = false) String field,
                               @RequestParam(required = false) String value,
+                              @RequestParam(required = false) Boolean dir,
+                              @RequestParam(required = false) String order,
                               Model model) {
+        boolean currentDir = (dir == null) ? true : dir;
+        if (order != null) {
+            currentDir = !currentDir;
+        }
 
+        boolean nextDir = !currentDir;
+        model.addAttribute("dir", currentDir);
+        model.addAttribute("nextDir", nextDir);
         List<MedicamentDto> medicamente;
-
+        model.addAttribute("field", field);
         if (field != null && value != null && !value.isEmpty()) {
             // căutare
-            List<MedicamentDto> lista = medicamentService.search(field, value);
+            List<MedicamentDto> lista = medicamentService.search(field, value,currentDir);
             medicamente = lista.stream()
                     .map(m -> MedicamentDto.builder()
                             .medicamentID(m.getMedicamentID())
@@ -37,7 +46,7 @@ public class MedicamentController {
 
         } else {
 
-            medicamente = medicamentService.findAllMedicaments();
+            medicamente = medicamentService.findAll(currentDir,field);
         }
 
         model.addAttribute("medicaments", medicamente);

@@ -37,17 +37,22 @@ public class MedicamentRepository {
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
 
-    public List<Medicament> search(String field, String value) {
+    public List<Medicament> search(String field, String value,Boolean dir) {
 
         if (!ALLOWED_FIELDS.contains(field)) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
         }
 
         if (value == null || value.trim().isEmpty()) {
-            return findAll();
+            return findAll(dir,field);
         }
 
-        String sql = "SELECT * FROM Medicament WHERE RTRIM(" + field + ") LIKE ?";
+        String sql;
+        if (dir==null || dir==true)
+            sql = "SELECT * FROM Medicament WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
+        else
+            sql="SELECT * FROM Medicament WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" DESC";
+
 
         return jdbcTemplate.query(
                 sql,
@@ -72,8 +77,20 @@ public class MedicamentRepository {
         return m;
     }
 
-    public List<Medicament> findAll() {
-        String sql = "SELECT * FROM Medicament";
+    public List<Medicament> findAll(Boolean dir,String field) {
+        String sql;
+        if(field!=null) {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Medicament ORDER BY " + field + " ASC";
+            else
+                sql = "SELECT * FROM Medicament ORDER BY " + field + " DESC";
+        }
+        else {
+            if (dir == null || dir == true)
+                sql = "SELECT * FROM Medicament ORDER BY Nume ASC";
+            else
+                sql = "SELECT * FROM Medicament ORDER BY Nume DESC";
+        }
         return jdbcTemplate.query(sql, this::mapRow);
     }
     public Medicament save(Medicament medicament) {

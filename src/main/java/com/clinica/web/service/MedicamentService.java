@@ -8,11 +8,9 @@ import java.util.List;
 
 public interface MedicamentService {
 
-    List<MedicamentDto> findAllMedicaments();
-    List<MedicamentDto> search(String field, String value);
+    List<MedicamentDto> findAll(Boolean dir,String field);
+    List<MedicamentDto> search(String field, String value,Boolean dir);
     Medicament save(Medicament medicament);
-
-
     void deleteById(Long medicamentId);
     Medicament update(Medicament medicament);
     Medicament findById(Long id);
