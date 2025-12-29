@@ -42,7 +42,7 @@ public class PacientJdbcRepository {
     }
 
     public List<Pacient> search(String field, String value,Boolean dir) {
-        // Verifica daca coloana este permisa
+
         if (!ALLOWED_FIELDS.contains(field)) {
             throw new IllegalArgumentException("Invalid column for filtering: " + field);
         }

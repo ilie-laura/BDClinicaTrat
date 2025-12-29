@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapoarte clinică</title>
+
+    <!-- CSS navbar (IMPORTANT) -->
+    <link rel="stylesheet" href="/css/listPacients.css">
+    <!-- CSS rapoarte -->
+    <link rel="stylesheet" href="/css/rapoarte.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="navbar">
+            <div class="container nav-container">
+                <input class="checkbox" type="checkbox" id="nav-toggle"/>
+
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+
+                <div class="logo">
+                    <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo-img">
+                </div>
+
+                <ul class="menu-items">
+                    <li><a th:href="@{/index}" onclick="document.getElementById('nav-toggle').checked=false;">Home</a></li>
+                    <li><a th:href="@{/index}" onclick="document.getElementById('nav-toggle').checked=false;">About</a></li>
+                    <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked=false;">Informatii</a></li>
+                    <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked=false;">Contact</a></li>
+                    <li><a th:href="@{/rapoarte}">Rapoarte</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<h1>Rapoarte clinică</h1>
+
+<!-- ================== RAPOARTE ================== -->
+<div class="reports-container">
+
+    <!-- RAPORT 1 -->
+    <div class="report-card">
+        <div class="report-header">
+            <h2>Medicii cu salariu peste medie</h2>
+            <button type="button"
+                    class="toggle-btn"
+                    onclick="toggleReport('raport1', this)">
+                Generează raport
+            </button>
+        </div>
+
+        <div id="raport1" class="report-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>Salariu</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="m : ${mediciSalariu}">
+                    <td th:text="${m.medicID}"></td>
+                    <td th:text="${m.nume}"></td>
+                    <td th:text="${m.prenume}"></td>
+                    <td th:text="${m.salariu}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- RAPORT 2 -->
+    <div class="report-card">
+        <div class="report-header">
+            <h2>Pacienți cu programări</h2>
+            <button type="button"
+                    class="toggle-btn"
+                    onclick="toggleReport('raport2', this)">
+                Generează raport
+            </button>
+        </div>
+
+        <div id="raport2" class="report-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>Oraș</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${pacientiCuProgramari}">
+                    <td th:text="${p.pacientID}"></td>
+                    <td th:text="${p.nume}"></td>
+                    <td th:text="${p.prenume}"></td>
+                    <td th:text="${p.oras}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- RAPORT 3 -->
+    <div class="report-card">
+        <div class="report-header">
+            <h2>Medicamente utilizate în tratamente</h2>
+            <button type="button"
+                    class="toggle-btn"
+                    onclick="toggleReport('raport3', this)">
+                Generează raport
+            </button>
+        </div>
+
+        <div id="raport3" class="report-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Stoc</th>
+                    <th>Preț</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="m : ${medicamenteFolosite}">
+                    <td th:text="${m.medicamentID}"></td>
+                    <td th:text="${m.nume}"></td>
+                    <td th:text="${m.stoc}"></td>
+                    <td th:text="${m.pret}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- RAPORT 4 -->
+    <div class="report-card">
+        <div class="report-header">
+            <h2>Medici fără programări</h2>
+            <button type="button"
+                    class="toggle-btn"
+                    onclick="toggleReport('raport4', this)">
+                Generează raport
+            </button>
+        </div>
+
+        <div id="raport4" class="report-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>Specializare</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="m : ${mediciFaraProgramari}">
+                    <td th:text="${m.medicID}"></td>
+                    <td th:text="${m.nume}"></td>
+                    <td th:text="${m.prenume}"></td>
+                    <td th:text="${m.specializare}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleReport(id, btn) {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const hidden = el.style.display === "" || el.style.display === "none";
+        el.style.display = hidden ? "block" : "none";
+        btn.textContent = hidden ? "Ascunde raport" : "Genereaza raport";
+    }
+</script>
+
+</body>
+</html>

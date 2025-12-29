@@ -36,6 +36,9 @@
 
                 </li>
                 <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
+                <li>
+                    <a th:href="@{/rapoarte}" > Rapoarte</a>
+                </li>
             </div>
             <div th:if="${currentUsername != null}">
                 Bine ai venit, <strong th:text="${currentUsername}"></strong>!
