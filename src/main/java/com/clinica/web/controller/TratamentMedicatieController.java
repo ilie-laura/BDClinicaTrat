@@ -16,6 +16,7 @@ public class TratamentMedicatieController {
     public TratamentMedicatieController(TratamentMedicatieService service) {
         this.service = service;
     }
+
     @GetMapping("/tratament_medicatie")
     public String tratamentMedicatie(Model model){
         List<TratamentMedicatieDto> tratamentMedicatie= service.findAllTratamentMedicaties();

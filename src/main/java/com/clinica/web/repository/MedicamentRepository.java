@@ -10,12 +10,13 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class MedicamentRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private static  JdbcTemplate jdbcTemplate;
 
     private static final List<String> ALLOWED_FIELDS =
             List.of("Nume", "Data_expirare", "Stoc", "Pret");
@@ -126,6 +127,22 @@ public class MedicamentRepository {
                 pacient.getMedicamentID()
         );
         return pacient;
+    }
+    public static List<Map<String, Object>> celeMaiUtilizateMedicamente() {
+
+        String sql = """
+        SELECT 
+            m.MedicamentID,
+            m.Nume,
+            COUNT(tm.TratamentID) AS utilizari
+        FROM Medicament m
+        JOIN TratamentMedicatie tm
+            ON m.MedicamentID = tm.MedicamentID
+        GROUP BY m.MedicamentID, m.Nume
+        ORDER BY utilizari DESC
+    """;
+
+        return jdbcTemplate.queryForList(sql);
     }
 
 }

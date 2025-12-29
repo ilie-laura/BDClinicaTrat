@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/listPacients.css">
 <head>
     <meta charset="UTF-8">
     <title>Lista Tratament Medicatie</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 5px 10px;
-        }
-        th {
-            background-color: #f0f0f0;
-        }
-    </style>
 </head>
 <body>
+
+<nav>
+    <div class="navbar">
+        <div class="container nav-container">
+            <input class="checkbox" type="checkbox" id="nav-toggle" />
+
+            <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </div>
+
+            <div class="logo">
+                <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo-img">
+            </div>
+
+            <ul class="menu-items">
+                <li><a th:href="@{/index}" onclick="document.getElementById('nav-toggle').checked = false;">Home</a></li>
+                <li><a th:href="@{/index}" onclick="document.getElementById('nav-toggle').checked = false;">About</a></li>
+                <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">Informatii</a></li>
+                <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
+                <li>
+                    <a th:href="@{/rapoarte}" > Rapoarte</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <h1>Lista Tratament Medicatie</h1>
 
 <table>

@@ -2,6 +2,7 @@ package com.clinica.web.controller;
 
 import com.clinica.web.dto.MedicamentDto;
 import com.clinica.web.model.Medicament;
+import com.clinica.web.repository.MedicamentRepository;
 import com.clinica.web.service.MedicamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +48,8 @@ public class MedicamentController {
 
             medicamente = medicamentService.findAll(currentDir,field);
         }
-
+        model.addAttribute("medicamenteUtilizate",
+                MedicamentRepository.celeMaiUtilizateMedicamente());
         model.addAttribute("medicaments", medicamente);
         return "medicaments";
     }

@@ -8,6 +8,7 @@ public class InfoController {
 
     @GetMapping("/info")
     public String showInfoPage() {
+
         return "info";
     }
 }

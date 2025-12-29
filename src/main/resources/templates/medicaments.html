@@ -125,6 +125,26 @@
     </tr>
     </tbody>
 </table>
+
+<h2 style="margin-top:40px;">Cele mai utilizate medicamente</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nume</th>
+        <th>Număr utilizări</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="m : ${medicamenteUtilizate}">
+        <td th:text="${m.MedicamentID}"></td>
+        <td th:text="${m.Nume}"></td>
+        <td th:text="${m.utilizari}"></td>
+    </tr>
+    </tbody>
+</table>
+
 <div class="table-popup">
     <p>Stergi medicamentul?</p>
     <div class="popup-actions">

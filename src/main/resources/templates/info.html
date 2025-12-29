@@ -83,25 +83,29 @@
         .tabs .slider {
             height: 4px;
             background: #16697A;
-            width: 16.6%;
+            width: 14.28%;
             transition: all 0.3s ease;
         }
 
         /* Tab positions */
-        #tab1:checked ~ .slider { margin-left: 0%; }
-        #tab2:checked ~ .slider { margin-left: 16.6%; }
-        #tab3:checked ~ .slider { margin-left: 33.2%; }
-        #tab4:checked ~ .slider { margin-left: 49.8%; }
-        #tab5:checked ~ .slider { margin-left: 66.4%; }
-        #tab6:checked ~ .slider { margin-left: 83%; }
+       #tab1:checked ~ .slider { margin-left: 0%; }
+       #tab2:checked ~ .slider { margin-left: 14.28%; }
+       #tab3:checked ~ .slider { margin-left: 28.56%; }
+       #tab4:checked ~ .slider { margin-left: 42.84%; }
+       #tab5:checked ~ .slider { margin-left: 57.12%; }
+       #tab6:checked ~ .slider { margin-left: 71.4%; }
+       #tab7:checked ~ .slider { margin-left: 85.68%; }
 
-        /* Active tab label color */
+
+       /* Active tab label color */
         #tab1:checked ~ ul li:nth-child(1) label,
         #tab2:checked ~ ul li:nth-child(2) label,
         #tab3:checked ~ ul li:nth-child(3) label,
         #tab4:checked ~ ul li:nth-child(4) label,
         #tab5:checked ~ ul li:nth-child(5) label,
-        #tab6:checked ~ ul li:nth-child(6) label {
+        #tab6:checked ~ ul li:nth-child(6) label,
+        #tab7:checked ~ ul li:nth-child(7) label
+        {
             color: #16697A;
             font-weight: 700;
         }
@@ -116,7 +120,8 @@
         #tab3:checked ~ .content section:nth-child(3),
         #tab4:checked ~ .content section:nth-child(4),
         #tab5:checked ~ .content section:nth-child(5),
-        #tab6:checked ~ .content section:nth-child(6) {
+        #tab6:checked ~ .content section:nth-child(6),
+        #tab7:checked ~ .content section:nth-child(7) {
             display: block;
         }
 
@@ -211,6 +216,7 @@
     <input type="radio" id="tab4" name="tab">
     <input type="radio" id="tab5" name="tab">
     <input type="radio" id="tab6" name="tab">
+    <input type="radio" id="tab7" name="tab">
 
     <ul>
         <li><label for="tab1">Pacienți</label></li>
@@ -219,6 +225,7 @@
         <li><label for="tab4">Programări</label></li>
         <li><label for="tab5">Tratamente</label></li>
         <li><label for="tab6">Prescrieri</label></li>
+        <li ><label for="tab7" >TratamentMedicatie</label></li>
     </ul>
     <div class="slider"></div>
 
@@ -279,6 +286,16 @@
                     <h2>Prescrieri</h2>
                     <p>Administrează prescrierile pacienților și istoricul acestora.</p>
                     <a th:href="@{/prescrieri}">Deschide</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="card">
+                    <h2>TratamentMedicatie</h2>
+                    <p>Administrează tratamentele si medicaiile pacienților .</p>
+                    <a th:href="@{/tratament_medicatie}">Deschide</a>
                 </div>
             </div>
         </section>
