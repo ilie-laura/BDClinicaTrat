@@ -12,11 +12,31 @@ import java.util.Map;
 @Repository
 public class RapoarteRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private static JdbcTemplate jdbcTemplate = null;
 
     public RapoarteRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    public static List<Map<String, Object>> mediciActiviAzi() {
+
+        String sql = """
+        SELECT 
+            m.MedicID,
+            m.Nume,
+            m.Prenume,
+            m.Specializare,
+            COUNT(p.ProgramareID) AS nrProgramari
+        FROM Medic m
+        JOIN Programare p ON m.MedicID = p.MedicID
+        WHERE CAST(p.Data_programare AS DATE) = CAST(GETDATE() AS DATE)
+        GROUP BY m.MedicID, m.Nume, m.Prenume, m.Specializare
+        ORDER BY nrProgramari DESC
+    """;
+
+        return jdbcTemplate.queryForList(sql);
+    }
+
 
 
     public List<MedicDto> mediciCuSalariuPesteMedie() {
@@ -95,7 +115,7 @@ public class RapoarteRepository {
 
     public List<Map<String, Object>> salariiMediciCuProgramari(long minSalariu) {
         String sql = """
-SELECT 
+        SELECT 
             m.MedicID,
             m.Nume,
             m.Prenume,
@@ -110,5 +130,6 @@ SELECT
 
         return jdbcTemplate.queryForList(sql, minSalariu);
     }
+
 
 }

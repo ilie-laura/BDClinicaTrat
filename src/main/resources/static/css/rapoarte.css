@@ -158,3 +158,57 @@ h2 {
         grid-template-columns: 1fr;
     }
 }
+/* ================= CUSTOM JOIN ================= */
+
+.custom-join-section {
+    width: 95%;
+    max-width: 1400px;
+    margin: 50px auto;
+}
+
+.custom-join-form {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    margin-bottom: 25px;
+}
+
+.custom-join-form .form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.custom-join-form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #213A57;
+}
+
+.custom-join-form select,
+.custom-join-form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.custom-join-form button {
+    grid-column: span 5;
+    padding: 12px;
+    background: #4a90e2;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .custom-join-form {
+        grid-template-columns: 1fr;
+    }
+}

@@ -644,3 +644,24 @@ a {
 .logout-btn:hover {
     background-color: #a60617;
 }
+.active-medics-section h2 {
+    margin-bottom: 10px;
+
+}
+
+.active-medics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #7190fb;
+}
+
+.active-medics-table th,
+.active-medics-table td {
+    padding: 12px;
+    border-bottom: 1px solid #224261;
+}
+
+.active-medics-table th {
+    background: #aabaf8;
+}

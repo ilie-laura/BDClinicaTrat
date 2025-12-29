@@ -1,5 +1,7 @@
 package com.clinica.web.controller;
 
+import com.clinica.web.repository.RapoarteRepository;
+import com.clinica.web.service.MedicService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,12 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
+
 @Controller
 public class WebController {
     @GetMapping("/index")
-    public String index(Model model) {
+    public String index(Model model, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        if (principal != null) {
+            model.addAttribute("currentUsername", principal.getName());
+        }
+
+        model.addAttribute("mediciActivi",
+                RapoarteRepository.mediciActiviAzi());
+        
         // Verifică dacă obiectul de autentificare este valid și nu este utilizatorul anonim
         if (auth != null && auth.isAuthenticated() &&
                 auth.getPrincipal() instanceof UserDetails) {
@@ -35,6 +46,7 @@ public class WebController {
 
         return "index";
     }
+
 
 
 }

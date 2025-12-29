@@ -37,7 +37,7 @@
 </header>
 
 <h1>Rapoarte clinică</h1>
-
+<!-- ================== DASHBOARD GRAFICE ================== -->
 <section class="charts-section">
 
     <h2>Dashboard salarii</h2>
@@ -58,7 +58,7 @@
 
     </div>
 </section>
-
+<!-- ================== RAPOARTE ================== -->
 <div class="reports-container">
 
     <!-- RAPORT 1 -->
@@ -195,7 +195,6 @@
     </div>
 </div>
 
-
 <script>
     function toggleReport(id, btn) {
         const el = document.getElementById(id);
@@ -211,8 +210,8 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const salariiData = [[${salariiJoin}]];
-
+    const salariiData = /*[[${salariiJoin}]]*/ [];
+    /*]]>*/
     if (salariiData && salariiData.length > 0) {
 
         const labels = salariiData.map(s => s.Nume + " " + s.Prenume);

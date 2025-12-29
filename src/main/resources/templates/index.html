@@ -99,6 +99,40 @@
     </div>
 </section>
 
+<section class="section active-medics-section" style="background:rgb(0,2,3,0)">
+    <div class="container glass">
+
+        <h2>Medici activi astăzi</h2>
+        <p>Medicii care au programări în curs.</p>
+
+        <table class="active-medics-table">
+            <thead>
+            <tr>
+                <th>Medic</th>
+                <th>Specializare</th>
+                <th>Programări</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${mediciActivi}">
+                <td th:text="${m.nume + ' ' + m.prenume}"></td>
+                <td th:text="${m.specializare}"></td>
+                <td th:text="${m.nrProgramari}"></td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(mediciActivi)}">
+                <td colspan="3" style="text-align:center;">
+                    Nu există programări astăzi.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
+
+
+
 <section style="padding-top:2rem;background-image: url(https://i.pinimg.com/736x/17/43/21/174321b860839f260a096c0dd2e3ffaf.jpg);min-height: 80vh">
         <div class="appointment-form-container">
             <div class="side-block">
