@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rapoarte clinică</title>
-
-    <!-- CSS navbar (IMPORTANT) -->
     <link rel="stylesheet" href="/css/listPacients.css">
-    <!-- CSS rapoarte -->
     <link rel="stylesheet" href="/css/rapoarte.css">
 </head>
 <body>
@@ -41,7 +38,27 @@
 
 <h1>Rapoarte clinică</h1>
 
-<!-- ================== RAPOARTE ================== -->
+<section class="charts-section">
+
+    <h2>Dashboard salarii</h2>
+
+    <div class="charts-grid">
+
+        <!-- GRAFIC 1 -->
+        <div class="chart-card">
+            <h3>Salarii medici</h3>
+            <canvas id="chartSalarii"></canvas>
+        </div>
+
+        <!-- GRAFIC 2 -->
+        <div class="chart-card">
+            <h3>Salariu vs număr programări</h3>
+            <canvas id="chartActivitate"></canvas>
+        </div>
+
+    </div>
+</section>
+
 <div class="reports-container">
 
     <!-- RAPORT 1 -->
@@ -176,8 +193,8 @@
             </table>
         </div>
     </div>
-
 </div>
+
 
 <script>
     function toggleReport(id, btn) {
@@ -188,6 +205,55 @@
         el.style.display = hidden ? "block" : "none";
         btn.textContent = hidden ? "Ascunde raport" : "Genereaza raport";
     }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const salariiData = [[${salariiJoin}]];
+
+    if (salariiData && salariiData.length > 0) {
+
+        const labels = salariiData.map(s => s.Nume + " " + s.Prenume);
+        const salarii = salariiData.map(s => s.Salariu);
+        const programari = salariiData.map(s => s.nrProgramari);
+
+        // GRAFIC 1 – Salarii
+        new Chart(document.getElementById("chartSalarii"), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Salarii medici',
+                    data: salarii,
+                    backgroundColor: '#4a90e2'
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // GRAFIC 2 – Activitate
+        new Chart(document.getElementById("chartActivitate"), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Număr programări',
+                    data: programari,
+                    borderColor: '#e67e22',
+                    backgroundColor: 'rgba(230,126,34,0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
+    /*]]>*/
 </script>
 
 </body>

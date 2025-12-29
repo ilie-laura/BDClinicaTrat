@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RapoarteRepository {
@@ -90,4 +91,24 @@ public class RapoarteRepository {
             return m;
         });
     }
+
+
+    public List<Map<String, Object>> salariiMediciCuProgramari(long minSalariu) {
+        String sql = """
+SELECT 
+            m.MedicID,
+            m.Nume,
+            m.Prenume,
+            m.Salariu,
+            COUNT(p.ProgramareID) AS nrProgramari
+        FROM Medic m
+        LEFT JOIN Programare p ON m.MedicID = p.MedicID
+        WHERE m.Salariu >= ?
+        GROUP BY m.MedicID, m.Nume, m.Prenume, m.Salariu
+        ORDER BY m.Salariu DESC
+    """;
+
+        return jdbcTemplate.queryForList(sql, minSalariu);
+    }
+
 }
