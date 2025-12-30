@@ -6,23 +6,25 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static java.sql.Types.NULL;
 
 @Repository
 public class MedicRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private  final JdbcTemplate jdbcTemplate;
+
     private static final List<String> ALLOWED_FIELDS = List.of("Nume", "Prenume", "Specializare","Salariu","Sex");
-    public MedicRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public MedicRepository( JdbcTemplate jdbcTemplate) {
+this.jdbcTemplate = jdbcTemplate;
     }
+    
 
 
     public Optional<Medic> findByMedicID(int medicID) {
@@ -113,8 +115,8 @@ public class MedicRepository {
                     p.getSex() != 0 ? String.valueOf(p.getSex()) : null,
                     p.getCNP(),
                     p.getDataNasterii() != null
-                            ? java.sql.Date.valueOf(p.getDataNasterii())
-                            : java.sql.Date.valueOf(LocalDate.now())
+                            ? Date.valueOf(p.getDataNasterii())
+                            : Date.valueOf(LocalDate.now())
 
             );
         } catch (DuplicateKeyException e) {
@@ -147,5 +149,50 @@ public class MedicRepository {
         );
         return pacient;
     }
+    public Map<Integer, Integer> findNrProgramariPerMedic() {
+
+        String sql = """
+        SELECT m.MedicID, COUNT(pr.ProgramareID) AS nr_programari
+        FROM Medic m
+        LEFT JOIN Programare pr ON pr.MedicID = m.MedicID
+        GROUP BY m.MedicID
+    """;
+
+        return jdbcTemplate.query(sql, rs -> {
+            Map<Integer, Integer> map = new HashMap<>();
+            while (rs.next()) {
+                map.put(rs.getInt("MedicID"), rs.getInt("nr_programari"));
+            }
+            return map;
+        });
+    }
+    public Map<Integer, List<String>> findPacientiPerMedic() {
+
+        String sql = """
+        SELECT m.MedicID, p.Nume, p.Prenume
+        FROM Medic m
+        LEFT JOIN Programare pr ON pr.MedicID = m.MedicID
+        LEFT JOIN Pacient p ON p.PacientID = pr.PacientID
+        ORDER BY m.MedicID
+    """;
+
+        return jdbcTemplate.query(sql, rs -> {
+            Map<Integer, List<String>> map = new HashMap<>();
+
+            while (rs.next()) {
+                int medicId = rs.getInt("MedicID");
+                String nume = rs.getString("Nume");
+                String prenume = rs.getString("Prenume");
+
+                map.computeIfAbsent(medicId, k -> new ArrayList<>());
+
+                if (nume != null && prenume != null) {
+                    map.get(medicId).add(nume + " " + prenume);
+                }
+            }
+            return map;
+        });
+    }
+
 
 }

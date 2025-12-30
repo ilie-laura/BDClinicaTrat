@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PacientJdbcRepository {
@@ -127,5 +130,25 @@ public class PacientJdbcRepository {
         return pacient;
     }
 
+    public Map<Integer, LocalDateTime> findUltimaProgramarePerPacient() {
+
+        String sql = """
+        SELECT PacientID, MAX(data_Programare) AS ultima_programare
+        FROM Programare
+        GROUP BY PacientID
+    """;
+
+        return jdbcTemplate.query(sql, rs -> {
+            Map<Integer, LocalDateTime> result = new HashMap<>();
+            while (rs.next()) {
+                Integer pacientId = rs.getInt("PacientID");
+                Timestamp ts = rs.getTimestamp("ultima_programare");
+                if (ts != null) {
+                    result.put(pacientId, ts.toLocalDateTime());
+                }
+            }
+            return result;
+        });
+    }
 
 }

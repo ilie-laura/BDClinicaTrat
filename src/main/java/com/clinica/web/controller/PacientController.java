@@ -1,23 +1,28 @@
 package com.clinica.web.controller;
 
 import com.clinica.web.model.Pacient;
+import com.clinica.web.repository.PacientJdbcRepository;
 import com.clinica.web.service.PacientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 
 public class PacientController {
 
     private final PacientService pacientService;
+    private final PacientJdbcRepository pacientJdbcRepository;
 
     @Autowired
-    public PacientController(PacientService pacientService) {
+    public PacientController(PacientService pacientService, PacientJdbcRepository pacientJdbcRepository) {
         this.pacientService = pacientService;
+        this.pacientJdbcRepository = pacientJdbcRepository;
     }
 
     @GetMapping("/listPacients")
@@ -49,7 +54,9 @@ public class PacientController {
         }
 
         model.addAttribute("pacienti", pacienti);
-
+        Map<Integer, LocalDateTime> ultimeleProgramari =
+                pacientJdbcRepository.findUltimaProgramarePerPacient();
+        model.addAttribute("ultimeleProgramari", ultimeleProgramari);
         return "listPacients";
     }
     @GetMapping("/addPacient")

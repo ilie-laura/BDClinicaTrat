@@ -46,6 +46,7 @@
         <option value="Oras" th:selected="${field == 'Oras'}">Oraș</option>
         <option value="Sex" th:selected="${field == 'Sex'}">Sex</option>
 
+
     </select>
 
 
@@ -69,6 +70,8 @@
         <th>Nume</th>
         <th>Prenume</th>
         <th>Oraș</th>
+        <th>Ultima programare</th>
+
     </tr>
     </thead>
     <tbody>
@@ -115,6 +118,11 @@
         <td th:text="${p.nume}"></td>
         <td th:text="${p.prenume}"></td>
         <td th:text="${p.oras}"></td>
+        <td th:text="${ultimeleProgramari[p.pacientID] != null
+    ? #temporals.format(ultimeleProgramari[p.pacientID], 'dd.MM.yyyy HH:mm')
+    : '-'}">
+        </td>
+
     </tr>
     <tr th:if="${#lists.isEmpty(pacienti)}">
         <td colspan="6">No results found</td>

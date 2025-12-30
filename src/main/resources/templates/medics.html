@@ -68,7 +68,8 @@
         <th>Prenume</th>
         <th>Specializare</th>
         <th>Salariu</th>
-        <th>Sex</th>
+        <th>Pacienti</th>
+        <th>Nr programari</th>
     </tr>
     </thead>
     <body>
@@ -116,7 +117,18 @@
         <td th:text="${p.prenume}"></td>
         <td th:text="${p.specializare}">/td>
         <td th:text="${p.salariu}"></td>
-        <td th:text="${p.sex}"></td>
+<!--        <td th:text="${p.sex}"></td>-->
+        <td>
+    <span th:if="${pacientiPerMedic[p.medicID] != null}"
+          th:text="${#lists.size(pacientiPerMedic[p.medicID]) + ' pacienti'}">
+    </span>
+            <span th:if="${pacientiPerMedic[p.medicID] == null}">
+        0 pacienti
+    </span>
+        </td>
+
+        <td th:text="${nrProgramari[p.medicID] != null ? nrProgramari[p.medicID] : 0}"></td>
+
     </tr>
     <tr th:if="${#lists.isEmpty(medici)}">
         <td colspan="4" style="text-align: center;">Nu există medici.</td>

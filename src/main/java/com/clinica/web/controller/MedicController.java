@@ -4,12 +4,15 @@ import com.clinica.web.dto.MedicDto;
 import com.clinica.web.dto.PacientDto;
 import com.clinica.web.model.Medic;
 import com.clinica.web.model.Pacient;
+import com.clinica.web.repository.MedicRepository;
 import com.clinica.web.service.MedicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @Controller
 public class MedicController {
     private final MedicService medicService;
@@ -40,6 +43,14 @@ public class MedicController {
         } else {
             medici = medicService.findAll(currentDir, field);
         }
+
+        Map<Integer, Integer> nrProgramari =
+                medicService.findNrProgramariPerMedic();
+        model.addAttribute("nrProgramari", nrProgramari);
+        Map<Integer, List<String>> pacientiPerMedic =
+                medicService.findPacientiPerMedic();
+
+        model.addAttribute("pacientiPerMedic", pacientiPerMedic);
 
         model.addAttribute("medici", medici);
         return "medics";

@@ -7,6 +7,7 @@ import com.clinica.web.service.MedicService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 @Service
 public class MedicServiceImpl implements MedicService {
@@ -61,5 +62,14 @@ return medicDto;
     @Override
     public Medic findById(Long medicId) {
         return medicRepository.findById(medicId);
+    }
+
+    @Override
+    public Map<Integer, Integer> findNrProgramariPerMedic() {
+        return medicRepository.findNrProgramariPerMedic();
+    }
+    @Override
+    public Map<Integer, List<String>> findPacientiPerMedic() {
+        return medicRepository.findPacientiPerMedic();
     }
 }
