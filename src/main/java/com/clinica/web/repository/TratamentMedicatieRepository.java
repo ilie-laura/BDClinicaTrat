@@ -16,7 +16,7 @@ import java.util.Optional;
 public class TratamentMedicatieRepository  {
   //  @Override
   private final JdbcTemplate jdbcTemplate;
-    private static final List<String> ALLOWED_FIELDS = List.of("Doza", "Frecventa");
+    private static final List<String> ALLOWED_FIELDS = List.of("Doza", "Frecventa","doza","frecventa");
     public TratamentMedicatieRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

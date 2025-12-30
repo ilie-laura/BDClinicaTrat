@@ -70,13 +70,13 @@ public class TratamentMedicatieController {
 
     @GetMapping("/tratament_medicatie/update/{id}/{id2}")
     public String updateTratMed(@PathVariable Long id,@PathVariable Long id2, Model model) {
-        TratamentMedicatie pacient =tratamentMedicatieService.findById(id,id2);
-        model.addAttribute("pacient", pacient);
+        TratamentMedicatie p =tratamentMedicatieService.findById(id,id2);
+        model.addAttribute("tratamentMedicatie", p);
         return "updateTratMed";
     }
 
 
-    @PostMapping("/tratament_medicatie/update/{id}/{id2}")
+    @PostMapping("/tratament_medicatie/update")
     public String update(@ModelAttribute TratamentMedicatie pacient) {
         tratamentMedicatieService.update(pacient);
         return "redirect:/tratament_medicatie";
