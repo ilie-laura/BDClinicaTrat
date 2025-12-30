@@ -18,6 +18,18 @@
         <button type="submit" class="register-btn">Register</button>
         <a href="/login" class="login-btn">Login</a>
     </div>
+
+
 </form>
+<div th:if="${error}" class="error-popup">
+    <span th:text="${error}"></span>
+</div>
+<script>
+    setTimeout(() => {
+        const error = document.querySelector('.error-popup');
+        if (error) error.style.display = 'none';
+    }, 4000);
+</script>
+
 </body>
 </html>

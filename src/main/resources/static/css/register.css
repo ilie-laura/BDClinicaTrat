@@ -128,3 +128,42 @@ button.register-btn:hover {
         width: 100%;
     }
 }
+/* Error message box */
+.error-popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+
+    width: auto;
+    min-width: 300px;
+    max-width: 600px;
+
+    background-color: #ffe6e6;
+    color: #8b0000;
+    border-left: 6px solid #e74c3c;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.25);
+    animation: fadeInError 0.4s ease-in-out;
+}
+
+
+.error-popup::before {
+    content: "⚠ ";
+    font-weight: 600;
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

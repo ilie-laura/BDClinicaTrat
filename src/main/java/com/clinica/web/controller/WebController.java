@@ -32,10 +32,8 @@ public class WebController {
 
             String username = auth.getName();
 
-            // Debugging: Arată numele în consolă
             System.out.println("--- UTILIZATOR LOGAT: " + username + " ---");
 
-            // Setează variabila NUMAI dacă utilizatorul este logat
             model.addAttribute("currentUsername", username);
 
         } else {
