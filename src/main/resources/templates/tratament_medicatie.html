@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/css/listPacients.css">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Tratament Medicatie</title>
 </head>
 <body>
@@ -36,28 +37,131 @@
 </nav>
 
 <h1>Lista Tratament Medicatie</h1>
+<form class="search-form" method="get" th:action="@{/tratament_medicatie}" >
+    <label for="field">Caută după:</label>
+    <select name="field" id="field" th:value="${field}">
+        <option value="doza" th:selected="${field == 'Doza'}">Doza</option>
+        <option value="frecventa" th:selected="${field == 'Frecventa'}">Frecventa</option>
+    </select>
 
+    <input type="text" name="value" placeholder="Introduceți valoarea">
+    <input type="hidden" name="dir" th:value="${dir}">
+    <button type="submit">Search</button>
+    <button type="submit" name="order" value="true">Order by
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"/>
+        </svg>
+    </button>
+    <a th:href="@{/addTratMed}" class="btn add-btn" >Adaugă medicatie</a>
+</form>
 <table>
     <thead>
     <tr>
-        <th>ID Tratament</th>
-        <th>ID Medicament</th>
+<!--        <th>ID Tratament</th>-->
+<!--        <th>ID Medicament</th>-->
+        <th>Modif</th>
+                <th>ID Tratament</th>
+                <th>ID Medicament</th>
         <th>Doza</th>
         <th>Frecventa</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="tm : ${tratamentMedicatie}">
-        <td th:text="${tm.tratamentID}"></td>
-        <td th:text="${tm.medicamentID}"></td>
-        <td th:text="${tm.doza}"></td>
-        <td th:text="${tm.frecventa}"></td>
+    <tr th:each="p : ${tratamentMedicatie}">
+
+        <td class="modif-cell">
+            <form th:action="@{/tratament_medicatie/delete/{tid}/{mid}(
+        tid=${p.tratament.tratamentId},
+        mid=${p.medicament.medicamentId}
+    )}"
+                  method="get"
+                  class="delete-form">
+
+
+            <button type="button"
+                        class="modif-button"
+                        onclick="togglePopup(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="16" height="16"
+                         style="cursor:pointer"
+                         class="bi bi-trash3"
+                         viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                    </svg></button>
+                /
+                <a th:href="@{/tratament_medicatie/update/{tid}/{mid}(
+        tid=${p.tratament.tratamentId},
+        mid=${p.medicament.medicamentId}
+    )}"
+                   class="modif-button">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                    </svg>
+
+                </a>
+                <div class="table-popup">
+                    <p>Ștergi medicatia?</p>
+                    <div class="popup-actions">
+                        <button type="submit" class="confirm-btn">Da</button>
+                        <button type="button"
+                                class="cancel-btn"
+                                onclick="closePopup(this)">Nu</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </td>
+        <td th:text="${p.tratament.tratamentId}"></td>
+        <td th:text="${p.medicament.medicamentId}"></td>
+        <td th:text="${p.doza}"></td>
+        <td th:text="${p.frecventa}"></td>
     </tr>
     <tr th:if="${#lists.isEmpty(tratamentMedicatie)}">
         <td colspan="4" style="text-align: center;">Nu există tratamente pentru medicamente.</td>
     </tr>
     </tbody>
 </table>
+<div class="table-popup">
+    <p>Stergi medicatia?</p>
+    <div class="popup-actions">
+        <button type="submit" class="confirm-btn">Da</button>
+        <button type="button"
+                class="cancel-btn"
+                onclick="closePopup(this)">Nu</button>
+    </div>
+</div>
+
+<script>
+    function togglePopup(button) {
+
+        document.querySelectorAll('.table-popup').forEach(p => {
+            if (!button.closest('form').contains(p)) {
+                p.style.display = 'none';
+            }
+        });
+
+        const popup = button.closest('form').querySelector('.table-popup');
+        popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function closePopup(button) {
+        const popup = button.closest('.table-popup');
+        popup.style.display = 'none';
+    }
+
+    // click în afara tabelului închide popup-ul
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.delete-form')) {
+            document.querySelectorAll('.table-popup').forEach(p => {
+                p.style.display = 'none';
+            });
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -12,11 +12,11 @@
 
 <h1>Editează tratament</h1>
 <form class="update-form"
-      th:action="@{/tratamente/update/{id}(id=${tratament.tratamentID})}"
+      th:action="@{/tratamente/update/{id}(id=${tratament.tratamentId})}"
       th:object="${tratament}"
       method="post">
 
-    <input type="hidden" th:field="*{tratamentID}"/>
+    <input type="hidden" th:field="*{tratamentId}"/>
 
     <label>Nume</label>
     <input type="text" th:field="*{nume}" required/>

@@ -65,7 +65,7 @@ public class MedicamentRepository {
 
     private Medicament mapRow(ResultSet rs, int rowNum) throws SQLException {
         Medicament m = new Medicament();
-        m.setMedicamentID(rs.getInt("MedicamentID"));
+        m.setMedicamentId(rs.getInt("MedicamentID"));
         m.setNume(rs.getString("Nume"));
         m.setStoc(rs.getInt("Stoc"));
         m.setPret(rs.getInt("Pret"));
@@ -124,7 +124,7 @@ public class MedicamentRepository {
                 pacient.getNume(),
                pacient.getStoc(),
                 pacient.getPret(),
-                pacient.getMedicamentID()
+                pacient.getMedicamentId()
         );
         return pacient;
     }

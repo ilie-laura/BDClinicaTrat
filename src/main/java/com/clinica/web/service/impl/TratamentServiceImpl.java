@@ -48,7 +48,7 @@ public class TratamentServiceImpl implements TratamentService {
 
     private TratamentDto mapToDto(Tratament t) {
         return TratamentDto.builder()
-                .TratamentID(t.getTratamentID())
+                .TratamentID(t.getTratamentId())
                 .Nume(t.getNume())
                 .Data_inceput(t.getData_inceput())
                 .Durata_tratament(t.getDurata_tratament())

@@ -14,12 +14,12 @@
 <h1>Editează medicament</h1>
 
 <form class="update-form"
-      th:action="@{/medicaments/update/{id}(id=${medicament.medicamentID})}"
+      th:action="@{/medicaments/update/{id}(id=${medicament.medicamentId})}"
       th:object="${medicament}"
       method="post">
 
     <!-- ID ascuns -->
-    <input type="hidden" th:field="*{medicamentID}"/>
+    <input type="hidden" th:field="*{medicamentId}"/>
 
     <label>Nume</label>
     <input type="text" th:field="*{nume}" required/>

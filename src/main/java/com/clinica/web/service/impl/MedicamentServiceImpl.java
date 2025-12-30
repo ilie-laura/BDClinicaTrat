@@ -44,7 +44,7 @@ public class MedicamentServiceImpl implements MedicamentService {
 
     private MedicamentDto mapToMedicamentDto(Medicament medicament) {
         return MedicamentDto.builder()
-                .medicamentID(medicament.getMedicamentID())
+                .medicamentID(medicament.getMedicamentId())
                 .nume(medicament.getNume())
                 .data_expirarii(LocalDate.from(medicament.getData_expirarii()))
                 .pret(medicament.getPret())

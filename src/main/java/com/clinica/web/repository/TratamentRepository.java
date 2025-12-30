@@ -23,7 +23,7 @@ public class TratamentRepository {
     // mapare ResultSet → Tratament
     private Tratament mapRow(ResultSet rs, int rowNum) throws SQLException {
         Tratament t = new Tratament();
-        t.setTratamentID(rs.getInt("TratamentID"));
+        t.setTratamentId(rs.getInt("TratamentID"));
         t.setNume(rs.getString("Nume"));
         t.setDurata_tratament(rs.getString("Durata_tratament"));
 
@@ -107,7 +107,7 @@ public class TratamentRepository {
                 pacient.getNume(),
                 pacient.getData_inceput(),
                 pacient.getDurata_tratament(),
-                pacient.getTratamentID()
+                pacient.getTratamentId()
         );
         return pacient;
     }

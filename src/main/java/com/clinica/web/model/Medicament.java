@@ -18,7 +18,7 @@ import java.util.Set;
 public class Medicament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int medicamentID;
+    private int medicamentId;
     private String Nume;
     private int Stoc;
     private int Pret;
@@ -27,4 +27,13 @@ public class Medicament {
     // Relația 1-la-M: Un Medicament este parte din Multe structuri de Tratament
     @OneToMany(mappedBy = "medicament")
     private Set<TratamentMedicatie> inclusInTratamente = new HashSet<>();
+
+    public void setMedicamentId(int medicamentID) {
+        this.medicamentId = medicamentID;
+    }
+
+
+    public int getMedicamentId() {
+        return medicamentId;
+    }
 }

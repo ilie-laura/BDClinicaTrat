@@ -71,7 +71,7 @@ public class PacientController {
     }
 
     @GetMapping("/listPacients/update/{id}")
-    public String updatePacient(@PathVariable Long id, Model model) {
+    public String updateTratMed(@PathVariable Long id, Model model) {
         Pacient pacient = pacientService.findById(id);
         model.addAttribute("pacient", pacient);
         return "updatePacient";

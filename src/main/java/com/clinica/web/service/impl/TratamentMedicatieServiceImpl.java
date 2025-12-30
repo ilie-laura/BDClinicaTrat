@@ -1,6 +1,7 @@
 package com.clinica.web.service.impl;
 
 import com.clinica.web.dto.TratamentMedicatieDto;
+import com.clinica.web.model.Pacient;
 import com.clinica.web.model.TratamentMedicatie;
 import com.clinica.web.repository.TratamentMedicatieRepository;
 import com.clinica.web.service.TratamentMedicatieService;
@@ -17,19 +18,41 @@ public class TratamentMedicatieServiceImpl implements TratamentMedicatieService 
     }
 
     @Override
-    public List<TratamentMedicatieDto> findAllTratamentMedicaties() {
-        List<TratamentMedicatie> tratamentMedicaties = tratamentMedicatieRepository.findAll();
-        return tratamentMedicaties.stream()
-                .map(this::mapToTratamentMedicatieDto)
-                .collect(Collectors.toList());
+    public List<TratamentMedicatie> findAll(Boolean dir,String field) {
+       return tratamentMedicatieRepository.findAll(dir,field);
+    }
+
+    @Override
+    public List<TratamentMedicatie> search(String field, String value, Boolean dir) {
+        return tratamentMedicatieRepository.search(field, value,dir);
     }
 
     private TratamentMedicatieDto mapToTratamentMedicatieDto(TratamentMedicatie tratamentMedicatie) {
         return TratamentMedicatieDto.builder()
-                .tratamentID(tratamentMedicatie.getTratament().getTratamentID())
-                .medicamentID(tratamentMedicatie.getMedicament().getMedicamentID())
+                .tratamentID(tratamentMedicatie.getTratament().getTratamentId())
+                .medicamentID(tratamentMedicatie.getMedicament().getMedicamentId())
                 .Doza(tratamentMedicatie.getDoza())
                 .Frecventa(tratamentMedicatie.getFrecventa())
                 .build();
     }
+
+
+    @Override
+    public TratamentMedicatie save(TratamentMedicatie pacient) {
+        return tratamentMedicatieRepository.save(pacient);
+    }
+    @Override
+    public void deleteById(Long pacientId,Long  medicamentId) {
+        tratamentMedicatieRepository.deleteById(pacientId,medicamentId);
+    }
+    @Override
+    public TratamentMedicatie findById(Long id,Long id2) {
+        return tratamentMedicatieRepository.findById(id,id2);
+    }
+
+    @Override
+    public TratamentMedicatie update(TratamentMedicatie pacient) {
+        return tratamentMedicatieRepository.update(pacient);
+    }
+
 }
