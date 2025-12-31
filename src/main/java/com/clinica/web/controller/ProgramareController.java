@@ -3,8 +3,11 @@ package com.clinica.web.controller;
 import com.clinica.web.dto.PacientDto;
 import com.clinica.web.dto.ProgramareDto;
 import com.clinica.web.dto.TratamentDto;
+import com.clinica.web.model.Medic;
+import com.clinica.web.model.Pacient;
 import com.clinica.web.model.Programare;
 import com.clinica.web.model.Tratament;
+import com.clinica.web.repository.MedicRepository;
 import com.clinica.web.service.PacientService;
 import com.clinica.web.service.ProgramareService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,14 @@ import java.util.Optional;
 @Controller
 public class ProgramareController {
     private final ProgramareService programareService;
+    private final MedicRepository medicRepository;
+    private final PacientService pacientService;
 
     @Autowired
-    public ProgramareController(ProgramareService programareService) {
+    public ProgramareController(ProgramareService programareService, MedicRepository medicRepository, PacientService pacientService) {
         this.programareService = programareService;
+        this.medicRepository = medicRepository;
+        this.pacientService = pacientService;
     }
     @GetMapping("/programari")
 
@@ -57,13 +64,21 @@ public class ProgramareController {
 
             programari = programareService.findAll(currentDir,field);
         }
+
         model.addAttribute("programari", programari);
         return "programari";
     }
 
     @GetMapping("/addProgramare")
     public String addProgramare(Model model) {
+
         model.addAttribute("programare", new ProgramareDto());
+
+        List<Pacient> pacienti = pacientService.findAll(null,null);
+        List<Medic>medici=medicRepository.findAll(null,null);
+        model.addAttribute("medici",medici);
+        model.addAttribute("pacienti", pacienti);
+
         return "addProgramare";
     }
     @PostMapping("/addProgramare")

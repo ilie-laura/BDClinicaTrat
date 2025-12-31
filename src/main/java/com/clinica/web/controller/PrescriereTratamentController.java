@@ -2,7 +2,9 @@ package com.clinica.web.controller;
 
 import com.clinica.web.dto.PrescriereTratamentDto;
 import com.clinica.web.dto.TratamentDto;
+import com.clinica.web.model.Tratament;
 import com.clinica.web.service.PrescriereTratamentService;
+import com.clinica.web.service.TratamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,14 +13,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class PrescriereTratamentController {
     private final PrescriereTratamentService prescriereTratamentService;
+    private final TratamentService tratamentService;
+
     @Autowired
-    public PrescriereTratamentController (PrescriereTratamentService prescriereTratamentService) {
+    public PrescriereTratamentController (PrescriereTratamentService prescriereTratamentService, TratamentService tratamentService) {
         this.prescriereTratamentService = prescriereTratamentService;
+        this.tratamentService = tratamentService;
     }
     @GetMapping("/prescrieri")
     public String prescrieri(Model model){
@@ -35,6 +41,8 @@ public class PrescriereTratamentController {
     @GetMapping("/addPrescriere")
     public String addPrescriere(Model model) {
         model.addAttribute("prescrieri", new PrescriereTratamentDto());
+
+
         return "addPrescriere";
     }
     // Salvare

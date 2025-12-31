@@ -6,6 +6,7 @@ import com.clinica.web.repository.ProgramareRepository;
 import com.clinica.web.service.ProgramareService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,5 +98,26 @@ public class ProgramareServiceImpl implements ProgramareService {
                 .durataProgramare(p.getDurata_programare())
                 .build();
     }
+    @Override
+    public void creeazaProgramare(String cnp,
+                                  int medicID,
+                                  LocalDate appointmentDate,
+                                  String motiv) {
 
+        int durata = durataDupaMotiv(motiv);
+
+        programareRepository.creeazaProgramareDupaCNP(
+                cnp, medicID, appointmentDate, durata, motiv
+        );
+    }
+
+    private int durataDupaMotiv(String motiv) {
+        return switch (motiv) {
+            case "Consultatie scurta" -> 10;
+            case "Consultatie standard" -> 20;
+            case "Control" -> 15;
+            case "Investigatie" -> 30;
+            default -> throw new IllegalArgumentException("Motiv invalid");
+        };
+    }
 }

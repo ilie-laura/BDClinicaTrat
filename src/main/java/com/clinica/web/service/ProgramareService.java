@@ -4,6 +4,7 @@ import com.clinica.web.dto.ProgramareDto;
 import com.clinica.web.model.Programare;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,4 +20,6 @@ public interface ProgramareService {
     public void update(ProgramareDto dto);
 //
    ProgramareDto findDtoById(int id);
+
+    void creeazaProgramare(String cnp, int medicID, LocalDate appointmentDate, String motiv);
 }

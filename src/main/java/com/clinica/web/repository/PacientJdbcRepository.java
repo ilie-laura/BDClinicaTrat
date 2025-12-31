@@ -150,5 +150,32 @@ public class PacientJdbcRepository {
             return result;
         });
     }
+    public void creeazaProgramareDupaCNP(
+            String cnp,
+            int medicId,
+            LocalDate data,
+            int durata,
+            String motiv
+    ) {
 
+        String sql = """
+            INSERT INTO Programare (PacientID, MedicID, Data_Programare, Durata_programare)
+            SELECT p.PacientID, ?, ?, ?
+            FROM Pacient p
+            WHERE p.CNP = ?
+        """;
+
+        int rows = jdbcTemplate.update(
+                sql,
+                medicId,
+                Timestamp.valueOf(data.atStartOfDay()),
+                durata,
+                motiv,
+                cnp
+        );
+
+        if (rows == 0) {
+            throw new IllegalArgumentException("Pacientul cu acest CNP nu există");
+        }
+    }
 }

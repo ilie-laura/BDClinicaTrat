@@ -13,19 +13,21 @@
 
     <h3>Adaugă Tratament – Medicament</h3>
 
-    <label for="tratamentId">ID Tratament:</label>
-    <input type="number"
-           th:field="*{tratament.tratamentId}"
-           id="tratamentId"
-           placeholder="Introduceți ID tratament"
-           required />
+    <label for="tratamentId">Tratament:</label>
+    <select th:field="*{tratament.tratamentId}" id="tratamentId" required>
+        <option th:each="t : ${tratamente}"
+                th:value="${t.tratamentID}"
+                th:text="${t.nume + ' (' + t.durata_tratament + ')'}">
+        </option>
+    </select>
 
-    <label for="medicamentId">ID Medicament:</label>
-    <input type="number"
-           th:field="*{medicament.medicamentId}"
-           id="medicamentId"
-           placeholder="Introduceți ID medicament"
-           required />
+    <label for="medicamentId">Medicament:</label>
+    <select th:field="*{medicament.medicamentId}" id="medicamentId" required>
+        <option th:each="m : ${medicamente}"
+                th:value="${m.medicamentID}"
+                th:text="${m.nume + ' (' + m.getStoc() + ')'}">
+        </option>
+    </select>
 
     <label for="doza">Doză:</label>
     <input type="number"

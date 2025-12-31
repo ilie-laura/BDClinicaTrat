@@ -10,11 +10,25 @@
 <form th:action="@{/addProgramare}" th:object="${programare}" method="post">
     <h3>Adaugă Programare</h3>
 
-    <label for="pacientID">Pacient ID:</label>
-    <input type="number" th:field="*{pacientId}" id="pacientID" placeholder="Introduceți ID pacient" required />
+<!--    <label for="pacientID">Pacient ID:</label>-->
+<!--    <input type="number" th:field="*{pacientId}" id="pacientID" placeholder="Introduceți ID pacient" required />-->
+    <label for="pacientID">Pacient:</label>
+    <select th:field="*{pacientId}" id="pacientID" required>
+    <option th:each="p : ${pacienti}"
+            th:value="${p.pacientID}"
+            th:text="${p.nume + ' ' + p.prenume + ' (CNP: ' + p.cnp + ')'}">
+    </option>
+</select>
+
+
 
     <label for="medicID">Medic ID:</label>
-    <input type="number" th:field="*{medicId}" id="medicID" placeholder="Introduceți ID medic" required />
+    <select th:field="*{medicId}" id="medicID" required>
+        <option th:each="m : ${medici}"
+                th:value="${m.medicID}"
+                th:text="${m.nume +' '+ m.specializare}">
+        </option>
+    </select>
 
     <label for="data_programare">Data programării:</label>
     <input type="datetime-local" th:field="*{dataProgramare}" id="data_programare" required />

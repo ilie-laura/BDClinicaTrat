@@ -665,3 +665,56 @@ a {
 .active-medics-table th {
     background: #aabaf8;
 }
+
+
+.input-group select {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #ffffff;
+    color: #232323;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+
+.input-group {
+    position: relative;
+}
+
+.input-group::after {
+    content: "▼";
+    position: absolute;
+    right: 12px;
+    top: 38px;
+    font-size: 0.7rem;
+    color: #555;
+    pointer-events: none;
+}
+
+/* focus */
+.input-group select:focus {
+    outline: none;
+    border-color: #2e86de;
+    box-shadow: 0 0 0 2px rgba(46, 134, 222, 0.2);
+}
+
+/* hover */
+.input-group select:hover {
+    border-color: #2e86de;
+}
+
+.input-group select option {
+    padding: 10px;
+    font-size: 0.95rem;
+}
+
+/* disabled option  */
+.input-group select option[value=""] {
+    color: #999;
+}

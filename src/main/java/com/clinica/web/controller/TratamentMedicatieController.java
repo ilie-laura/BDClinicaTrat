@@ -1,7 +1,13 @@
 package com.clinica.web.controller;
+import com.clinica.web.dto.MedicamentDto;
+import com.clinica.web.dto.TratamentDto;
 import com.clinica.web.dto.TratamentMedicatieDto;
+import com.clinica.web.model.Medicament;
 import com.clinica.web.model.Pacient;
+import com.clinica.web.model.Tratament;
 import com.clinica.web.model.TratamentMedicatie;
+import com.clinica.web.service.MedicamentService;
+import com.clinica.web.service.TratamentService;
 import org.springframework.ui.Model;
 import com.clinica.web.service.TratamentMedicatieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +22,14 @@ import java.util.List;
 @Controller
 public class TratamentMedicatieController {
     private final TratamentMedicatieService tratamentMedicatieService;
+    private final TratamentService tratamentService;
+    private final MedicamentService medicamentService;
 
     @Autowired
-    public TratamentMedicatieController(TratamentMedicatieService tratamentMedicatieService) {
+    public TratamentMedicatieController(TratamentMedicatieService tratamentMedicatieService, TratamentService tratamentService, MedicamentService medicamentService) {
         this.tratamentMedicatieService = tratamentMedicatieService;
+        this.tratamentService = tratamentService;
+        this.medicamentService = medicamentService;
     }
 
     @GetMapping("/tratament_medicatie")
@@ -52,7 +62,17 @@ public class TratamentMedicatieController {
 
     @GetMapping("/addTratMed")
     public String showAddForm(Model model) {
-        model.addAttribute("tratamentMedicatie", new TratamentMedicatie());
+        TratamentMedicatie tm = new TratamentMedicatie();
+        tm.setTratament(new Tratament());
+        tm.setMedicament(new Medicament());
+
+        model.addAttribute("tratamentMedicatie", tm);
+
+        List<TratamentDto> tratamente = tratamentService.findAll(null, null);
+        List<MedicamentDto> medicamente = medicamentService.findAll(null, null);
+
+        model.addAttribute("tratamente", tratamente);
+        model.addAttribute("medicamente", medicamente);
         return "addTratMed";
     }
     @PostMapping("/addTratMed")

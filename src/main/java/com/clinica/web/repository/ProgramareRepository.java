@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -16,7 +17,7 @@ public class ProgramareRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private static final List<String> ALLOWED_FIELDS =
-            List.of("PacientID", "pacientID", "MedicID", "medicID",
+            List.of("PacientID", "pacientID","pacientId", "MedicID", "medicID",
                     "Data_programare", "data_programare",
                     "Durata_programare", "durata_programare");
 
@@ -36,9 +37,9 @@ public class ProgramareRepository {
 
         String sql;
         if (dir==null || dir==true)
-            sql = "SELECT * FROM Programare WHERE CONVERT(VARCHAR(19), \" + field + \", 120) LIKE ? ORDER BY "+field+" ASC";
+            sql = "SELECT * FROM Programare WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
         else
-            sql="SELECT * FROM Programare WHERE CONVERT(VARCHAR(19), \" + field + \", 120) LIKE ? ORDER BY "+field+" DESC";
+            sql="SELECT * FROM Programare WHERE RTRIM(" + field + ") LIKE ? ORDER BY " +field+ " DESC";
 
         return jdbcTemplate.query(
                 sql,
@@ -95,7 +96,7 @@ public class ProgramareRepository {
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Programare p = new Programare();
             p.setProgramareID(rs.getInt("ProgramareID"));
-            p.setPacientID(rs.getInt("PacientID"));
+            p.setPacientID(rs.getInt("PacientId"));
             p.setMedicID(rs.getInt("MedicID"));
             p.setData_programare(rs.getTimestamp("Data_programare").toLocalDateTime());
             p.setDurataProgramare(rs.getString("Durata_programare"));
@@ -137,4 +138,28 @@ public class ProgramareRepository {
         );
         return pacient;
     }
+
+    public void creeazaProgramareDupaCNP(String cnp, int medicID, LocalDate appointmentDate, int durata, String motiv) {
+        {
+
+            String sql = """
+            INSERT INTO Programare
+                (PacientId, MedicID, Data_Programare, Durata_programare)
+            SELECT
+                p.PacientId,
+                ?, ?, ?
+            FROM Pacient p
+            WHERE p.CNP = ?
+        """;
+
+            int rows = jdbcTemplate.update(
+                    sql,
+                    medicID,
+                    Timestamp.valueOf(appointmentDate.atStartOfDay()), // ?
+                    durata ,                                  // ?
+                    cnp
+            )
+                    ;
+    }
+}
 }

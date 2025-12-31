@@ -11,5 +11,15 @@ public interface PacientService {
     void deleteById(Long pacientId);
     Pacient update(Pacient pacient);
     Pacient findById(Long id);
+    private int durataDupaMotiv(String motiv) {
+        return switch (motiv) {
+            case "Consultatie scurta" -> 10;
+            case "Consultatie standard" -> 20;
+            case "Control" -> 15;
+            case "Investigatie" -> 30;
+            default -> throw new IllegalArgumentException("Motiv invalid");
+        };
+    }
+
 
 }

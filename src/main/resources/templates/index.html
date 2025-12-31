@@ -97,6 +97,10 @@
         <img src="/assets/file.gif" >
         <img src="/assets/sample.gif" >
     </div>
+
+    <div class="btn">
+        <a href="/listPacients">Vezi Datele!</a>
+    </div>
 </section>
 
 <section class="section active-medics-section" style="background:rgb(0,2,3,0)">
@@ -132,45 +136,93 @@
 </section>
 
 
+<section style="padding-top:2rem;
+        background-image:url(https://i.pinimg.com/736x/17/43/21/174321b860839f260a096c0dd2e3ffaf.jpg);
+        min-height:80vh">
 
-<section style="padding-top:2rem;background-image: url(https://i.pinimg.com/736x/17/43/21/174321b860839f260a096c0dd2e3ffaf.jpg);min-height: 80vh">
-        <div class="appointment-form-container">
-            <div class="side-block">
-                <i class="calendar-icon">📅</i> <h2>Programare</h2>
-            </div>
+    <div class="appointment-form-container">
 
-            <form class="main-form">
-
-                <div class="fields-container">
-
-                    <div class="input-group">
-                        <label for="full-name">Nume Prenume</label>
-                        <input type="text" id="full-name" name="full_name">
-                    </div>
-
-                    <div class="input-group">
-                        <label for="email">E-mail </label>
-                        <input type="email" id="email" name="email">
-                    </div>
-
-                    <div class="input-group">
-                        <label for="phone">Nr telefon</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-
-                    <div class="input-group">
-                        <label for="date">Data Programarii</label>
-                        <input type="date" id="date" name="appointment_date">
-                    </div>
-                </div>
-
-                <button type="submit" class="appointment-btn">
-                    Trimite Programarea~
-                </button>
-
-            </form>
+        <div class="side-block">
+            <i class="calendar-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" fill="currentColor" class="bi bi-calendar-date-fill" viewBox="0 0 16 16">
+                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zm5.402 9.746c.625 0 1.184-.484 1.184-1.18 0-.832-.527-1.23-1.16-1.23-.586 0-1.168.387-1.168 1.21 0 .817.543 1.2 1.144 1.2"/>
+                <path d="M16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-6.664-1.21c-1.11 0-1.656-.767-1.703-1.407h.683c.043.37.387.82 1.051.82.844 0 1.301-.848 1.305-2.164h-.027c-.153.414-.637.79-1.383.79-.852 0-1.676-.61-1.676-1.77 0-1.137.871-1.809 1.797-1.809 1.172 0 1.953.734 1.953 2.668 0 1.805-.742 2.871-2 2.871zm-2.89-5.435v5.332H5.77V8.079h-.012c-.29.156-.883.52-1.258.777V8.16a13 13 0 0 1 1.313-.805h.632z"/>
+            </svg>
+            </i>
+            <h2>Programare</h2>
         </div>
 
+        <div th:if="${error}" class="error-popup">
+            <span th:text="${error}"></span>
+        </div>
+
+        <form class="main-form"
+              th:action="@{/programare}"
+              method="post">
+
+            <div class="fields-container">
+
+                <!-- CNP -->
+                <div class="input-group">
+                    <label for="cnp">CNP pacient</label>
+                    <input type="text"
+                           id="cnp"
+                           name="cnp"
+                           placeholder="Introduceți CNP-ul"
+                           required>
+                </div>
+
+                <div class="input-group">
+                    <label for="medic">Medic</label>
+                    <select id="medic"
+                            name="medicID"
+                            required>
+                        <option value="">-- Selectează medic --</option>
+                        <option th:each="m : ${medici}"
+                                th:value="${m.medicID}"
+                                th:text="${m.nume + ' ' + m.prenume + ' - ' + m.specializare}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="motiv">Motiv vizită</label>
+                    <select id="motiv"
+                            name="motiv"
+                            required>
+                        <option value="">-- Selectează motiv --</option>
+                        <option value="Consultatie scurta">
+                            Consultație scurtă (10 min)
+                        </option>
+                        <option value="Consultatie standard">
+                            Consultație standard (20 min)
+                        </option>
+                        <option value="Control">
+                            Control (15 min)
+                        </option>
+                        <option value="Investigatie">
+                            Investigație (30 min)
+                        </option>
+                    </select>
+                </div>
+
+                <!-- DATA -->
+                <div class="input-group">
+                    <label for="date">Data programării</label>
+                    <input type="date"
+                           id="date"
+                           name="appointment_date"
+                           required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="appointment-btn">
+                Trimite Programarea
+            </button>
+
+        </form>
+    </div>
 </section>
 
 
