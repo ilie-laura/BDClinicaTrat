@@ -68,5 +68,9 @@ public class TratamentServiceImpl implements TratamentService {
     public Tratament update(Tratament pacient) {
         return tratamentRepository.update(pacient);
     }
+    public String getNumeTratamentById(Long tratamentId) {
+        Tratament t = tratamentRepository.findById(tratamentId);
+        return t.getNume();
+    }
 
 }

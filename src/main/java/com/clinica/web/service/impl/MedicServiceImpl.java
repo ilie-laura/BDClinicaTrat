@@ -72,4 +72,9 @@ return medicDto;
     public Map<Integer, List<String>> findPacientiPerMedic() {
         return medicRepository.findPacientiPerMedic();
     }
+    public String getNumeCompletById(Integer medicId) {
+        Medic m = medicRepository.findById(medicId.longValue());
+        return m.getNume() + " " + m.getPrenume();
+    }
+
 }

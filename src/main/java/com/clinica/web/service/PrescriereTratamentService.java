@@ -11,5 +11,6 @@ public interface PrescriereTratamentService {
     List<PrescriereTratamentDto> search(String keyword, String value);
 
     void savePrescriere(PrescriereTratamentDto prescriereTratamentDto);
+    public String getProgramareInfo(Long programareId) ;
 
 }

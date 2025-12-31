@@ -21,5 +21,6 @@ public interface PacientService {
         };
     }
 
+    public String getNumeCompletById(Integer pacientId) ;
 
 }

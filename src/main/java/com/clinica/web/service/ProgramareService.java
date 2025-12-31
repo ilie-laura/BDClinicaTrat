@@ -22,4 +22,6 @@ public interface ProgramareService {
    ProgramareDto findDtoById(int id);
 
     void creeazaProgramare(String cnp, int medicID, LocalDate appointmentDate, String motiv);
+
+    void enrichProgramare(ProgramareDto p);
 }

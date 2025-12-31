@@ -42,8 +42,8 @@
 <form class="search-form" th:action="@{/programari}" method="get" style="margin-bottom: 20px;">
     <label>Caută după:</label>
     <select name="field" id="field"  th:value="${field}">
-        <option value="pacientId" th:selected="${field == 'PacientID'}">Pacient ID</option>
-        <option value="medicId" th:selected="${field == 'MedicID'}">Medic ID</option>
+        <option value="pacientId" th:selected="${field == 'PacientID'}">Pacient </option>
+        <option value="medicId" th:selected="${field == 'MedicID'}">Medic </option>
         <option value="Data_programare" th:selected="${field == 'Data_programare'}">Data programare</option>
     </select>
 
@@ -65,9 +65,9 @@
     <thead>
     <tr>
         <th>Modif</th>
-        <th>ProgramareID</th>
-        <th>PacientID</th>
-        <th>MedicID</th>
+<!--        <th>ProgramareID</th>-->
+        <th>Pacient</th>
+        <th>Medic</th>
         <th>Data_prog</th>
         <th>Durata</th>
     </tr>
@@ -110,9 +110,9 @@
                     </div>
                 </div>
             </form>
-        <td th:text="${p.programareId}"></td>
-        <td th:text="${p.pacientId}"></td>
-        <td th:text="${p.medicId}"></td>
+<!--        <td th:text="${p.programareId}"></td>-->
+        <td th:text="${p.pacientNume}"></td>
+        <td th:text="${p.medicNume}"></td>
         <td th:text="${p.dataProgramare}"></td>
         <td th:text="${p.durataProgramare}"></td>
     </tr>

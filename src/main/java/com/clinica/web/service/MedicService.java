@@ -25,6 +25,7 @@ public interface MedicService {
 
     public Map<Integer, Integer> findNrProgramariPerMedic() ;
 
+    public String getNumeCompletById(Integer medicId) ;
 
     Map<Integer, List<String>> findPacientiPerMedic();
 }

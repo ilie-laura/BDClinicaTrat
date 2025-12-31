@@ -22,7 +22,7 @@
 
 
 
-    <label for="medicID">Medic ID:</label>
+    <label for="medicID">Medic:</label>
     <select th:field="*{medicId}" id="medicID" required>
         <option th:each="m : ${medici}"
                 th:value="${m.medicID}"

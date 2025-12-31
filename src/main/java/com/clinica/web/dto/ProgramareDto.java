@@ -15,6 +15,9 @@ public class ProgramareDto {
     private int pacientId;
     private LocalDateTime dataProgramare;
     private String durataProgramare;
+    private String pacientNume;
+    private String medicNume;
+
 
 //    public int getProgramareID() {
 //        return ProgramareID;

@@ -8,6 +8,7 @@ import com.clinica.web.model.Pacient;
 import com.clinica.web.model.Programare;
 import com.clinica.web.model.Tratament;
 import com.clinica.web.repository.MedicRepository;
+import com.clinica.web.service.MedicService;
 import com.clinica.web.service.PacientService;
 import com.clinica.web.service.ProgramareService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,14 @@ public class ProgramareController {
     private final ProgramareService programareService;
     private final MedicRepository medicRepository;
     private final PacientService pacientService;
+    private final MedicService medicService;
 
     @Autowired
-    public ProgramareController(ProgramareService programareService, MedicRepository medicRepository, PacientService pacientService) {
+    public ProgramareController(ProgramareService programareService, MedicRepository medicRepository, PacientService pacientService, MedicService medicService) {
         this.programareService = programareService;
         this.medicRepository = medicRepository;
         this.pacientService = pacientService;
+        this.medicService = medicService;
     }
     @GetMapping("/programari")
 
@@ -64,6 +67,14 @@ public class ProgramareController {
 
             programari = programareService.findAll(currentDir,field);
         }
+        programari.forEach(p -> {
+            p.setPacientNume(
+                    pacientService.getNumeCompletById(p.getPacientId())
+            );
+            p.setMedicNume(
+                    medicService.getNumeCompletById(p.getMedicId())
+            );
+        });
 
         model.addAttribute("programari", programari);
         return "programari";
@@ -115,10 +126,13 @@ public class ProgramareController {
         return "redirect:/programari";
     }
 
-//    @PostMapping("/programari/update/{id}")
-//    public String update(@ModelAttribute Programare tratament) {
-//        programareService.update(tratament);
-//        return "redirect:/programari";
-//    }
+    public void enrichProgramare(ProgramareDto p) {
+
+        String pacientNume = pacientService.getNumeCompletById(p.getPacientId());
+        String medicNume   = medicService.getNumeCompletById(p.getMedicId());
+
+        p.setPacientNume(pacientNume);
+        p.setMedicNume(medicNume);
+    }
 
 }

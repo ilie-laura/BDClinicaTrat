@@ -14,4 +14,8 @@ public class PrescriereTratamentDto {
     private long programareID;
     private long tratamentID;
     private String durata;
+
+    private String programareInfo;
+    private String tratamentNume;
+
 }

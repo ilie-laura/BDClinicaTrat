@@ -3,6 +3,8 @@ package com.clinica.web.service.impl;
 import com.clinica.web.dto.ProgramareDto;
 import com.clinica.web.model.Programare;
 import com.clinica.web.repository.ProgramareRepository;
+import com.clinica.web.service.MedicService;
+import com.clinica.web.service.PacientService;
 import com.clinica.web.service.ProgramareService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,13 @@ import java.util.stream.Collectors;
 public class ProgramareServiceImpl implements ProgramareService {
 
     private final ProgramareRepository programareRepository;
+    private final PacientService pacientService;
+    private final MedicService medicService;
 
-    public ProgramareServiceImpl(ProgramareRepository programareRepository) {
+    public ProgramareServiceImpl(ProgramareRepository programareRepository, PacientService pacientService, MedicService medicService) {
         this.programareRepository = programareRepository;
+        this.pacientService = pacientService;
+        this.medicService = medicService;
     }
 
 
@@ -120,4 +126,15 @@ public class ProgramareServiceImpl implements ProgramareService {
             default -> throw new IllegalArgumentException("Motiv invalid");
         };
     }
+    public void enrichProgramare(ProgramareDto p) {
+
+
+        String pacientNume = pacientService.getNumeCompletById(p.getPacientId());
+        String medicNume   = medicService.getNumeCompletById(p.getMedicId());
+
+        p.setPacientNume(pacientNume);
+        p.setMedicNume(medicNume);
+    }
+
+
 }

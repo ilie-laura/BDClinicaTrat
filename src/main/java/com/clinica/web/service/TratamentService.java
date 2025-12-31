@@ -18,4 +18,6 @@ public interface TratamentService {
     void deleteById(Long tratamentId);
     Tratament update(Tratament tratament);
     Tratament findById(Long id);
+    public String getNumeTratamentById(Long tratamentId) ;
+
 }

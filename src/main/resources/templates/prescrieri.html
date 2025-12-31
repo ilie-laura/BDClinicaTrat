@@ -54,16 +54,16 @@
 <table>
     <thead>
     <tr>
-        <th>ProgramareID</th>
-        <th>TratamentID</th>
+        <th>Programare</th>
+        <th>Tratament</th>
         <th>Durata</th>
     </tr>
     </thead>
     <tbody>
 
     <tr th:each="p : ${prescrieri}">
-        <td th:text="${p.programareID}"></td>
-        <td th:text="${p.tratamentID}"></td>
+        <td th:text="${p.programareInfo}"></td>
+        <td th:text="${p.tratamentNume}"></td>
         <td th:text="${p.durata}"></td>
 
     </tr>

@@ -57,6 +57,10 @@ public class PacientServiceImpl implements PacientService {
     public Pacient update(Pacient pacient) {
         return pacientRepository.update(pacient);
     }
+    public String getNumeCompletById(Integer pacientId) {
+        Pacient p = pacientRepository.findById(pacientId.longValue());
+        return p.getNume() + " " + p.getPrenume();
+    }
 
 
 }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PrescriereTratamentController {
@@ -28,12 +30,20 @@ public class PrescriereTratamentController {
     }
     @GetMapping("/prescrieri")
     public String prescrieri(Model model){
-        List<PrescriereTratamentDto> prescrieri=prescriereTratamentService.findAllPrescriereTrataments();
 
-        System.out.println("Prescrieri size: " + prescrieri.size());
-        prescrieri.forEach(p -> System.out.println(p));
+        List<PrescriereTratamentDto> prescrieri =
+                prescriereTratamentService.findAllPrescriereTrataments();
 
-        model.addAttribute("prescrieri",prescrieri);
+        prescrieri.forEach(p -> {
+            p.setTratamentNume(
+                    tratamentService.getNumeTratamentById(p.getTratamentID())
+            );
+            p.setProgramareInfo(
+                    prescriereTratamentService.getProgramareInfo(p.getProgramareID())
+            );
+        });
+        enrichPrescrieri(prescrieri);
+        model.addAttribute("prescrieri", prescrieri);
         return "prescrieri";
     }
 
@@ -74,9 +84,30 @@ public class PrescriereTratamentController {
             // Dacă nu există valoare, afișează toate tratamentele
             tratamente = prescriereTratamentService.findAllPrescriereTrataments();
         }
-
+        enrichPrescrieri(tratamente);
         model.addAttribute("prescrieri", tratamente);
         return "prescrieri";
+    }
+    private void enrichPrescrieri(List<PrescriereTratamentDto> prescrieri) {
+
+        Map<Long, String> tratamentCache = new HashMap<>();
+        Map<Long, String> programareCache = new HashMap<>();
+
+        for (PrescriereTratamentDto p : prescrieri) {
+
+            tratamentCache.computeIfAbsent(
+                    p.getTratamentID(),
+                    id -> tratamentService.getNumeTratamentById(id)
+            );
+
+            programareCache.computeIfAbsent(
+                    p.getProgramareID(),
+                    id -> prescriereTratamentService.getProgramareInfo(id)
+            );
+
+            p.setTratamentNume(tratamentCache.get(p.getTratamentID()));
+            p.setProgramareInfo(programareCache.get(p.getProgramareID()));
+        }
     }
 
 }
