@@ -207,5 +207,36 @@ public class ProgramareRepository {
         return jdbcTemplate.query(sql, this::mapRow);
     }
 
+    public List<ProgramareDto> findProgramariDinAn(int an) {
+
+        String sql = """
+        SELECT
+            pr.ProgramareID,
+            pr.Data_programare,
+            pr.Durata_programare,
+            pa.Nume   AS PacientNume,
+            pa.Prenume AS PacientPrenume,
+            m.Nume    AS MedicNume,
+            m.Prenume AS MedicPrenume
+        FROM Programare pr
+        JOIN Pacient pa ON pa.PacientID = pr.PacientID
+        JOIN Medic m    ON m.MedicID    = pr.MedicID
+        WHERE YEAR(pr.Data_programare) = ?
+    """;
+
+        return jdbcTemplate.query(sql, new Object[]{an}, (rs, rowNum) ->
+                ProgramareDto.builder()
+                        .programareId(rs.getInt("ProgramareID"))
+                        .dataProgramare(rs.getTimestamp("Data_programare").toLocalDateTime())
+                        .durataProgramare(rs.getString("Durata_programare"))
+                        .pacientNume(
+                                rs.getString("PacientNume") + " " +
+                                        rs.getString("PacientPrenume"))
+                        .medicNume(
+                                rs.getString("MedicNume") + " " +
+                                        rs.getString("MedicPrenume"))
+                        .build()
+        );
+    }
 
 }

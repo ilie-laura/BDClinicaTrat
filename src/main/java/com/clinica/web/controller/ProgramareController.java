@@ -153,5 +153,16 @@ public class ProgramareController {
 
         return "programari";
     }
+    @GetMapping("/programari/an")
+    public String programariDinAn(@RequestParam int an, Model model) {
+
+        List<ProgramareDto> programari =
+                programareService.findProgramariDinAn(an);
+
+        model.addAttribute("programari", programari);
+        model.addAttribute("anSelectat", an);
+
+        return "programari";
+    }
 
 }

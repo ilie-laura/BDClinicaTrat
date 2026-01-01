@@ -25,4 +25,6 @@ public interface ProgramareService {
 
     void enrichProgramare(ProgramareDto p);
     public List<ProgramareDto> findWithDurataAboveAverage();
+    public List<ProgramareDto> findProgramariDinAn(int an) ;
+
 }

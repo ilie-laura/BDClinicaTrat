@@ -148,5 +148,8 @@ public class ProgramareServiceImpl implements ProgramareService {
                 )
                 .toList();
     }
+    public List<ProgramareDto> findProgramariDinAn(int an) {
+        return programareRepository.findProgramariDinAn(an);
+    }
 
 }
