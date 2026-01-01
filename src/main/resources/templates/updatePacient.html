@@ -6,11 +6,15 @@
     <link rel="stylesheet" href="/css/update.css">
 </head>
 <body>
-
+<div id="errorPopup" class="alert alert-danger error-popup" style="display:none;">
+    <span id="errorMessage"></span>
+</div>
+<div id="errorOverlay" class="error-overlay" style="display:none;"></div>
 <h1>Editează pacient</h1>
 
 <form th:action="@{/listPacients/update/{id}(id=${pacient.pacientID})}"
       th:object="${pacient}"
+      onsubmit="return validatePacientUpd()"
       method="post">
   <input type="hidden" th:field="*{pacientID}"/>
 
@@ -36,6 +40,6 @@
     </div>
 
 </form>
-
+<script src="/js/validatePacientUpd.js"></script>
 </body>
 </html>

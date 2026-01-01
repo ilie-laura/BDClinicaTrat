@@ -6,7 +6,14 @@
     <link rel="stylesheet" href="/css/adder.css">
 </head>
 <body>
-<form th:action="@{/addPacient}" th:object="${pacient}" method="post">
+<div id="errorPopup" class="alert alert-danger error-popup" style="display:none;">
+    <span id="errorMessage"></span>
+</div>
+
+<div id="errorOverlay" class="error-overlay" style="display:none;"></div>
+
+<form th:action="@{/addPacient}" th:object="${pacient}"  onsubmit="return validatePacientForm()" method="post"
+      >
     <h3>Adaugă Pacient</h3>
 
     <label for="nume">Nume:</label>
@@ -39,5 +46,9 @@
         <a href="/listPacients" class="login-btn">Înapoi la listă</a>
     </div>
 </form>
+<script src="/js/validatePatient.js"></script>
 </body>
+
+
+
 </html>

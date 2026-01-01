@@ -71,7 +71,7 @@ public class PacientController {
     }
 
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/listPacients/delete/{id}")
     public String delete(@PathVariable Long id) {
         pacientService.deleteById(id);
         return "redirect:/listPacients";
