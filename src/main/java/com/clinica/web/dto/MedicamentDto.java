@@ -15,7 +15,7 @@ public class MedicamentDto {
     private int medicamentID;
     private String nume;
     private int stoc;
-    private int pret;
+    private float pret;
     private LocalDate data_expirarii;
 
 }

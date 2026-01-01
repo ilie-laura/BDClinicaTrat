@@ -21,7 +21,7 @@ public class Medicament {
     private int medicamentId;
     private String Nume;
     private int Stoc;
-    private int Pret;
+    private float Pret;
     @Column(name="Data_expirare")
     private LocalDate Data_expirarii;
     // Relația 1-la-M: Un Medicament este parte din Multe structuri de Tratament

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="RO">
 <head>
     <meta charset="UTF-8">
     <title>Adaugă Medicament</title>
@@ -7,7 +7,14 @@
 </head>
 <body>
 
-<form th:action="@{/addMedicament}" th:object="${medicament}" method="post">
+<div id="errorPopup" class="alert alert-danger error-popup" style="display:none;">
+    <span id="errorMessage"></span>
+</div>
+
+<div id="errorOverlay" class="error-overlay" style="display:none;"></div>
+<form th:action="@{/addMedicament}" th:object="${medicament}"
+      onsubmit="return validateMed()"
+      method="post">
     <h3>Adaugă Medicament</h3>
 
     <label for="nume">Nume medicament:</label>
@@ -17,16 +24,16 @@
     <input type="date" id="dataExp" th:field="*{data_expirarii}" required />
 
     <label for="stoc">Stoc:</label>
-    <input type="number" id="stoc" th:field="*{stoc}" placeholder="Introduceți stocul" min="0" required />
+    <input type="text" id="stoc" th:field="*{stoc}" placeholder="Introduceți stocul" min="0" required />
 
     <label for="pret">Preț:</label>
-    <input type="number" id="pret" th:field="*{pret}" placeholder="Introduceți prețul" min="0" required />
+    <input type="text" id="pret" th:field="*{pret}" placeholder="Introduceți prețul" min="0" required />
 
     <div class="buttons">
         <button type="submit" class="register-btn">Salvează medicament</button>
         <a href="/medicaments" class="login-btn">Înapoi la listă</a>
     </div>
 </form>
-
+<script src="/js/validateMed.js"></script>
 </body>
 </html>

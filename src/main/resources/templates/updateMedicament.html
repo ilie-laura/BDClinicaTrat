@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
 <head>
     <meta charset="UTF-8">
     <title>Editează medicament</title>
@@ -9,6 +9,10 @@
 </head>
 <body>
 
+<div id="errorPopup" class="alert alert-danger error-popup" style="display:none;">
+    <span id="errorMessage"></span>
+</div>
+<div id="errorOverlay" class="error-overlay" style="display:none;"></div>
 
 
 <h1>Editează medicament</h1>
@@ -16,6 +20,7 @@
 <form class="update-form"
       th:action="@{/medicaments/update/{id}(id=${medicament.medicamentId})}"
       th:object="${medicament}"
+      onsubmit="return validateMed()"
       method="post">
 
     <!-- ID ascuns -->
@@ -25,12 +30,12 @@
     <input type="text" th:field="*{nume}" required/>
 
     <label>Stoc</label>
-    <input type="number" th:field="*{stoc}" min="0" required/>
+    <input type="text" th:field="*{stoc}" min="0" required/>
 
     <label>Preț</label>
-    <input type="number"
+    <input type="text"
            th:field="*{pret}"
-           step="0.01"
+           step="0.1"
            min="0"
            required/>
 
@@ -40,6 +45,6 @@
     </div>
 
 </form>
-
+<script src="/js/validateMed.js"></script>
 </body>
 </html>
