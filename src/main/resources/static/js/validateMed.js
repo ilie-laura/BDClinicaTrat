@@ -81,7 +81,7 @@ function validateMed() {
         showError("Stocul trebuie să fie mai mare decât 0");
         return false;
     }
-   const pret2=parseFloat(pret,4);
+   const pret2=parseFloat(pret);
     if(pret2<=0){
         showError("Pretul trebuie sa fie > 0");
         return false;
