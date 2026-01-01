@@ -1,5 +1,6 @@
 package com.clinica.web.controller;
 
+import com.clinica.web.model.Medic;
 import com.clinica.web.repository.RapoarteRepository;
 import com.clinica.web.service.MedicService;
 import com.clinica.web.service.ProgramareService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 public class WebController {

@@ -192,6 +192,30 @@ this.jdbcTemplate = jdbcTemplate;
             }
             return map;
         });
+    }public List<Medic> findMediciFaraPrescrieri() {
+
+        String sql = """
+        SELECT
+            m.MedicID,
+            m.Nume,
+            m.Prenume
+        FROM Medic m
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM Programare p
+            JOIN PrescriereTratament pt
+                 ON pt.ProgramareID = p.ProgramareID
+            WHERE p.MedicID = m.MedicID
+        )
+    """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Medic m = new Medic();
+            m.setMedicID(rs.getInt("MedicID"));
+            m.setNume(rs.getString("Nume"));
+            m.setPrenume(rs.getString("Prenume"));
+            return m;
+        });
     }
 
 

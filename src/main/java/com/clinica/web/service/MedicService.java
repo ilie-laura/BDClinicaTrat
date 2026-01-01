@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 //@Service
 public interface MedicService {
@@ -28,4 +29,8 @@ public interface MedicService {
     public String getNumeCompletById(Integer medicId) ;
 
     Map<Integer, List<String>> findPacientiPerMedic();
+
+    List<Medic> findMediciFaraPrescrieri();
+
+
 }

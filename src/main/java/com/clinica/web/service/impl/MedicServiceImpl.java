@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
 public class MedicServiceImpl implements MedicService {
@@ -76,5 +77,10 @@ return medicDto;
         Medic m = medicRepository.findById(medicId.longValue());
         return m.getNume() + " " + m.getPrenume();
     }
+    @Override
+    public List<Medic> findMediciFaraPrescrieri(){
+        return medicRepository.findMediciFaraPrescrieri();
+    }
+
 
 }

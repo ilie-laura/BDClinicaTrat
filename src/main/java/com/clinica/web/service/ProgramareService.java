@@ -24,4 +24,5 @@ public interface ProgramareService {
     void creeazaProgramare(String cnp, int medicID, LocalDate appointmentDate, String motiv);
 
     void enrichProgramare(ProgramareDto p);
+    public List<ProgramareDto> findWithDurataAboveAverage();
 }

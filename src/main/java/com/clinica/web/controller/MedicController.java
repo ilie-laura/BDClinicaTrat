@@ -51,7 +51,8 @@ public class MedicController {
                 medicService.findPacientiPerMedic();
 
         model.addAttribute("pacientiPerMedic", pacientiPerMedic);
-
+        List<Medic> medici2 = medicService.findMediciFaraPrescrieri();
+        model.addAttribute("medici2", medici2);
         model.addAttribute("medici", medici);
         return "medics";
     }
@@ -88,4 +89,7 @@ public class MedicController {
         medicService.update(pacient);
         return "redirect:/medics";
     }
+
+
+
 }

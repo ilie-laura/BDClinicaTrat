@@ -72,7 +72,7 @@
         <th>Nr programari</th>
     </tr>
     </thead>
-    <body>
+    <tbody>
     <tr th:each="p : ${medici}">
         <td class="modif-cell">
             <form th:action="@{/medics/delete/{id}(id=${p.medicID})}"
@@ -133,9 +133,33 @@
     <tr th:if="${#lists.isEmpty(medici)}">
         <td colspan="4" style="text-align: center;">Nu există medici.</td>
     </tr>
-    </body>
+    </tbody>
 
 </table>
+<section style="margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+    <h2>Medicii fără prescrieri</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nume</th>
+            <th>Prenume</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="mm : ${medici2}">
+            <td th:text="${mm.nume}"></td>
+            <td th:text="${mm.prenume}"></td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(medici2)}">
+            <td colspan="2" style="text-align:center;">
+                Toți medicii au prescrieri.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 
 <div class="table-popup">
     <p>Stergi medicul?</p>

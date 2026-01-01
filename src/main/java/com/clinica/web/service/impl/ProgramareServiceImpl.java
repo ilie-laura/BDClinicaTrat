@@ -135,6 +135,18 @@ public class ProgramareServiceImpl implements ProgramareService {
         p.setPacientNume(pacientNume);
         p.setMedicNume(medicNume);
     }
-
+    public List<ProgramareDto> findWithDurataAboveAverage(){
+        return programareRepository.findWithDurataAboveAverage()
+                .stream()
+                .map(p -> ProgramareDto.builder()
+                        .programareId(p.getProgramareID())
+                        .pacientId(p.getPacientID())
+                        .medicId(p.getMedicID())
+                        .dataProgramare(p.getDataProgramarii())
+                        .durataProgramare(p.getDurata_programare())
+                        .build()
+                )
+                .toList();
+    }
 
 }

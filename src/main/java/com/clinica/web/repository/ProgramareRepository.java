@@ -162,4 +162,50 @@ public class ProgramareRepository {
                     ;
     }
 }
+    public List<Programare> findWithDurataAboveAverage() {
+
+        String sql = """ 
+        SELECT *
+        FROM Programare
+        WHERE
+            CASE
+                WHEN Durata_programare LIKE '%ora%' THEN
+                    TRY_CAST(LEFT(Durata_programare, CHARINDEX(' ', Durata_programare) - 1) AS INT) * 60
+                    +
+                    TRY_CAST(
+                        SUBSTRING(
+                            Durata_programare,
+                            CHARINDEX('si', Durata_programare) + 3,
+                            CHARINDEX('minute', Durata_programare) - (CHARINDEX('si', Durata_programare) + 3)
+                        ) AS INT
+                    )
+                ELSE
+                    TRY_CAST(REPLACE(Durata_programare, ' min', '') AS INT)
+            END
+            >
+            (
+                SELECT AVG(
+                    CASE
+                        WHEN Durata_programare LIKE '%ora%' THEN
+                            TRY_CAST(LEFT(Durata_programare, CHARINDEX(' ', Durata_programare) - 1) AS INT) * 60
+                            +
+                            TRY_CAST(
+                                SUBSTRING(
+                                    Durata_programare,
+                                    CHARINDEX('si', Durata_programare) + 3,
+                                    CHARINDEX('minute', Durata_programare) - (CHARINDEX('si', Durata_programare) + 3)
+                                ) AS INT
+                            )
+                        ELSE
+                            TRY_CAST(REPLACE(Durata_programare, ' min', '') AS INT)
+                    END
+                )
+                FROM Programare
+            )
+        """;
+
+        return jdbcTemplate.query(sql, this::mapRow);
+    }
+
+
 }

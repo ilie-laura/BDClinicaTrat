@@ -134,5 +134,24 @@ public class ProgramareController {
         p.setPacientNume(pacientNume);
         p.setMedicNume(medicNume);
     }
+    public void enrichProgramari(List<ProgramareDto> programari) {
+        for (ProgramareDto p : programari) {
+            enrichProgramare(p);
+        }
+    }
+
+    @GetMapping("/programari/durata-peste-medie")
+    public String programariDurataPesteMedie(Model model) {
+
+        List<ProgramareDto> programari =
+                programareService.findWithDurataAboveAverage();
+
+        enrichProgramari(programari);
+
+        model.addAttribute("programari", programari);
+        model.addAttribute("durataMedie", true);
+
+        return "programari";
+    }
 
 }
