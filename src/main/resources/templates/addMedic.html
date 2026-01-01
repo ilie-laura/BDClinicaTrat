@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ROU">
 <head>
     <meta charset="UTF-8">
     <title>Adaugă Medic</title>
@@ -7,7 +7,12 @@
 </head>
 <body>
 
-<form th:action="@{/addMedic}" th:object="${medic}" method="post">
+<div id="errorPopup" class="alert alert-danger error-popup" style="display:none;">
+    <span id="errorMessage"></span>
+</div>
+
+<div id="errorOverlay" class="error-overlay" style="display:none;"></div>
+<form th:action="@{/addMedic}" th:object="${medic}" onsubmit="return validateMedic()" method="post">
     <h3>Adaugă Medic</h3>
 
     <label for="nume">Nume:</label>
@@ -33,13 +38,13 @@
     <input type="date" th:field="*{dataNasterii}" id="dataNasterii" required />
 
     <label for="salariu">Salariu:</label>
-    <input type="number" th:field="*{salariu}" id="salariu" placeholder="Introduceți salariul" min="0" />
+    <input type="text" th:field="*{salariu}" id="salariu" placeholder="Introduceți salariul" min="0" />
 
     <div class="buttons">
         <button type="submit" class="register-btn">Salvează medic</button>
         <a href="/medics" class="login-btn">Înapoi la listă</a>
     </div>
 </form>
-
+<script src="/js/validateMedic.js"></script>
 </body>
 </html>

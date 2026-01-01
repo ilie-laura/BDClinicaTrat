@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="RO">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="/css/update.css">
 </head>
 <body>
+<div id="errorPopup" class="alert alert-danger error-popup" style="display:none;">
+    <span id="errorMessage"></span>
+</div>
+<div id="errorOverlay" class="error-overlay" style="display:none;"></div>
 
 <h1>Editează medic</h1>
 
 <form class="update-form"
       th:action="@{/medics/update/{id}(id=${medic.medicID})}"
       th:object="${medic}"
+      onsubmit="return validateMedicUpd()"
       method="post">
 
     <input type="hidden" th:field="*{medicID}"/>
@@ -24,7 +29,7 @@
     <input id="prenume" type="text" th:field="*{prenume}" required>
 
     <label for="salariu">Salariu</label>
-    <input id="salariu" type="number" th:field="*{salariu}" required>
+    <input id="salariu" type="text" th:field="*{salariu}" required>
 
     <label for="specializare">Specializare</label>
     <input id="specializare" type="text" th:field="*{specializare}" required>
@@ -37,6 +42,6 @@
     </div>
 
 </form>
-
+<script src="/js/validateMedicUpd.js"></script>
 </body>
 </html>
