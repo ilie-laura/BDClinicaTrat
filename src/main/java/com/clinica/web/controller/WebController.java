@@ -40,7 +40,7 @@ public class WebController {
         model.addAttribute("mediciActivi",
                 RapoarteRepository.mediciActiviAzi());
         
-        // Verifică dacă obiectul de autentificare este valid și nu este utilizatorul anonim
+        // Verifică dacă obiectul de autentificare este valid
         if (auth != null && auth.isAuthenticated() &&
                 auth.getPrincipal() instanceof UserDetails) {
 

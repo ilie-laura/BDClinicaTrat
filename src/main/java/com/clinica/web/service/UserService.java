@@ -22,10 +22,13 @@ public class UserService {
 
     public User save(UserDto userDto) {
         validatePassword(userDto.getPassword());
+        validateEmail(userDto.getEmail());
         User user = new User();
         user.setUsername(userDto.getUsername());
 
         user.setPassword(passwordEncoder.encode(userDto.getPassword())); // bcrypt
+        user.setEmail(userDto.getEmail());
+
         return userRepository.save(user);
     }
     public boolean existsByUsername(String username) {
@@ -44,7 +47,48 @@ public class UserService {
                             "o literă mică, o cifră și un caracter special"
             );
         }
+
     }
+    private void validateEmail(String email) {
+
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Emailul este obligatoriu");
+        }
+
+        int atIndex = email.indexOf('@');
+        if (atIndex <= 0 || atIndex != email.lastIndexOf('@')) {
+            throw new IllegalArgumentException("Emailul trebuie să conțină un singur caracter @");
+        }
+
+        String localPart = email.substring(0, atIndex);
+        String domainPart = email.substring(atIndex + 1);
+
+        if (localPart.isBlank()) {
+            throw new IllegalArgumentException("Partea locală a emailului este invalidă");
+        }
+
+        if (!domainPart.contains(".")) {
+            throw new IllegalArgumentException("Domeniul emailului este invalid");
+        }
+
+        if (domainPart.startsWith(".") || domainPart.endsWith(".")) {
+            throw new IllegalArgumentException("Domeniul emailului este invalid");
+        }
+
+        String[] parts = domainPart.split("\\.");
+        String tld = parts[parts.length - 1];
+
+        if (tld.length() < 2 || tld.length() > 6) {
+            throw new IllegalArgumentException("Codul de domeniu este invalid");
+        }
+
+        if (!domainPart.equalsIgnoreCase("gmail.com") &&
+                !domainPart.equalsIgnoreCase("yahoo.com")) {
+
+            throw new IllegalArgumentException("Domeniul emailului nu este acceptat");
+        }
+    }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
