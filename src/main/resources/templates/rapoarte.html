@@ -196,10 +196,38 @@
     </div>
 
 </div>
+<div class="report-card">
+    <div class="report-header">
+        <h2>Pacienți cu cheltuieli peste medie</h2>
+        <button type="button"
+                class="toggle-btn"
+                onclick="toggleReport('raport5', this)">
+            Generează raport
+        </button>
+    </div>
 
-
+    <div id="raport5" class="report-content">
+        <table>
+            <thead>
+            <tr>
+                <th>Nume Pacient</th>
+                <th>Prenume Pacient</th>
+                <th>Total Cheltuit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${pacientiCheltuieli}">
+                <td th:text="${p['Nume']}"></td>
+                <td th:text="${p['Prenume']}"></td>
+                <td th:text="${p['TotalCheltuit']} + ' RON'"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pacientiCheltuieli)}">
+                <td colspan="3" style="text-align: center;">Nu au fost găsiți pacienți care să depășească media.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 <script>
     function toggleReport(id, btn) {
         const el = document.getElementById(id);

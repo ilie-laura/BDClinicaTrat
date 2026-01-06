@@ -646,24 +646,28 @@ a {
 }
 .active-medics-section h2 {
     margin-bottom: 10px;
-
+display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .active-medics-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    background: #7190fb;
+    background: #5c9bde;
 }
 
 .active-medics-table th,
 .active-medics-table td {
     padding: 12px;
-    border-bottom: 1px solid #224261;
+    border-bottom: 1px solid #2678cc;
+
 }
 
 .active-medics-table th {
-    background: #aabaf8;
+    background: #84b5ec;
+
 }
 
 
@@ -684,6 +688,10 @@ a {
 
 
 .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
     position: relative;
 }
 
@@ -754,4 +762,14 @@ a {
     padding: 10px 10px;
     border-radius: 5px;
     font-weight: bold;
+}
+.glass {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.glass.appear {
+    opacity: 1;
+    transform: translateY(0);
 }

@@ -130,6 +130,27 @@ public class RapoarteRepository {
 
         return jdbcTemplate.queryForList(sql, minSalariu);
     }
-
+    public List<Map<String, Object>> pacientiCuCheltuieliPesteMedie() {
+        String sql = """
+        SELECT p.Nume, p.Prenume, SUM(m.Pret) as TotalCheltuit
+        FROM Pacient p
+        JOIN Programare pr ON p.PacientID = pr.PacientID
+        JOIN PrescriereTratament pt ON pr.ProgramareID = pt.ProgramareID
+        JOIN TratamentMedicatie tm ON pt.TratamentID = tm.TratamentID
+        JOIN Medicament m ON tm.MedicamentID = m.MedicamentID
+        GROUP BY p.PacientID, p.Nume, p.Prenume
+        HAVING SUM(m.Pret) > (
+            /* Subcerere pentru media cheltuielilor per pacient */
+            SELECT AVG(TotalPePacient) FROM (
+                SELECT SUM(med.Pret) as TotalPePacient
+                FROM PrescriereTratament pt2
+                JOIN TratamentMedicatie tm2 ON pt2.TratamentID = tm2.TratamentID
+                JOIN Medicament med ON tm2.MedicamentID = med.MedicamentID
+                GROUP BY pt2.ProgramareID
+            ) as Subtabel
+        )
+    """;
+        return jdbcTemplate.queryForList(sql);
+    }
 
 }

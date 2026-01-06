@@ -43,8 +43,8 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/login",
                                 "/register",
-                "/programare")
-                .permitAll()
+                                "/programare")
+                                .permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

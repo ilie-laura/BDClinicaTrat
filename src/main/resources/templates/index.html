@@ -61,7 +61,7 @@
 </nav>
 
 <!-- Hero Section -->
-<section id="home" class="section hero-section">
+<section id="home" class="section hero-section" style="min-height: 100vh">
     <div class="hero-content container">
         <div class="hero-text">
             <h1>ClinicaTrat – Sănătatea ta, prioritatea noastră</h1>
@@ -73,13 +73,13 @@
             <img src="/assets/hero-image.png" alt="Medical illustration">
         </div>
         <div class="btn">
-            <a href="/info">Vezi Datele!</a>
+            <a sec:authorize="isAuthenticated()" href="/info">Vezi Datele!</a>
         </div>
     </div>
 </section>
 
 <!-- About Section -->
-<section id="about" class="section about-section">
+<section id="about" class="section about-section" style="min-height: 100vh">
     <div class="container glass">
         <h2>Despre Noi</h2>
         <p>La Clinica Trat, toate informațiile despre pacienți, programări și personalul medical sunt organizate eficient într-o bază de date sigură și actualizată. Sistemul nostru asigură acces rapid la date, programări bine coordonate și protecția confidențialității fiecărui pacient,
@@ -104,7 +104,7 @@
     </div>
 
     <div class="btn">
-        <a href="/listPacients">Vezi Datele!</a>
+        <a sec:authorize="isAuthenticated()" href="/listPacients">Vezi Datele!</a>
     </div>
 </section>
 
@@ -272,5 +272,37 @@
     </div>
 </div>
 </footer>
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 60, // Scădem 60px pentru a nu acoperi titlul cu Navbar-ul sticky
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+<script>
+    const observerOptions = {
+        threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('appear');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.glass').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>

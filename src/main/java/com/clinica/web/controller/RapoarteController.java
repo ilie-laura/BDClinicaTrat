@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/rapoarte")
 public class RapoarteController {
@@ -34,6 +37,9 @@ public class RapoarteController {
 
         model.addAttribute("salariiJoin",
                 rapoarteRepository.salariiMediciCuProgramari(0));
+
+        List<Map<String, Object>> pacientiCheltuieli = rapoarteRepository.pacientiCuCheltuieliPesteMedie();
+        model.addAttribute("pacientiCheltuieli", pacientiCheltuieli);
         return "rapoarte";
     }
 
