@@ -143,11 +143,23 @@ h2 {
 }
 
 .charts-grid {
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+
+}
+/* Graficele mari (Salarii/Activitate) rămân la dimensiunea lor normală */
+.chart-card canvas {
+    max-height: 400px; /* Dimensiune generoasă pentru graficele bar/line */
+    width: 100%;
 }
 
+
+.chart-pie-container canvas {
+    max-height: 220px !important;
+    margin: 0 auto;
+}
 .chart-card {
     background: #ffffff;
     border-radius: 14px;
@@ -254,4 +266,50 @@ h2 {
 .report-card button:hover,
 .report-card .btn:hover {
     background-color: #357ab8;
+}
+.stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #4a90e2;
+    transition: all 0.3s ease;
+}
+.stat-item:hover {
+
+    transform: scale(1.03);
+
+    background: #e9ecef;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    border-left-color: #213A57;
+}
+
+/* Dacă vrei ca și textul să se schimbe ușor la hover */
+.stat-item:hover .stat-label {
+    color: #213A57;
+}
+.stat-label {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 600;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #213A57;
+}
+
+.stat-value.warning {
+    color: #e74c3c; /* Roșu pentru alerte de stoc */
 }

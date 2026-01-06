@@ -21,7 +21,9 @@ public class RapoarteController {
     }
 
     @GetMapping
-    public String rapoarte(Model model) {
+    public String rapoarte(@RequestParam(required = false) Double minCheltuieli,
+                           @RequestParam(required = false,defaultValue = "15") Integer pragStoc,
+                           Model model) {
 
         model.addAttribute("mediciSalariu",
                 rapoarteRepository.mediciCuSalariuPesteMedie());
@@ -37,9 +39,22 @@ public class RapoarteController {
 
         model.addAttribute("salariiJoin",
                 rapoarteRepository.salariiMediciCuProgramari(0));
+        List<Map<String, Object>> cheltuieli = rapoarteRepository.pacientiCuCheltuieliPesteMedie(minCheltuieli);
 
-        List<Map<String, Object>> pacientiCheltuieli = rapoarteRepository.pacientiCuCheltuieliPesteMedie();
-        model.addAttribute("pacientiCheltuieli", pacientiCheltuieli);
+        model.addAttribute("pacientiCheltuieli", cheltuieli);
+        model.addAttribute("minCheltuieliSelectat", minCheltuieli);
+
+        List<Map<String, Object>> venituriMed = rapoarteRepository.venituriMedicamente();
+        model.addAttribute("venituriMedicamente", venituriMed);
+
+        Double totalVenit = rapoarteRepository.getTotalVenit();
+        model.addAttribute("totalVenit", totalVenit != null ? totalVenit : 0);
+
+        model.addAttribute("nrProgramariNoi", rapoarteRepository.getNrProgramariNoi());
+
+        int pragAles = pragStoc;
+        model.addAttribute("medicamenteStocMic", rapoarteRepository.getNrMedicamenteStocCritic(pragAles));
+        model.addAttribute("pragSelectat", pragStoc);
         return "rapoarte";
     }
 

@@ -56,7 +56,40 @@
             <canvas id="chartActivitate"></canvas>
         </div>
 
+        <div class="chart-card">
+            <h3>Distribuție Venituri Medicamente</h3>
+            <canvas id="chartPieMedicamente"></canvas>
+        </div>
+
+        <div class="chart-card stats-summary-card">
+            <h3>Sumar Clinică</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-label">Venit Total</span>
+                    <span class="stat-value" th:text="${totalVenit} + ' RON'">0 RON</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Programări Noi</span>
+                    <span class="stat-value" th:text="${nrProgramariNoi}">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Stoc Critic</span>
+                    <form th:action="@{/rapoarte}" method="get" id="stocForm" style="display: flex; gap: 10px; width: 100%; align-items: center;">
+                        <select name="pragStoc" onchange="this.form.submit()" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; font-size: 0.8rem;">
+                            <option value="5" th:selected="${pragSelectat == 5}">Sub 5</option>
+                            <option value="10" th:selected="${pragSelectat == 10}">Sub 10</option>
+                            <option value="20" th:selected="${pragSelectat == 20}">Sub 25</option>
+                            <option value="35" th:selected="${pragSelectat==35}">Sub 35</option>
+                            <option value="50" th:selected="${pragSelectat == 50}">Sub 50</option>
+                        </select>
+
+                        <span class="stat-value warning" th:text="${medicamenteStocMic}" style="margin-left: auto;">0</span>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 </section>
 
 <div class="reports-container">
@@ -194,40 +227,72 @@
         </div>
 
     </div>
-
-</div>
-<div class="report-card">
-    <div class="report-header">
-        <h2>Pacienți cu cheltuieli peste medie</h2>
-        <button type="button"
-                class="toggle-btn"
-                onclick="toggleReport('raport5', this)">
-            Generează raport
-        </button>
+    <div class="report-card">
+        <div class="report-header">
+            <h2>Venituri per Medicament</h2>
+            <button type="button" class="toggle-btn" onclick="toggleReport('raportVenituri', this)">
+                Generează
+            </button>
+        </div>
+        <div id="raportVenituri" class="report-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>Medicament</th>
+                    <th>Prescrieri</th>
+                    <th>Venit (RON)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="v : ${venituriMedicamente}">
+                    <td th:text="${v['Nume']}"></td>
+                    <td th:text="${v['NrPrescrieri']}"></td>
+                    <td th:text="${v['VenitGenerat']} + ' RON'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+    <div class="report-card">
+        <div class="report-header">
+            <div style="text-align: left;">
+                <h2>Cheltuieli peste medie</h2>
+                <form th:action="@{/rapoarte}" method="get" style="margin-top: 10px;">
+                    <input type="number"
+                           name="minCheltuieli"
+                           placeholder="Suma min. (RON)"
+                           th:value="${minCheltuieliSelectat}">
+                    <button type="submit">Filtrează</button>
+                </form>
+            </div>
+            <button type="button"
+                    class="toggle-btn"
+                    onclick="toggleReport('raport5', this)">
+                Generează raport
+            </button>
+        </div>
 
-    <div id="raport5" class="report-content">
-        <table>
-            <thead>
-            <tr>
-                <th>Nume Pacient</th>
-                <th>Prenume Pacient</th>
-                <th>Total Cheltuit</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="p : ${pacientiCheltuieli}">
-                <td th:text="${p['Nume']}"></td>
-                <td th:text="${p['Prenume']}"></td>
-                <td th:text="${p['TotalCheltuit']} + ' RON'"></td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(pacientiCheltuieli)}">
-                <td colspan="3" style="text-align: center;">Nu au fost găsiți pacienți care să depășească media.</td>
-            </tr>
-            </tbody>
-        </table>
+        <div id="raport5" class="report-content" th:style="${minCheltuieliSelectat != null ? 'display:block' : 'display:none'}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nume Pacient</th>
+                    <th>Prenume Pacient</th>
+                    <th>Total Cheltuit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${pacientiCheltuieli}">
+                    <td th:text="${p['Nume']}"></td>
+                    <td th:text="${p['Prenume']}"></td>
+                    <td th:text="${p['TotalCheltuit']} + ' RON'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 <script>
     function toggleReport(id, btn) {
         const el = document.getElementById(id);
@@ -286,6 +351,36 @@
         });
     }
     /*]]>*/
+    /*<![CDATA[*/
+    const venituriData = /*[[${venituriMedicamente}]]*/ [];
+    /*]]>*/
+
+    if (venituriData && venituriData.length > 0) {
+        const labelsMed = venituriData.map(v => v.Nume);
+        const valoriMed = venituriData.map(v => v.VenitGenerat);
+
+        new Chart(document.getElementById("chartPieMedicamente"), {
+            type: 'pie', // Tipul de grafic: Plăcintă
+            data: {
+                labels: labelsMed,
+                datasets: [{
+                    data: valoriMed,
+                    backgroundColor: [
+                        '#4a90e2', '#e67e22', '#2ecc71', '#e74c3c', '#9b59b6', '#f1c40f'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom' // Legenda să fie sub cerc
+                    }
+                }
+            }
+        });
+    }
 </script>
 
 </body>

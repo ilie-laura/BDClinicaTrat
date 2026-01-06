@@ -129,8 +129,10 @@ public class RapoarteRepository {
     """;
 
         return jdbcTemplate.queryForList(sql, minSalariu);
-    }
-    public List<Map<String, Object>> pacientiCuCheltuieliPesteMedie() {
+    }public List<Map<String, Object>> pacientiCuCheltuieliPesteMedie(Double pragMinim) {
+        // Dacă nu vine niciun prag din HTML, punem 0 default
+        double prag = (pragMinim != null) ? pragMinim : 0.0;
+
         String sql = """
         SELECT p.Nume, p.Prenume, SUM(m.Pret) as TotalCheltuit
         FROM Pacient p
@@ -140,7 +142,6 @@ public class RapoarteRepository {
         JOIN Medicament m ON tm.MedicamentID = m.MedicamentID
         GROUP BY p.PacientID, p.Nume, p.Prenume
         HAVING SUM(m.Pret) > (
-            /* Subcerere pentru media cheltuielilor per pacient */
             SELECT AVG(TotalPePacient) FROM (
                 SELECT SUM(med.Pret) as TotalPePacient
                 FROM PrescriereTratament pt2
@@ -148,9 +149,36 @@ public class RapoarteRepository {
                 JOIN Medicament med ON tm2.MedicamentID = med.MedicamentID
                 GROUP BY pt2.ProgramareID
             ) as Subtabel
-        )
+        ) AND SUM(m.Pret) >= ? 
+        ORDER BY TotalCheltuit DESC
+    """;
+        return jdbcTemplate.queryForList(sql, prag);
+    }
+    public List<Map<String, Object>> venituriMedicamente() {
+        String sql = """
+        SELECT 
+            m.Nume, 
+            COUNT(tm.TratamentID) AS NrPrescrieri,
+            SUM(m.Pret) AS VenitGenerat
+        FROM Medicament m
+        JOIN TratamentMedicatie tm ON m.MedicamentID = tm.MedicamentID
+        GROUP BY m.MedicamentID, m.Nume
+        ORDER BY VenitGenerat DESC
     """;
         return jdbcTemplate.queryForList(sql);
     }
 
+    public Double getTotalVenit() {
+        return jdbcTemplate.queryForObject("SELECT SUM(Pret) FROM Medicament m JOIN TratamentMedicatie tm ON m.MedicamentID = tm.MedicamentID", Double.class);
+    }
+
+    public Integer getNrProgramariNoi() {
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM Programare WHERE CAST(Data_programare AS DATE) = CAST(GETDATE() AS DATE)", Integer.class);
+    }
+    public Integer getNrMedicamenteStocCritic(int prag) {
+        // Punem pragul direct sau prin parametru ?
+        String sql = "SELECT COUNT(*) FROM Medicament WHERE Stoc <= ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, prag);
+        return (count != null) ? count : 0;
+    }
 }
