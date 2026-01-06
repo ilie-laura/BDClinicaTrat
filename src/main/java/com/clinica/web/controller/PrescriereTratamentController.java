@@ -78,10 +78,10 @@ public class PrescriereTratamentController {
         List<PrescriereTratamentDto> tratamente;
 
         if (value != null && !value.trim().isEmpty() && field != null) {
-            // Folosește metoda search din service
+
             tratamente = prescriereTratamentService.search(field, value);
         } else {
-            // Dacă nu există valoare, afișează toate tratamentele
+
             tratamente = prescriereTratamentService.findAllPrescriereTrataments();
         }
         enrichPrescrieri(tratamente);

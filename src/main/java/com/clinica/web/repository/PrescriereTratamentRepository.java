@@ -2,13 +2,13 @@ package com.clinica.web.repository;
 
 import com.clinica.web.model.PrescriereTratament;
 import com.clinica.web.model.PrescriereTratamentId;
-import com.clinica.web.model.Tratament;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -109,8 +109,22 @@ public class PrescriereTratamentRepository {
             return findAll();
         }
 
-        String sql = "SELECT * FROM PrescriereTratament WHERE RTRIM(" + field + ") LIKE ?";
-        return jdbcTemplate.query(sql, new Object[]{value.trim() + "%"}, this::mapRow);
+      String sql;
+        if ("TratamentID".equals(field)) {
+            sql = "SELECT pr.* FROM PrescriereTratament pr " +
+                    "JOIN Tratament p ON pr.TratamentID = p.TratamentID " +
+                    "WHERE p.Nume LIKE ? ORDER BY p.Nume " ;
+        }
+        else if ("ProgramareID".equals(field)) {
+            sql = "SELECT pr.* FROM PrescriereTratament pr " +
+                    "JOIN Programare m ON pr.ProgramareID = m.ProgramareID " +
+                    "WHERE m.Data_programare LIKE ? ORDER BY m.Data_programare " ;
+        }
+        else {
+
+            sql = "SELECT * FROM PrescriereTratament WHERE " + field + " LIKE ? ORDER BY " + field + " " ;
+        }
+        return jdbcTemplate.query(sql, new Object[]{"%" + value.trim() + "%"}, this::mapRow);
     }
 
     public  int savePrescriere(PrescriereTratament t) {
