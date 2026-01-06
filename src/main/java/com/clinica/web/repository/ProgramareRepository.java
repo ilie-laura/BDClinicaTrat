@@ -17,7 +17,7 @@ public class ProgramareRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private static final List<String> ALLOWED_FIELDS =
-            List.of("PacientID", "pacientID","pacientId", "MedicID", "medicID",
+            List.of("PacientID", "pacientID","pacientId", "MedicID", "medicID","medicId",
                     "Data_programare", "data_programare",
                     "Durata_programare", "durata_programare");
 
@@ -25,43 +25,41 @@ public class ProgramareRepository {
     public ProgramareRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public List<Programare> search(String field, String value, Boolean dir) {
 
-        if (!ALLOWED_FIELDS.contains(field)) {
-            throw new IllegalArgumentException("Invalid column for filtering: " + field);
-        }
-
-        if (value == null || value.trim().isEmpty()) {
-            return findAll(dir,field);
-        }
-
-        String sql;
-        if (dir==null || dir==true)
-            sql = "SELECT * FROM Programare WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
-        else
-            sql="SELECT * FROM Programare WHERE RTRIM(" + field + ") LIKE ? ORDER BY " +field+ " DESC";
-
-        return jdbcTemplate.query(
-                sql,
-                new Object[]{value.trim() + "%"},
-                this::mapRow
-        );
+public List<Programare> search(String field, String value, Boolean dir) {
+    // 1. Validare
+    if (!ALLOWED_FIELDS.contains(field)) {
+        return findAll(dir, "Data_programare");
     }
 
-    public Programare findByID(Long programareID) {
-        String sql = "SELECT * FROM Programare WHERE ProgramareID = ?";
-
-        List<Programare> programari = jdbcTemplate.query(sql, new Object[]{programareID}, (rs, rowNum) -> {
-            Programare p = new Programare();
-            p.setProgramareID(rs.getInt("ProgramareID"));
-            p.setPacientID(rs.getInt("PacientID"));
-            p.setMedicID(rs.getInt("MedicID"));
-            p.setDurata_programare("Durata_programare");
-            p.setDataProgramarii(rs.getTimestamp("Data_programare").toLocalDateTime());
-            return p;
-        });
-        return jdbcTemplate.queryForObject(sql, this::mapRow, programareID);
+    if (value == null || value.trim().isEmpty()) {
+        return findAll(dir, field);
     }
+
+    String direction = (dir == null || dir) ? "ASC" : "DESC";
+    String sql;
+
+    if ("pacientId".equals(field)) {
+        sql = "SELECT pr.* FROM Programare pr " +
+                "JOIN Pacient p ON pr.PacientID = p.PacientID " +
+                "WHERE p.Nume LIKE ? ORDER BY p.Nume " + direction;
+    }
+    else if ("medicId".equals(field)) {
+        sql = "SELECT pr.* FROM Programare pr " +
+                "JOIN Medic m ON pr.MedicID = m.MedicID " +
+                "WHERE m.Nume LIKE ? ORDER BY m.Nume " + direction;
+    }
+    else {
+
+        sql = "SELECT * FROM Programare WHERE " + field + " LIKE ? ORDER BY " + field + " " + direction;
+    }
+
+    return jdbcTemplate.query(
+            sql,
+            new Object[]{value.trim() + "%"},
+            this::mapRow
+    );
+}
     private Programare mapRow(ResultSet rs, int rowNum) throws SQLException {
         Programare p = new Programare();
 
@@ -243,5 +241,26 @@ public class ProgramareRepository {
                         .build()
         );
     }
+    public Programare findById(long id) {
+        // Folosim JOIN pentru a aduce și numele, astfel încât să le poți afișa în pagina de edit/detalii
+        String sql = """
+        SELECT pr.*, pa.Nume as PacientNume, pa.Prenume as PacientPrenume, 
+               m.Nume as MedicNume, m.Prenume as MedicPrenume
+        FROM Programare pr
+        JOIN Pacient pa ON pr.PacientID = pa.PacientID
+        JOIN Medic m ON pr.MedicID = m.MedicID
+        WHERE pr.ProgramareID = ?
+    """;
 
+        try {
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+                Programare p = mapRow(rs, rowNum); // refolosim metoda mapRow existentă
+
+
+                return p;
+            }, id);
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            return null; // Returnăm null dacă nu s-a găsit programarea
+        }
+    }
 }

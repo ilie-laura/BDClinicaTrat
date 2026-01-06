@@ -37,7 +37,7 @@ public class ProgramareServiceImpl implements ProgramareService {
 
     @Override
     public Programare findById(long id) {
-       return programareRepository.findByID(id);
+       return programareRepository.findById(id);
     }
 @Override
     public void deleteById(Long programareId) {
@@ -94,7 +94,7 @@ public class ProgramareServiceImpl implements ProgramareService {
     }
     @Override
     public ProgramareDto findDtoById(int id) {
-        Programare p = programareRepository.findByID((long) id);
+        Programare p = programareRepository.findById((long) id);
 
         return ProgramareDto.builder()
                 .programareId(p.getProgramareID())

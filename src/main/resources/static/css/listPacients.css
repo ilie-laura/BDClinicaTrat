@@ -441,5 +441,11 @@ tbody tr:last-child td:last-child { border-bottom-right-radius: 0.4rem; }
     align-items: center;
     flex-wrap: wrap;
 }
-
+.menu-items a.active-link{
+    color: white;
+    background-color: #224261;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
 

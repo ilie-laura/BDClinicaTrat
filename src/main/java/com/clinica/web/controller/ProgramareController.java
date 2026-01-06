@@ -50,32 +50,37 @@ public class ProgramareController {
         model.addAttribute("nextDir", nextDir);
         model.addAttribute("field", field);
         List<ProgramareDto> programari;
-        if (field != null && value != null && !value.isEmpty()) {
-            // căutare
-            List<ProgramareDto> lista = programareService.search(field, value,currentDir);
-            programari = lista.stream()
-                    .map(m -> ProgramareDto.builder()
-                            .programareId(m.getProgramareId())
-                            .pacientId(m.getPacientId())
-                            .medicId(m.getMedicId())
-                            .dataProgramare(m.getDataProgramare())
-                            .durataProgramare(m.getDurataProgramare())
-                            .build()
-                    ).toList();
+        try {
+            if (field != null && value != null && !value.isEmpty()) {
+                // căutare
+                List<ProgramareDto> lista = programareService.search(field, value, currentDir);
+                programari = lista.stream()
+                        .map(m -> ProgramareDto.builder()
+                                .programareId(m.getProgramareId())
+                                .pacientId(m.getPacientId())
+                                .medicId(m.getMedicId())
+                                .dataProgramare(m.getDataProgramare())
+                                .durataProgramare(m.getDurataProgramare())
+                                .build()
+                        ).toList();
 
-        } else {
+            } else {
 
-            programari = programareService.findAll(currentDir,field);
+                programari = programareService.findAll(currentDir, field);
+            }
+            programari.forEach(p -> {
+                p.setPacientNume(
+                        pacientService.getNumeCompletById(p.getPacientId())
+                );
+                p.setMedicNume(
+                        medicService.getNumeCompletById(p.getMedicId())
+                );
+            });
+        }catch(Exception e){
+
+            model.addAttribute("errorMessage", "Eroare la procesarea datelor: " + e.getMessage());
+            programari = List.of();
         }
-        programari.forEach(p -> {
-            p.setPacientNume(
-                    pacientService.getNumeCompletById(p.getPacientId())
-            );
-            p.setMedicNume(
-                    medicService.getNumeCompletById(p.getMedicId())
-            );
-        });
-
         model.addAttribute("programari", programari);
         return "programari";
     }
