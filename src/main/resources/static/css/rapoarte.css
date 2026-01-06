@@ -24,6 +24,14 @@ h2 {
     font-size: 20px;
 }
 
+.menu-items a.active-link{
+    color: white;
+    background-color: #224261;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
 
 .reports-container {
     width: 95%;

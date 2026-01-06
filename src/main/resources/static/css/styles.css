@@ -747,3 +747,11 @@ a {
     border: 2px solid #e74c3c;
     box-shadow: 0 0 6px #e74c3c;
 }
+
+.menu-items a.active-link{
+    color: white;
+    background-color: #224261;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
