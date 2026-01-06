@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -68,11 +69,13 @@ public class WebController {
                                    @RequestParam String motiv,
                                    @RequestParam LocalDate appointment_date,
                                    Principal principal,
+                                   RedirectAttributes redirectAttributes,
                                    Model model) {
+        boolean exista = pacientJdbcRepository.existsByCnp(cnp);
 
         try {
-            if (!pacientJdbcRepository.existsByCnp(cnp)) {
-            model.addAttribute("error", "CNP-ul introdus nu există în baza de date.");
+            if (!exista) {
+                redirectAttributes.addFlashAttribute("error", "CNP-ul introdus nu există!");
 
                 model.addAttribute("medici", medicService.findAll(null, null));
                 model.addAttribute("mediciActivi", RapoarteRepository.mediciActiviAzi());
@@ -80,19 +83,21 @@ public class WebController {
                 if (principal != null) {
                     model.addAttribute("currentUsername", principal.getName());
                 }
-            return "index";
+
+              return "redirect:/index";
         }
 
             programareService.creeazaProgramare(
                     cnp, medicID, appointment_date, motiv
             );
+            return "redirect:/index";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("medici", medicService.findAll(null, null));
-            return "index";
+            model.addAttribute("mediciActivi", RapoarteRepository.mediciActiviAzi());
+            return "redirect:/index";
         }
 
-        return "redirect:/index";
     }
 
 

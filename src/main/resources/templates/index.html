@@ -7,7 +7,7 @@
     <title>ClinicaTrat</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
+<body >
 
 <nav>
     <div class="navbar">
@@ -139,13 +139,17 @@
 
     </div>
 </section>
+<div th:if="${error}" id="errorOverlay" class="error-overlay"></div>
 
+<div th:if="${error}" id="errorPopup" class="error-popup alert-danger">
+    <span th:text="${error}"></span>
+</div>
 
 <section style="padding-top:2rem;
         background-image:url(https://i.pinimg.com/736x/17/43/21/174321b860839f260a096c0dd2e3ffaf.jpg);
         min-height:80vh">
 
-    <div class="appointment-form-container">
+    <div class="appointment-form-container" id="appointment-anchor">
 
         <div class="side-block">
             <i class="calendar-icon">
@@ -157,9 +161,7 @@
             <h2>Programare</h2>
         </div>
 
-        <div th:if="${error}" class="error-popup">
-            <span th:text="${error}"></span>
-        </div>
+
 
         <form class="main-form"
               th:action="@{/programare}"
@@ -303,6 +305,34 @@
     }, observerOptions);
 
     document.querySelectorAll('.glass').forEach(el => observer.observe(el));
+</script><script th:if="${error}">
+    const popup = document.getElementById('errorPopup');
+    const overlay = document.getElementById('errorOverlay');
+
+    function closeError() {
+
+        if (popup) popup.style.opacity = '0';
+        if (overlay) overlay.style.opacity = '0';
+
+
+        setTimeout(() => {
+            if (popup) popup.style.display = 'none';
+            if (overlay) overlay.style.display = 'none';
+        }, 300);
+    }
+
+    setTimeout(closeError, 3000);
+
+
+    if (overlay) {
+        overlay.addEventListener('click', closeError);
+    }
+
+    document.addEventListener('click', function(event) {
+        if (popup && !popup.contains(event.target)) {
+            closeError();
+        }
+    });
 </script>
 </body>
 </html>

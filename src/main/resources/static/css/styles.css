@@ -1,6 +1,4 @@
-/* --------------------------------------------------
-   RESET & GENERAL
--------------------------------------------------- */
+
 * {
     margin: 0;
     padding: 0;
@@ -174,9 +172,7 @@ a {
     }
 }
 
-/* --------------------------------------------------
-   HERO SECTION
--------------------------------------------------- */
+
 .hero-section {
     background: #FDFDFD;
     display: flex;
@@ -216,9 +212,7 @@ a {
     animation: fadeIn 1.5s ease forwards;
 }
 
-/* --------------------------------------------------
-   GLASS SECTIONS
--------------------------------------------------- */
+
 
 .glass {
     margin: 2rem;
@@ -260,9 +254,7 @@ a {
     /*scroll-margin-top: 70px;*/
 }
 
-/* --------------------------------------------------
-   BUTTONS
--------------------------------------------------- */
+
 .btn {
     display: block;
     background-color: #4a90e2;
@@ -284,15 +276,9 @@ a {
     color: white;
 }
 
-/* --------------------------------------------------
-   ANIMATIONS
--------------------------------------------------- */
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 @keyframes fadeInDown { from {opacity:0; transform:translateY(-30px);} to {opacity:1; transform:translateY(0);} }
 
-/* --------------------------------------------------
-   RESPONSIVE
--------------------------------------------------- */
 
 @media (max-width: 900px) {
     .hero-content {
@@ -316,9 +302,6 @@ a {
         align-items: center;
     }
 }
-/* --------------------------------------------------
-   FOOTER SECTION
--------------------------------------------------- */
 
 .main-footer {
 
@@ -428,6 +411,9 @@ a {
 
     .footer-col:not(:last-child) {
         margin-bottom: 20px;
+    }
+    .logo img {
+        opacity: 0;
     }
 }
 /* Stil pentru a centra GIF-urile */
@@ -726,21 +712,37 @@ display: flex;
 .input-group select option[value=""] {
     color: #999;
 }
+
+/* Stiluri pentru a face div-ul să arate ca un pop-up */
 .error-popup {
+
     position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #e74c3c;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-    font-weight: 600;
-    z-index: 9999;
-    animation: slideDown 0.4s ease;
+    top: 50%;        /* Centrează vertical */
+    left: 50%;       /* Centrează orizontal */
+    transform: translate(-50%, -50%); /* Ajustează pentru centrare perfectă */
+    z-index: 1000;   /* Asigură că este deasupra altor elemente */
+    min-width: 300px; /* Lățime minimă */
+    max-width: 80%;  /* Lățime maximă */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Umbră pentru efect de ridicare */
+    padding: 20px;
+    border-radius: 8px;
+    background: red;
+    opacity: 75%;
+    /* Opțional: Adaugă o tranziție pentru efecte mai fluide */
+    transition: opacity 0.3s ease-in-out;
 }
 
+
+.error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent negru */
+    z-index: 999;
+}
 @keyframes slideDown {
     from {
         opacity: 0;

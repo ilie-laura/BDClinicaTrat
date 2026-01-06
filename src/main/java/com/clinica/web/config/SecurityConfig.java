@@ -42,8 +42,7 @@ public class SecurityConfig {
                                 "/assets/**",
                                 "/webjars/**",
                                 "/login",
-                                "/register",
-                                "/programare")
+                                "/register")
                                 .permitAll()
                         .anyRequest().authenticated()
                 )

@@ -179,11 +179,15 @@ public class PacientJdbcRepository {
         }
     }
     public boolean existsByCnp(String cnp) {
-        String sql = "SELECT COUNT(*) FROM Pacient WHERE CNP = ?";
-        List<Integer> result = jdbcTemplate.query(sql,
-                (rs, rowNum) -> rs.getInt(1),
-                cnp);
-        return !result.isEmpty();
+
+        String sql = "SELECT COUNT(*) FROM Pacient WHERE CAST(CNP AS VARCHAR) = ?";
+
+        try {
+            Integer count = jdbcTemplate.queryForObject(sql, Integer.class, cnp.trim());
+            return count != null && count > 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
