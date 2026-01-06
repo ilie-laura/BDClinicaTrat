@@ -178,4 +178,12 @@ public class PacientJdbcRepository {
             throw new IllegalArgumentException("Pacientul cu acest CNP nu există");
         }
     }
+    public boolean existsByCnp(String cnp) {
+        String sql = "SELECT COUNT(*) FROM Pacient WHERE CNP = ?";
+        List<Integer> result = jdbcTemplate.query(sql,
+                (rs, rowNum) -> rs.getInt(1),
+                cnp);
+        return !result.isEmpty();
+    }
+
 }

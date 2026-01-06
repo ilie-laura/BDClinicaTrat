@@ -1,6 +1,7 @@
 package com.clinica.web.controller;
 
 import com.clinica.web.model.Medic;
+import com.clinica.web.repository.PacientJdbcRepository;
 import com.clinica.web.repository.RapoarteRepository;
 import com.clinica.web.service.MedicService;
 import com.clinica.web.service.ProgramareService;
@@ -19,14 +20,16 @@ import java.util.Optional;
 public class WebController {
     private final MedicService medicService;
     private final ProgramareService programareService;
-    private final RapoarteRepository rapoarteRepository;
+    private final PacientJdbcRepository pacientJdbcRepository;
+
 
     public WebController(MedicService medicService,
                          ProgramareService programareService,
-                         RapoarteRepository rapoarteRepository) {
+                         RapoarteRepository rapoarteRepository, PacientJdbcRepository pacientJdbcRepository) {
         this.medicService = medicService;
         this.programareService = programareService;
-        this.rapoarteRepository = rapoarteRepository;
+        ;
+        this.pacientJdbcRepository = pacientJdbcRepository;
     }
 
     @GetMapping("/index")
@@ -64,9 +67,22 @@ public class WebController {
                                    @RequestParam int medicID,
                                    @RequestParam String motiv,
                                    @RequestParam LocalDate appointment_date,
+                                   Principal principal,
                                    Model model) {
 
         try {
+            if (!pacientJdbcRepository.existsByCnp(cnp)) {
+            model.addAttribute("error", "CNP-ul introdus nu există în baza de date.");
+
+                model.addAttribute("medici", medicService.findAll(null, null));
+                model.addAttribute("mediciActivi", RapoarteRepository.mediciActiviAzi());
+
+                if (principal != null) {
+                    model.addAttribute("currentUsername", principal.getName());
+                }
+            return "index";
+        }
+
             programareService.creeazaProgramare(
                     cnp, medicID, appointment_date, motiv
             );

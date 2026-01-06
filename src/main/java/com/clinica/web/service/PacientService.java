@@ -22,5 +22,5 @@ public interface PacientService {
     }
 
     public String getNumeCompletById(Integer pacientId) ;
-
+    public boolean existsByCnp(String cnp);
 }

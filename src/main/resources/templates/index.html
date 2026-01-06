@@ -27,6 +27,7 @@
 
 
             <div class="menu-items">
+
                 <li><a href="#home" onclick="document.getElementById('nav-toggle').checked = false;">Home</a></li>
                 <li><a href="#about" onclick="document.getElementById('nav-toggle').checked = false;">About</a></li>
                 <li >
@@ -39,6 +40,7 @@
                 <li>
                     <a th:href="@{/rapoarte}" > Rapoarte</a>
                 </li>
+
             </div>
             <div th:if="${currentUsername != null}">
                 Bine ai venit, <strong th:text="${currentUsername}"></strong>!
@@ -172,6 +174,7 @@
                            id="cnp"
                            name="cnp"
                            placeholder="Introduceți CNP-ul"
+                           th:classappend="${error} ? 'input-error'"
                            required>
                 </div>
 

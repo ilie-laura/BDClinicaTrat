@@ -61,6 +61,9 @@ public class PacientServiceImpl implements PacientService {
         Pacient p = pacientRepository.findById(pacientId.longValue());
         return p.getNume() + " " + p.getPrenume();
     }
-
+@Override
+public boolean existsByCnp(String cnp){
+        return pacientRepository.existsByCnp(cnp);
+}
 
 }

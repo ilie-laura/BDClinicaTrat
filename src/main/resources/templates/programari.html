@@ -58,29 +58,23 @@
     </button>
     <a th:href="@{/addProgramare}" class="btn add-btn" >Adaugă programare</a>
 
-    <div id="raportProgramariAn" class="report-content">
-
-        <form th:action="@{/programari/an}"
-              method="get"
-              class="search-form raport-search">
-
-            <label for="an">An:</label>
-
-            <input type="number"
-                   id="an"
-                   name="an"
-                   placeholder="Ex: 2025"
-                   required>
-
-            <button type="submit">
-                Afișează programările
-            </button>
-        </form>
-
-
-    </div>
-
 </form>
+<div class="search-form raport-search">
+    <form th:action="@{/programari/an}" method="get" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <label for="an">An:</label>
+
+        <input type="number"
+               id="an"
+               name="an"
+               placeholder="Ex: 2025"
+               required>
+
+        <button type="submit">
+            Afișează programările
+        </button>
+    </form>
+</div>
+
 
 <table>
     <thead>

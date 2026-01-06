@@ -112,7 +112,7 @@ public class ProgramareRepository {
         jdbcTemplate.update(sql,
                 p.getPacient() != null ? p.getPacient().getPacientID() : p.getPacientID(),
                 p.getMedic() != null ? p.getMedic().getMedicID() : p.getMedicID(),
-                p.getDataProgramarii(),
+                p.getData_programare(),
                 p.getDurata_programare()
         );
 
@@ -122,7 +122,12 @@ public class ProgramareRepository {
 
     public void deleteById(Long id) {
         jdbcTemplate.update(
-                "DELETE FROM Programare WHERE ProgramareID= ?",
+                "DELETE FROM PrescriereTratament WHERE ProgramareID = ?",
+                id
+        );
+
+        jdbcTemplate.update(
+                "DELETE FROM Programare WHERE ProgramareID = ?",
                 id
         );
     }
