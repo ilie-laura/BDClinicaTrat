@@ -27,21 +27,21 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found: " + username);
         }
 
-        // Luăm rolul din DB. Dacă e null, punem ROLE_USER ca să nu crape Spring
         String userRole = user.getRole();
         if (userRole == null || userRole.isEmpty()) {
             userRole = "ROLE_ADMIN";
         }
-        if(user.getEnabled()==0)
-            user.setEnabled(1);
-
-        // Debugging - verifică ce scrie aici în consolă după ce rulezi
-        System.out.println("DEBUG LOGIN -> User: " + username + " | Rol final: " + userRole + " | Status: " + user.getEnabled());
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userRole));
+// În CustomUserDetailsService, înainte de return builder.build();
+        System.out.println("--- VERIFICARE ROL ---");
+        System.out.println("Utilizator: " + user.getUsername());
+        System.out.println("Rol din Baza de Date: " + user.getRole());
+        System.out.println("Autorități trimise la Spring: " + authorities);
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .disabled(user.getEnabled() != 1) // Dacă e 0, contul e blocat
+                .disabled(user.getEnabled() == 1)// Dacă e 0, contul e blocat
                 .authorities(userRole)
                 .build();
     }

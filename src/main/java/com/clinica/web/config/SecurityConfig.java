@@ -46,7 +46,7 @@ public class SecurityConfig {
                                 .permitAll()
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
-
+                        .requestMatchers("/index", "/").authenticated()
                         // 3. Protejarea paginii de Rapoarte (Accesibilă pentru ADMIN și MEDIC)
                         .requestMatchers("/rapoarte/**")
                         .hasAnyRole("ADMIN", "MEDIC")
