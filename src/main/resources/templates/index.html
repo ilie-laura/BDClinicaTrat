@@ -11,7 +11,7 @@
 
 <nav>
     <div class="navbar">
-        <div class="container nav-container">
+        <ul class="container nav-container">
             <input class="checkbox" type="checkbox" id="nav-toggle" />
 
             <div class="hamburger-lines">
@@ -40,6 +40,9 @@
                 <li>
                     <a th:href="@{/rapoarte}" > Rapoarte</a>
                 </li>
+                <li>
+                    <a th:href="@{/admin-users}" >Admin</a>
+                </li>
 
             </div>
             <div th:if="${currentUsername != null}">
@@ -56,7 +59,7 @@
             </div>
 
 
-        </div>
+        </ul>
     </div>
 </nav>
 
@@ -305,7 +308,8 @@
     }, observerOptions);
 
     document.querySelectorAll('.glass').forEach(el => observer.observe(el));
-</script><script th:if="${error}">
+</script>
+<script th:if="${error}">
     const popup = document.getElementById('errorPopup');
     const overlay = document.getElementById('errorOverlay');
 

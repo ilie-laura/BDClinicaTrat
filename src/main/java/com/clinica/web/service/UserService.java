@@ -4,30 +4,39 @@ package com.clinica.web.service;
 import com.clinica.web.dto.UserDto;
 import com.clinica.web.model.User;
 import com.clinica.web.repository.UserRepository;
+import jakarta.persistence.NamedNativeQuery;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 
 @Service
 public class UserService {
 
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
-
+    private JdbcTemplate jdbcTemplate;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,JdbcTemplate jdbcTemplate) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public User save(UserDto userDto) {
         validatePassword(userDto.getPassword());
         validateEmail(userDto.getEmail());
+
         User user = new User();
         user.setUsername(userDto.getUsername());
 
         user.setPassword(passwordEncoder.encode(userDto.getPassword())); // bcrypt
         user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
+        user.setEnabled(1);
 
         return userRepository.save(user);
     }
@@ -93,4 +102,25 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public List<User> findAll() {
+        String sql = "SELECT username, role ,id ,enabled FROM Users";
+
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            User user = new User();
+
+            user.setUsername(rs.getString("username"));
+            user.setRole(rs.getString("role"));
+            user.setId(rs.getInt("id"));
+            user.setEnabled(rs.getInt("enabled"));
+            return user;
+        });
+    }
+
+    public void toggleStatus(Long id) {
+
+        String sql = "UPDATE Users SET enabled = CASE WHEN enabled = 1 THEN 0 ELSE 1 END WHERE id = ?";
+
+        jdbcTemplate.update(sql, id);
+    }
 }

@@ -30,6 +30,9 @@
                     <li><a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked=false;">Informatii</a></li>
                     <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked=false;">Contact</a></li>
                     <li><a class="active-link" th:href="@{/rapoarte}">Rapoarte</a></li>
+                    <li>
+                        <a th:href="@{/admin-users}" >Admin</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -261,6 +264,7 @@
                     <input type="number"
                            name="minCheltuieli"
                            placeholder="Suma min. (RON)"
+                           min="0"
                            th:value="${minCheltuieliSelectat}">
                     <button type="submit">Filtrează</button>
                 </form>

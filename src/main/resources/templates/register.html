@@ -15,13 +15,13 @@
     <input type="password" th:field="*{password}" id="password" placeholder="Enter password">
 
     <label for="email">Email</label>
-    <input type="text" placeholder="Email:dom@yahoo.com" id="email" name="email">
+    <input type="text" th:field="*{email}" placeholder="Email:dom@yahoo.com" id="email" >
 
-    <label for="role">Tip user</label>
-    <select>
-        <option>Pacient</option>
-        <option>Medic</option>
-        <option>Admin</option>
+    <label for="role">Tip utilizator</label>
+    <select id="role" th:field="*{role}" required>
+        <option value="ROLE_PACIENT">ROLE_PACIENT</option>
+        <option value="ROLE_MEDIC">ROLE_MEDIC</option>
+        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
     </select>
 
     <div class="buttons">

@@ -44,6 +44,14 @@ public class SecurityConfig {
                                 "/login",
                                 "/register")
                                 .permitAll()
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
+                        // 3. Protejarea paginii de Rapoarte (Accesibilă pentru ADMIN și MEDIC)
+                        .requestMatchers("/rapoarte/**")
+                        .hasAnyRole("ADMIN", "MEDIC")
+
+                        // 4. Orice altă cerere necesită autentificare
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

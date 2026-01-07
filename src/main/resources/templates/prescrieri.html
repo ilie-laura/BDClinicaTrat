@@ -32,6 +32,9 @@
                 <li>
                     <a th:href="@{/rapoarte}" > Rapoarte</a>
                 </li>
+                <li>
+                    <a th:href="@{/admin-users}" >Admin</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -41,8 +44,8 @@
 <form class="search-form" th:action="@{/prescrieri/search}" method="get" style="margin-bottom: 20px;">
     <label>Caută după:</label>
     <select name="field">
-        <option value="ProgramareID">ProgramareID</option>
-        <option value="TratamentID">TratamentID</option>
+        <option value="ProgramareID">Data Programare</option>
+        <option value="TratamentID">Tratament</option>
         <option value="Durata">Durata</option>
     </select>
 

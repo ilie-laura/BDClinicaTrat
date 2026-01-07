@@ -10,69 +10,40 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+
 public class AuthController {
 
     private final UserService userService;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService,
-                          BCryptPasswordEncoder passwordEncoder) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
-
-
 
     @GetMapping("/login")
     public String login() {
         return "login";
     }
-    @PostMapping("/login")
-    public String doLogin(@RequestParam String username,
-                          @RequestParam String password,
-                          Model model) {
 
-        User user;
-        try {
-            user = userService.findByUsername(username);
-        } catch (Exception e) {
-            model.addAttribute("error", "Username sau parolă invalidă");
-            return "login";
-        }
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            model.addAttribute("error", "Username sau parolă invalidă");
-            return "login";
-        }
-
-        return "redirect:/";
-    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-
         model.addAttribute("user", new UserDto());
-        return "/register";
+        return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserDto userDto,Model model) {
+    public String registerUser(@ModelAttribute("user") UserDto userDto, Model model) {
         if (userService.existsByUsername(userDto.getUsername())) {
             model.addAttribute("error", "Username deja existent");
-            return "/register";
+            return "register";
         }
         try {
             userService.save(userDto);
+            return "redirect:/login?success";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
-            return "/register";
+            return "register";
         }
-
-        return "redirect:/login";
-    }
-
-    @GetMapping("/")
-    public String home() {
-        return "index";
     }
 }

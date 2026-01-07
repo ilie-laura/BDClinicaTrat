@@ -130,7 +130,7 @@ public class RapoarteRepository {
 
         return jdbcTemplate.queryForList(sql, minSalariu);
     }public List<Map<String, Object>> pacientiCuCheltuieliPesteMedie(Double pragMinim) {
-        // Dacă nu vine niciun prag din HTML, punem 0 default
+        //  0 default
         double prag = (pragMinim != null) ? pragMinim : 0.0;
 
         String sql = """

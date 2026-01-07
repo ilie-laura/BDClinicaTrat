@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Gestionare Utilizatori</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .admin-container { padding: 50px; color: white; min-height: 100vh; background: #0f172a; }
+        .user-table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 10px; overflow: hidden; }
+        .user-table th, .user-table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .status-active { background: #22c55e; color: white; }
+        .status-inactive { background: #ef4444; color: white; }
+        .btn-action { padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .btn-toggle { background: #3b82f6; color: white; }
+        .btn-delete { background: #64748b; color: white; margin-left: 5px; }
+        .btn-action:hover { opacity: 0.8; transform: translateY(-2px); }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<nav>
+    <div class="navbar">
+        <ul class="container nav-container">
+            <input class="checkbox" type="checkbox" id="nav-toggle" />
+
+            <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </div>
+
+
+            <div class="logo hide-mobile">
+                <img src="/assets/logo.png" alt="ClinicaTrat Logo" class="logo-img">
+            </div>
+
+
+            <div class="menu-items">
+
+                <li><a  href="#home" onclick="document.getElementById('nav-toggle').checked = false;">Home</a></li>
+                <li><a href="#about" onclick="document.getElementById('nav-toggle').checked = false;">About</a></li>
+                <li >
+                    <a th:href="@{/info}" onclick="document.getElementById('nav-toggle').checked = false;">
+                        Informatii
+                    </a>
+
+                </li>
+                <li><a th:href="@{/contact}" onclick="document.getElementById('nav-toggle').checked = false;">Contact</a></li>
+                <li>
+                    <a th:href="@{/rapoarte}" > Rapoarte</a>
+                </li>
+                <li>
+                    <a class="active-link" th:href="@{/admin-users}" >Admin</a>
+                </li>
+            </div>
+
+        </ul>
+    </div>
+</nav>
+<div class="admin-container">
+    <h1>Panou control Admin</h1>
+
+    <br>
+
+
+
+    <table class="user-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Utilizator</th>
+            <th>Rol</th>
+            <th>Status</th>
+            <th>Acțiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">admin</td>
+            <td><strong th:text="${user.role}">ROLE_ADMIN</strong></td>
+            <td>
+                    <span th:class="${user.enabled} ? 'status-pill status-active' : 'status-pill status-inactive'"
+                          th:text="${user.enabled} ? 'Activ' : 'Inactiv'">
+                    </span>
+            </td>
+            <td>
+                <div style="display: flex;">
+                    <form th:action="@{/admin-users/toggle/{id}(id=${user.id})}" method="post">
+                        <button type="submit" class="btn-action btn-toggle">
+                            <span th:text="${user.enabled} ? 'Dezactivează' : 'Activează'"></span>
+                        </button>
+                    </form>
+
+                    <form th:action="@{/admin-users/delete/{id}(id=${user.id})}" method="post" class="delete-form">
+                        <button type="button" class="btn-action btn-delete" onclick="confirmDelete(this)">Șterge</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+        <a th:href="@{/index}" style="color: #3b82f6; text-decoration: none;">← Înapoi la Dashboard</a>
+    </div>
+</div>
+<script>
+    function confirmDelete(button) {
+        const form = button.closest('.delete-form'); // Găsește formularul părinte
+
+        Swal.fire({
+            title: 'Ești sigur?',
+            text: "Utilizatorul va fi șters definitiv din baza de date!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Da, șterge-l!',
+            cancelButtonText: 'Anulează',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit(); // Trimite formularul către Spring Boot doar dacă userul a confirmat
+            }
+        })
+    }
+</script>
+</body>
+</html>
