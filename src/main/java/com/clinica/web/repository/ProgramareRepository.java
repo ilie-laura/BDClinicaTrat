@@ -26,40 +26,41 @@ public class ProgramareRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-public List<Programare> search(String field, String value, Boolean dir) {
-    // 1. Validare
-    if (!ALLOWED_FIELDS.contains(field)) {
-        return findAll(dir, "Data_programare");
-    }
+    public List<Programare> search(String field, String value, Boolean dir) {
+        // 1. Validare
+        if (!ALLOWED_FIELDS.contains(field)) {
+            return findAll(dir, "Data_programare");
+        }
 
-    if (value == null || value.trim().isEmpty()) {
-        return findAll(dir, field);
-    }
+        if (value == null || value.trim().isEmpty()) {
+            return findAll(dir, field);
+        }
 
-    String direction = (dir == null || dir) ? "ASC" : "DESC";
-    String sql;
+        String direction = (dir == null || dir) ? "ASC" : "DESC";
+        String sql;
+        String searchPattern = "%" + value.trim() + "%"; //  nume/prenume
 
-    if ("pacientId".equals(field)) {
-        sql = "SELECT pr.* FROM Programare pr " +
-                "JOIN Pacient p ON pr.PacientID = p.PacientID " +
-                "WHERE p.Nume LIKE ? ORDER BY p.Nume " + direction;
-    }
-    else if ("medicId".equals(field)) {
-        sql = "SELECT pr.* FROM Programare pr " +
-                "JOIN Medic m ON pr.MedicID = m.MedicID " +
-                "WHERE m.Nume LIKE ? ORDER BY m.Nume " + direction;
-    }
-    else {
+        if ("pacientId".equals(field)) {
+            sql = "SELECT pr.* FROM Programare pr " +
+                    "JOIN Pacient p ON pr.PacientID = p.PacientID " +
+                    "WHERE (p.Nume LIKE ? OR p.Prenume LIKE ?) " +
+                    "ORDER BY p.Nume " + direction;
 
-        sql = "SELECT * FROM Programare WHERE " + field + " LIKE ? ORDER BY " + field + " " + direction;
-    }
+            return jdbcTemplate.query(sql, new Object[]{searchPattern, searchPattern}, this::mapRow);
+        }
+        else if ("medicId".equals(field)) {
+            sql = "SELECT pr.* FROM Programare pr " +
+                    "JOIN Medic m ON pr.MedicID = m.MedicID " +
+                    "WHERE (m.Nume LIKE ? OR m.Prenume LIKE ?) " +
+                    "ORDER BY m.Nume " + direction;
 
-    return jdbcTemplate.query(
-            sql,
-            new Object[]{value.trim() + "%"},
-            this::mapRow
-    );
-}
+            return jdbcTemplate.query(sql, new Object[]{searchPattern, searchPattern}, this::mapRow);
+        }
+        else {
+            sql = "SELECT * FROM Programare WHERE " + field + " LIKE ? ORDER BY " + field + " " + direction;
+            return jdbcTemplate.query(sql, new Object[]{searchPattern}, this::mapRow);
+        }
+    }
     private Programare mapRow(ResultSet rs, int rowNum) throws SQLException {
         Programare p = new Programare();
 

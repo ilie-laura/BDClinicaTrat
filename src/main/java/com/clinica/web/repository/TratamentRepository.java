@@ -74,9 +74,7 @@ public class TratamentRepository {
             sql = "SELECT * FROM Tratament WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" ASC";
         else
             sql="SELECT * FROM Tratament WHERE RTRIM(" + field + ") LIKE ? ORDER BY "+field+" DESC";
-        return jdbcTemplate.query(sql, new Object[]
-                {value.trim() + "%"
-                }, this::mapRow);
+        return jdbcTemplate.query(sql, new Object[]{"%" + value.trim() + "%"}, this::mapRow);
     }
 
 

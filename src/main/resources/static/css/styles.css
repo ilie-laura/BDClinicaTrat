@@ -719,17 +719,17 @@ display: flex;
     position: fixed;
     top: 50%;        /* Centrează vertical */
     left: 50%;       /* Centrează orizontal */
-    transform: translate(-50%, -50%); /* Ajustează pentru centrare perfectă */
+    transform: translate(-50%, -50%);
     z-index: 1000;   /* Asigură că este deasupra altor elemente */
     min-width: 300px; /* Lățime minimă */
     max-width: 80%;  /* Lățime maximă */
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Umbră pentru efect de ridicare */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 8px;
     background: red;
     opacity: 75%;
-    /* Opțional: Adaugă o tranziție pentru efecte mai fluide */
+
     transition: opacity 0.3s ease-in-out;
 }
 

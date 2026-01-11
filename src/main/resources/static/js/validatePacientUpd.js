@@ -30,8 +30,8 @@ function validatePacientUpd() {
   //  const cnp = document.getElementById("cnp").value.trim();
 
     // Nume
-    if (nume.length < 2 || nume.length>10) {
-        showError("Numele trebuie să conțină minim 2 caractere si maxim 10! ");
+    if (nume.length < 2 || nume.length>50) {
+        showError("Numele trebuie să conțină minim 2 caractere si maxim 50! ");
         return false;
     }
 
@@ -41,7 +41,7 @@ function validatePacientUpd() {
     }
 
     // Prenume
-    if (prenume.length < 2 || prenume.length>10) {
+    if (prenume.length < 2 || prenume.length>50) {
         showError("Prenumele trebuie să conțină minim 2 caractere");
         return false;
     }
@@ -58,7 +58,7 @@ function validatePacientUpd() {
 function onlyLetters(text) {
     for (let i = 0; i < text.length; i++) {
         const c = text[i].toLowerCase();
-        if (c < 'a' || c > 'z') {
+        if ((c < 'a' || c > 'z') && c!==' ') {
             return false;
         }
     }

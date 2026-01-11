@@ -28,7 +28,7 @@ function onlyLetters(text) {
 
     for (let i = 0; i < text.length; i++) {
         const c = text[i].toLowerCase();
-        if (c < 'a' || c > 'z') {
+        if ((c < 'a' || c > 'z') && c!==' ') {
             return false;
         }
     }
@@ -56,8 +56,8 @@ function validateMedicUpd() {
     const specializare = document.getElementById("specializare").value.trim();
 
     // NUME
-    if (nume.length < 2 || nume.length > 10) {
-        showError("Numele trebuie să aibă între 2 și 10 caractere");
+    if (nume.length < 2 || nume.length > 50) {
+        showError("Numele trebuie să aibă între 2 și 50 caractere");
         return false;
     }
 
@@ -67,8 +67,8 @@ function validateMedicUpd() {
     }
 
 
-    if (prenume.length < 2 || prenume.length > 10) {
-        showError("Prenumele trebuie să aibă între 2 și 10 caractere");
+    if (prenume.length < 2 || prenume.length > 50) {
+        showError("Prenumele trebuie să aibă între 2 și 50 caractere");
         return false;
     }
 

@@ -2,36 +2,46 @@
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-   <title>Programare update
-   </title>
-    <link rel="stylesheet" href="/css/update.css">
+    <title>Editează Programare</title>
+    <link rel="stylesheet" href="/css/adder.css">
 </head>
 <body>
-
-<h1 >Editeaza programare
-</h1>
 
 <form th:action="@{/programari/update/{id}(id=${programare.programareId})}"
       th:object="${programare}"
       method="post">
 
-<!--    <input type="hidden" th:field="*{programareId}"/>-->
+    <h3>Editează Programare</h3>
 
-    <label>Pacient ID</label>
-    <input type="number" id="pacientId" th:field="*{pacientId}" required/>
+    <input type="hidden" th:field="*{programareId}"/>
 
-    <label>Medic ID</label>
-    <input type="number" th:field="*{medicId}" required/>
+    <label for="pacientID">Pacient:</label>
+    <select th:field="*{pacientId}" id="pacientID" required>
+        <option th:each="p : ${pacienti}"
+                th:value="${p.pacientID}"
+                th:text="${p.nume + ' ' + p.prenume + ' (CNP: ' + p.cnp + ')'}"
+                th:selected="${p.pacientID == programare.pacientId}">
+        </option>
+    </select>
 
-    <label>Data programării</label>
-    <input type="datetime-local" th:field="*{dataProgramare}" required/>
+    <label for="medicID">Medic:</label>
+    <select th:field="*{medicId}" id="medicID" required>
+        <option th:each="m : ${medici}"
+                th:value="${m.medicID}"
+                th:text="${m.nume + ' ' + m.specializare}"
+                th:selected="${m.medicID == programare.medicId}">
+        </option>
+    </select>
 
-    <label>Durata (minute)</label>
-    <input type="number" th:field="*{durataProgramare}" min="1" required/>
+    <label for="data_programare">Data programării:</label>
+    <input type="datetime-local" th:field="*{dataProgramare}" id="data_programare" required />
+
+    <label for="durata">Durata (ex: 30 min):</label>
+    <input type="text" th:field="*{durataProgramare}" id="durata" placeholder="Introduceți durata" required />
 
     <div class="buttons">
-        <button type="submit">Salvează</button>
-        <a th:href="@{/programari}">Renunță</a>
+        <button type="submit" class="register-btn">Salvează modificările</button>
+        <a th:href="@{/programari}" class="login-btn">Renunță</a>
     </div>
 
 </form>

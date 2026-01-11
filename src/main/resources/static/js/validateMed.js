@@ -58,7 +58,7 @@ function validateMed() {
     const pret=document.getElementById("pret").value.trim();
 
     if (nume.length < 2 || nume.length > 50) {
-        showError("Numele trebuie să aibă între 2 și 10 caractere");
+        showError("Numele trebuie să aibă între 2 și 50 caractere");
         return false;
     }
 

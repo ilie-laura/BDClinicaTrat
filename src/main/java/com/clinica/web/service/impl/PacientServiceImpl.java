@@ -7,6 +7,7 @@ import com.clinica.web.repository.PacientJdbcRepository;
 import com.clinica.web.service.PacientService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PacientServiceImpl implements PacientService {
@@ -65,5 +66,8 @@ public class PacientServiceImpl implements PacientService {
 public boolean existsByCnp(String cnp){
         return pacientRepository.existsByCnp(cnp);
 }
-
+@Override
+public Map<Integer, Map<String, Object>> findPacientExtraStats(){
+        return pacientRepository.findPacientExtraStats();
+}
 }

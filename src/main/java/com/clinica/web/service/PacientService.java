@@ -3,6 +3,8 @@ import com.clinica.web.model.Pacient;
 import com.clinica.web.repository.PacientJdbcRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
+
 //@Service
 public interface PacientService {
     public List<Pacient> search(String field, String value,Boolean dir) ;
@@ -20,7 +22,7 @@ public interface PacientService {
             default -> throw new IllegalArgumentException("Motiv invalid");
         };
     }
-
+    public Map<Integer, Map<String, Object>> findPacientExtraStats();
     public String getNumeCompletById(Integer pacientId) ;
     public boolean existsByCnp(String cnp);
 }

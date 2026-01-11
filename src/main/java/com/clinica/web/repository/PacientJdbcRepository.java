@@ -189,5 +189,33 @@ public class PacientJdbcRepository {
             return false;
         }
     }
+    public Map<Integer, Map<String, Object>> findPacientExtraStats() {
+        // Subcerere 1  Numărul total de programări
+        // Subcerere 2 Diferența de zile de la prima până la ultima vizită
+        String sql = """
+        SELECT p.PacientID, 
+               stats.total_programari,
+               stats.zile_frecventa
+        FROM Pacient p
+        LEFT JOIN (
+            SELECT PacientID, 
+                   COUNT(*) AS total_programari,
+                   DATEDIFF(day, MIN(Data_Programare), MAX(Data_Programare)) AS zile_frecventa
+            FROM Programare 
+            GROUP BY PacientID
+        ) AS stats ON p.PacientID = stats.PacientID
+    """;
+
+        return jdbcTemplate.query(sql, rs -> {
+            Map<Integer, Map<String, Object>> statsMap = new HashMap<>();
+            while (rs.next()) {
+                Map<String, Object> data = new HashMap<>();
+                data.put("total", rs.getInt("total_programari"));
+                data.put("frecventa", rs.getInt("zile_frecventa"));
+                statsMap.put(rs.getInt("PacientID"), data);
+            }
+            return statsMap;
+        });
+    }
 
 }

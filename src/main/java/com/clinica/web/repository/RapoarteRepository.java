@@ -77,18 +77,22 @@ public class RapoarteRepository {
 
     public List<MedicamentDto> medicamenteFolositeInTratamente() {
         String sql = """
-            SELECT * FROM Medicament
-            WHERE medicamentID IN (
-                SELECT medicamentID FROM TratamentMedicatie
-            )
-        """;
+    SELECT m.*, stats.nr_utilizari
+    FROM Medicament m
+    JOIN (
+        SELECT medicamentID, COUNT(*) AS nr_utilizari
+        FROM TratamentMedicatie
+        GROUP BY medicamentID
+    ) AS stats ON m.medicamentID = stats.medicamentID
+    """;
 
         return jdbcTemplate.query(sql, (rs, i) -> {
             MedicamentDto m = new MedicamentDto();
-            m.setMedicamentID(rs.getInt("medicamentID"));
+            m.setMedicamentID(rs.getInt("nr_utilizari"));
             m.setNume(rs.getString("nume"));
             m.setStoc(rs.getInt("stoc"));
             m.setPret(rs.getInt("pret"));
+
             return m;
         });
     }
@@ -129,7 +133,8 @@ public class RapoarteRepository {
     """;
 
         return jdbcTemplate.queryForList(sql, minSalariu);
-    }public List<Map<String, Object>> pacientiCuCheltuieliPesteMedie(Double pragMinim) {
+    }
+    public List<Map<String, Object>> pacientiCuCheltuieliPesteMedie(Double pragMinim) {
         //  0 default
         double prag = (pragMinim != null) ? pragMinim : 0.0;
 
@@ -176,7 +181,7 @@ public class RapoarteRepository {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM Programare WHERE CAST(Data_programare AS DATE) = CAST(GETDATE() AS DATE)", Integer.class);
     }
     public Integer getNrMedicamenteStocCritic(int prag) {
-        // Punem pragul direct sau prin parametru ?
+
         String sql = "SELECT COUNT(*) FROM Medicament WHERE Stoc <= ?";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, prag);
         return (count != null) ? count : 0;

@@ -122,7 +122,13 @@ public class ProgramareController {
     @GetMapping("/programari/update/{id}")
     public String updateProgramare(@PathVariable int id, Model model) {
         ProgramareDto dto = programareService.findDtoById(id);
+        List<Pacient> pacienti = pacientService.findAll(null,null);
+        List<Medic> medici = medicService.findAll(null,null);
+
+        model.addAttribute("pacienti", pacienti);
+        model.addAttribute("medici", medici);
         model.addAttribute("programare", dto);
+
         return "updateProgramare";
     }
     @PostMapping("/programari/update/{id}")

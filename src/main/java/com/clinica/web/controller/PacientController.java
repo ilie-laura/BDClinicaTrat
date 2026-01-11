@@ -57,6 +57,7 @@ public class PacientController {
         Map<Integer, LocalDateTime> ultimeleProgramari =
                 pacientJdbcRepository.findUltimaProgramarePerPacient();
         model.addAttribute("ultimeleProgramari", ultimeleProgramari);
+        model.addAttribute("extraStats", pacientJdbcRepository.findPacientExtraStats());
         return "listPacients";
     }
     @GetMapping("/addPacient")

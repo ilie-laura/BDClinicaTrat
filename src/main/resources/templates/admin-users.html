@@ -103,13 +103,10 @@
         </tbody>
     </table>
 
-    <div style="margin-top: 20px;">
-        <a th:href="@{/index}" style="color: #3b82f6; text-decoration: none;">← Înapoi la Dashboard</a>
-    </div>
 </div>
 <script>
     function confirmDelete(button) {
-        const form = button.closest('.delete-form'); // Găsește formularul părinte
+        const form = button.closest('.delete-form');
 
         Swal.fire({
             title: 'Ești sigur?',
@@ -123,7 +120,7 @@
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                form.submit(); // Trimite formularul către Spring Boot doar dacă userul a confirmat
+                form.submit();
             }
         })
     }

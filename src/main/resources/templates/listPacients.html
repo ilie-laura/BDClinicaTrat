@@ -74,6 +74,9 @@
         <th>Prenume</th>
         <th>Oraș</th>
         <th>Ultima programare</th>
+        <th>Nr. Total Vizite</th>
+        <th>Vechime (Zile)</th>
+
 
     </tr>
     </thead>
@@ -126,6 +129,8 @@
     : '-'}">
         </td>
 
+        <td th:text="${extraStats[p.pacientID] != null ? extraStats[p.pacientID]['total'] : 0}"></td>
+        <td th:text="${extraStats[p.pacientID] != null ? extraStats[p.pacientID]['frecventa'] + ' zile' : '-'}"></td>
     </tr>
     <tr th:if="${#lists.isEmpty(pacienti)}">
         <td colspan="6">No results found</td>
@@ -133,6 +138,7 @@
 
     </tbody>
 </table>
+
 <div class="table-popup">
     <p>Stergi pacientul?</p>
     <div class="popup-actions">

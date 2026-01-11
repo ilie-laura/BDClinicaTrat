@@ -68,7 +68,7 @@ public class MedicamentRepository {
         m.setMedicamentId(rs.getInt("MedicamentID"));
         m.setNume(rs.getString("Nume"));
         m.setStoc(rs.getInt("Stoc"));
-        m.setPret(rs.getInt("Pret"));
+        m.setPret(rs.getFloat("Pret"));
 
 
         LocalDate date = rs.getObject("Data_expirare", LocalDate.class);
